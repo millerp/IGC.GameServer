@@ -1021,7 +1021,7 @@
     <ClCompile Include="SkillSafeZoneUse.cpp">
       <Filter>Game\Skills</Filter>
     </ClCompile>
-    <ClCompile Include="E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
+    <ClCompile Include="..\..\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaosCastle.h">

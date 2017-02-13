@@ -358,6 +358,8 @@ int CGMMng::GetTokenNumber()
 
 void PostSend(LPOBJ lpObj, char * szMessage)
 {
+	
+
 	PMSG_POST_DATA pMsg;
 	PHeadSubSetB((LPBYTE)&pMsg, 0xFA, 0x10, sizeof(pMsg));
 
