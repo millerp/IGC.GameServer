@@ -62,15 +62,15 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>E:\Season 9\Libraries\Shared_VS15\Mpir\lib\;E:\Season 9\Libraries\Shared_VS15\IniParser\3.1\;E:\Season 9\Libraries\Shared_VS15\Boost\1.59\stage\lib\;E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;E:\Season 9\Libraries\Shared_VS15\Mpir\2.5.1\lib\Win64\Release\;E:\Season 9\Libraries\Shared_VS15\CryptoPP\cryptopp\x64\Output\Release\;E:\Season 9\Libraries\Shared_VS15\Lua\5.2\lib\;E:\Season 9\Libraries\Shared_VS15\LuaEdit\lib\x64\_VS15;E:\Season 9\Libraries\Shared_VS15\LuaBind\lib\;E:\Season 9\Libraries\Shared_VS15\MAPM\lib\;E:\Season 9\Libraries\Shared_VS15\IniParser\3.1\include;E:\Season 9\Libraries\Shared_VS15\VLD\lib\Win64\;E:\local\boost_1_59_0\lib64-msvc-14.0\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\Libraries\Shared_VS15\Mpir\lib\;..\..\Libraries\Shared_VS15\IniParser\3.1\;..\..\Libraries\Shared_VS15\Boost\1.59\stage\lib\;..\..\Libraries\Shared_VS15\pugixml\1.4\;..\..\Libraries\Shared_VS15\Mpir\2.5.1\lib\Win64\Release\;..\..\Libraries\Shared_VS15\CryptoPP\cryptopp\x64\Output\Release\;..\..\Libraries\Shared_VS15\Lua\5.2\lib\;..\..\Libraries\Shared_VS15\LuaEdit\lib\x64\_VS15;..\..\Libraries\Shared_VS15\LuaBind\lib\;..\..\Libraries\Shared_VS15\MAPM\lib\;..\..\Libraries\Shared_VS15\IniParser\3.1\include;..\..\Libraries\Shared_VS15\VLD\lib\Win64\;E:\local\boost_1_59_0\lib64-msvc-14.0\;$(LibraryPath)</LibraryPath>
     <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
-    <IncludePath>E:\Season 9\Libraries\Shared_VS15\Boost\1.59\;E:\Season 9\Libraries\Shared_VS15\Mpir\2.5.1\;E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;E:\Season 9\Libraries\Shared_VS15\CryptoPP\cryptopp\;E:\Season 9\Libraries\Shared_VS15\Lua\5.2\include\;E:\Season 9\Libraries\Shared_VS15\LuaEdit\include\;E:\Season 9\Libraries\Shared_VS15\LuaBind\include\detail;E:\Season 9\Libraries\Shared_VS15\IniParser\3.1\include\;E:\Season 9\Libraries\Shared_VS15\MAPM\include\;E:\Season 9\Libraries\Shared_VS15\VLD\include\;$(ProjectDir);$(IncludePath)</IncludePath>
+    <IncludePath>..\..\Libraries\Shared_VS15\Boost\1.59\;..\..\Libraries\Shared_VS15\Mpir\2.5.1\;..\..\Libraries\Shared_VS15\pugixml\1.4\;..\..\Libraries\Shared_VS15\CryptoPP\cryptopp\;..\..\Libraries\Shared_VS15\Lua\5.2\include\;..\..\Libraries\Shared_VS15\LuaEdit\include\;..\..\Libraries\Shared_VS15\LuaBind\include\detail;..\..\Libraries\Shared_VS15\IniParser\3.1\include\;..\..\Libraries\Shared_VS15\MAPM\include\;..\..\Libraries\Shared_VS15\VLD\include\;$(ProjectDir);$(IncludePath)</IncludePath>
     <TargetExt>.exe</TargetExt>
     <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\..\Libraries\Shared\Boost\1.55\;..\..\Libraries\Shared\Mpir\2.5.1\;..\..\Libraries\Shared\CryptoPP\cryptopp\;..\..\Libraries\Shared\pugixml\1.4\;..\..\Libraries\Shared\Lua\5.2\include\;..\..\Libraries\Shared\LuaEdit\include\;..\..\Libraries\Shared\LuaBind\include\;..\..\Libraries\Shared\MAPM\include\;..\..\Libraries\Shared\IniParser\3.1\include\;$(ProjectDir);$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\Libraries\Shared\Boost\1.55\;..\..\Libraries\Shared\Mpir\2.5.1\lib\Win64\Release\;..\..\Libraries\Shared\CryptoPP\cryptlib\x64\;..\..\Libraries\Shared\pugixml\1.4\;..\..\Libraries\Shared\Lua\5.2\lib\;..\..\Libraries\Shared\LuaEdit\lib\x64\;..\..\Libraries\Shared\LuaBind\lib\;..\..\Libraries\Shared\MAPM\lib\;..\..\Libraries\Shared\IniParser\3.1\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\Libraries\Shared_VS15\Boost\1.59\;..\..\Libraries\Shared_VS15\Mpir\2.5.1\;..\..\Libraries\Shared_VS15\pugixml\1.4\;..\..\Libraries\Shared_VS15\CryptoPP\cryptopp\;..\..\Libraries\Shared_VS15\Lua\5.2\include\;..\..\Libraries\Shared_VS15\LuaEdit\include\;..\..\Libraries\Shared_VS15\LuaBind\include\detail;..\..\Libraries\Shared_VS15\IniParser\3.1\include\;..\..\Libraries\Shared_VS15\MAPM\include\;..\..\Libraries\Shared_VS15\VLD\include\;$(ProjectDir);$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\Libraries\Shared_VS15\Mpir\lib\;..\..\Libraries\Shared_VS15\IniParser\3.1\;..\..\Libraries\Shared_VS15\Boost\1.59\stage\lib\;..\..\Libraries\Shared_VS15\pugixml\1.4\;..\..\Libraries\Shared_VS15\Mpir\2.5.1\lib\Win64\Release\;..\..\Libraries\Shared_VS15\CryptoPP\cryptopp\x64\Output\Release\;..\..\Libraries\Shared_VS15\Lua\5.2\lib\;..\..\Libraries\Shared_VS15\LuaEdit\lib\x64\_VS15;..\..\Libraries\Shared_VS15\LuaBind\lib\;..\..\Libraries\Shared_VS15\MAPM\lib\;..\..\Libraries\Shared_VS15\IniParser\3.1\include;..\..\Libraries\Shared_VS15\VLD\lib\Win64\;E:\local\boost_1_59_0\lib64-msvc-14.0\;$(LibraryPath)</LibraryPath>
     <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -210,7 +210,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
+    <ClCompile Include="..\..\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
     <ClCompile Include="AcheronGuardianEvent.cpp" />
     <ClCompile Include="AntiSwear.cpp" />
     <ClCompile Include="AppointItemDrop.cpp" />

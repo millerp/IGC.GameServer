@@ -75,7 +75,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\Output\Season 9\ConnectServer\Debug\</OutDir>
     <IntDir>..\Output\Season 9\ConnectServer\Trunk\</IntDir>
-    <IncludePath>E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;$(ProjectDir);$(IncludePath)</IncludePath>
+    <IncludePath>..\..\Libraries\Shared_VS15\pugixml\1.4\;$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <GenerateManifest>true</GenerateManifest>
     <EmbedManifest>true</EmbedManifest>
@@ -190,7 +190,7 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\pugixml.hpp" />
+    <ClInclude Include="..\..\Libraries\Shared_VS15\pugixml\1.4\pugixml.hpp" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="IGCCS.h" />
     <ClInclude Include="IOCP.h" />
@@ -211,7 +211,7 @@
     <ClInclude Include="WzUdp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
+    <ClCompile Include="..\..\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="IGCCS.cpp" />
     <ClCompile Include="IOCP.cpp" />

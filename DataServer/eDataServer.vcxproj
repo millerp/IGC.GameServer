@@ -53,8 +53,8 @@
     <OutDir>..\Output\Season 9\DataServer\Debug\</OutDir>
     <IntDir>..\Output\Season 9\DataServer\Trunk\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\Season 9\Libraries\Shared_VS15\Boost\1.59\;E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;$(ProjectDir);$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Season 9\Libraries\Shared_VS15\Boost\1.59\;E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\Libraries\Shared_VS15\Boost\1.59\;..\..\Libraries\Shared_VS15\pugixml\1.4\;$(ProjectDir);$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\Libraries\Shared_VS15\Boost\1.59\;..\..\Libraries\Shared_VS15\pugixml\1.4\;$(LibraryPath)</LibraryPath>
     <EmbedManifest>true</EmbedManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
+    <ClCompile Include="..\..\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp" />
     <ClCompile Include="CQueue.cpp" />
     <ClCompile Include="CrashDump.cpp" />
     <ClCompile Include="DatabaseInstaller.cpp" />
