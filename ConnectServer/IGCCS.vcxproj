@@ -73,8 +73,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\..\Output\Season 9\ConnectServer\Debug\</OutDir>
-    <IntDir>..\..\..\Output\Season 9\ConnectServer\Trunk\</IntDir>
+    <OutDir>..\Output\Season 9\ConnectServer\Debug\</OutDir>
+    <IntDir>..\Output\Season 9\ConnectServer\Trunk\</IntDir>
     <IncludePath>E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <GenerateManifest>true</GenerateManifest>
@@ -85,8 +85,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\Output\ConnectServer\Trunk\</OutDir>
-    <IntDir>..\..\Output\ConnectServer\Trunk\</IntDir>
+    <OutDir>..\Output\ConnectServer\Trunk\</OutDir>
+    <IntDir>..\Output\ConnectServer\Trunk\</IntDir>
     <IncludePath>..\..\Libraries\Shared\pugixml\1.4\;$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -101,7 +101,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>..\..\Output\IGCCS\IGCCS.exe</OutputFile>
+      <OutputFile>..\Output\IGCCS\IGCCS.exe</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,23 +111,23 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WIN64;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>..\..\..\Output\Season 9\ConnectServer\Trunk\IGC.ConnectServer.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>..\..\..\Output\Season 9\ConnectServer\Trunk\</AssemblerListingLocation>
-      <ObjectFileName>..\..\..\Output\Season 9\ConnectServer\Trunk\</ObjectFileName>
-      <ProgramDataBaseFileName>..\..\..\Output\Season 9\ConnectServer\Trunk\</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>..\\Output\Season 9\ConnectServer\Trunk\IGC.ConnectServer.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>..\Output\Season 9\ConnectServer\Trunk\</AssemblerListingLocation>
+      <ObjectFileName>..\Output\Season 9\ConnectServer\Trunk\</ObjectFileName>
+      <ProgramDataBaseFileName>..\Output\Season 9\ConnectServer\Trunk\</ProgramDataBaseFileName>
       <CallingConvention>FastCall</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>..\..\..\Output\Season 9\ConnectServer\Debug\IGC.ConnectServer.exe</OutputFile>
-      <ProgramDatabaseFile>..\..\..\Output\Season 9\ConnectServer\Debug\IGC.ConnectServer.pdb</ProgramDatabaseFile>
+      <OutputFile>..\Output\Season 9\ConnectServer\Debug\IGC.ConnectServer.exe</OutputFile>
+      <ProgramDatabaseFile>..\Output\Season 9\ConnectServer\Debug\IGC.ConnectServer.pdb</ProgramDatabaseFile>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>..\..\..\Output\Season 9\ConnectServer\Debug\IGC.ConnectServer.map</MapFileName>
+      <MapFileName>..\Output\Season 9\ConnectServer\Debug\IGC.ConnectServer.map</MapFileName>
     </Link>
     <Bscmake>
-      <OutputFile>..\..\..\Output\Season 9\ConnectServer\Trunk\IGC.ConnectServer.bsc</OutputFile>
+      <OutputFile>..\Output\Season 9\ConnectServer\Trunk\IGC.ConnectServer.bsc</OutputFile>
     </Bscmake>
     <Manifest>
       <VerboseOutput>false</VerboseOutput>
@@ -148,7 +148,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <OutputFile>..\..\Output\IGCCS\IGCCS.exe</OutputFile>
+      <OutputFile>..\Output\IGCCS\IGCCS.exe</OutputFile>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
@@ -161,10 +161,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_WIN64;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>..\..\Output\ConnectServer\Trunk\IGC.ConnectServer.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>..\..\Output\ConnectServer\Trunk\</AssemblerListingLocation>
-      <ObjectFileName>..\..\Output\ConnectServer\Trunk\</ObjectFileName>
-      <ProgramDataBaseFileName>..\..\Output\ConnectServer\Trunk\</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>..\Output\ConnectServer\Trunk\IGC.ConnectServer.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>..\Output\ConnectServer\Trunk\</AssemblerListingLocation>
+      <ObjectFileName>..\Output\ConnectServer\Trunk\</ObjectFileName>
+      <ProgramDataBaseFileName>..\Output\ConnectServer\Trunk\</ProgramDataBaseFileName>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
@@ -175,14 +175,14 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <OutputFile>..\..\Output\ConnectServer\Release\IGC.ConnectServer.exe</OutputFile>
+      <OutputFile>..\Output\ConnectServer\Release\IGC.ConnectServer.exe</OutputFile>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
-      <ProgramDatabaseFile>..\..\Output\ConnectServer\Release\IGC.ConnectServer.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>..\Output\ConnectServer\Release\IGC.ConnectServer.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>..\..\Output\ConnectServer\Release\IGC.ConnectServer.map</MapFileName>
+      <MapFileName>..\Output\ConnectServer\Release\IGC.ConnectServer.map</MapFileName>
     </Link>
     <Bscmake>
-      <OutputFile>..\..\Output\ConnectServer\Trunk\IGC.ConnectServer.bsc</OutputFile>
+      <OutputFile>..\Output\ConnectServer\Trunk\IGC.ConnectServer.bsc</OutputFile>
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>

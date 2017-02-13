@@ -77,7 +77,7 @@
     <ClInclude Include="winutil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Libraries\Shared\pugixml\1.4\pugixml.hpp">
+    <ClInclude Include="E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\pugixml.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -121,7 +121,7 @@
     <ClCompile Include="WzUdp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp">
+    <ClCompile Include="E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\pugixml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

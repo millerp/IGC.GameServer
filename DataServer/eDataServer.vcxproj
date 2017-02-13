@@ -43,15 +43,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\..\Output\DataServer\Trunk\</OutDir>
-    <IntDir>..\..\Output\DataServer\Trunk\</IntDir>
+    <OutDir>..\Output\DataServer\Trunk\</OutDir>
+    <IntDir>..\Output\DataServer\Trunk\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>..\..\Libraries\Shared\pugixml\1.4\;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\Libraries\Shared\pugixml\1.4\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\..\..\Output\Season 9\DataServer\Debug\</OutDir>
-    <IntDir>..\..\..\Output\Season 9\DataServer\Trunk\</IntDir>
+    <OutDir>..\Output\Season 9\DataServer\Debug\</OutDir>
+    <IntDir>..\Output\Season 9\DataServer\Trunk\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>E:\Season 9\Libraries\Shared_VS15\Boost\1.59\;E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>E:\Season 9\Libraries\Shared_VS15\Boost\1.59\;E:\Season 9\Libraries\Shared_VS15\pugixml\1.4\;$(LibraryPath)</LibraryPath>
@@ -67,13 +67,13 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>X64;NDEBUG;_WINDOWS;EF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>..\..\Output\DataServer\Trunk\</AssemblerListingLocation>
+      <AssemblerListingLocation>..\Output\DataServer\Trunk\</AssemblerListingLocation>
       <BrowseInformation>true</BrowseInformation>
-      <PrecompiledHeaderOutputFile>..\..\Output\DataServer\Trunk\IGC.DataServer.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>..\Output\DataServer\Trunk\IGC.DataServer.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <ObjectFileName>..\..\Output\DataServer\Trunk\</ObjectFileName>
-      <ProgramDataBaseFileName>..\..\Output\DataServer\Trunk\</ProgramDataBaseFileName>
+      <ObjectFileName>..\Output\DataServer\Trunk\</ObjectFileName>
+      <ProgramDataBaseFileName>..\Output\DataServer\Trunk\</ProgramDataBaseFileName>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
@@ -91,17 +91,17 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>..\..\Output\DataServer\Trunk/IGC.DataServer.bsc</OutputFile>
+      <OutputFile>..\Output\DataServer\Trunk/IGC.DataServer.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>..\..\Output\DataServer\Release\IGC.DataServer.exe</OutputFile>
+      <OutputFile>..\Output\DataServer\Release\IGC.DataServer.exe</OutputFile>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ProgramDatabaseFile>..\..\Output\DataServer\Release\IGC.DataServer.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>..\Output\DataServer\Release\IGC.DataServer.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>..\..\Output\DataServer\Release\IGC.DataServer.map</MapFileName>
+      <MapFileName>..\Output\DataServer\Release\IGC.DataServer.map</MapFileName>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
@@ -115,12 +115,12 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>_WIN64;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>..\..\..\Output\Season 9\DataServer\Trunk\</AssemblerListingLocation>
-      <PrecompiledHeaderOutputFile>..\..\..\Output\Season 9\DataServer\Trunk\IGC.DataServer.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>..\Output\Season 9\DataServer\Trunk\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>..\Output\Season 9\DataServer\Trunk\IGC.DataServer.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <ObjectFileName>..\..\..\Output\Season 9\DataServer\Trunk\</ObjectFileName>
-      <ProgramDataBaseFileName>..\..\..\Output\Season 9\DataServer\Trunk\</ProgramDataBaseFileName>
+      <ObjectFileName>..\Output\Season 9\DataServer\Trunk\</ObjectFileName>
+      <ProgramDataBaseFileName>..\Output\Season 9\DataServer\Trunk\</ProgramDataBaseFileName>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -134,18 +134,18 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>..\..\..\Output\Season 9\DataServer\Trunk\IGC.DataServer.bsc</OutputFile>
+      <OutputFile>..\Output\Season 9\DataServer\Trunk\IGC.DataServer.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>..\..\..\Output\Season 9\DataServer\Debug\IGC.DataServer.exe</OutputFile>
+      <OutputFile>..\Output\Season 9\DataServer\Debug\IGC.DataServer.exe</OutputFile>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
-      <ProgramDatabaseFile>..\..\..\Output\Season 9\DataServer\Debug\IGC.DataServer.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>..\Output\Season 9\DataServer\Debug\IGC.DataServer.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>..\..\..\Output\Season 9\DataServer\Debug\IGC.DataServer.map</MapFileName>
+      <MapFileName>..\Output\Season 9\DataServer\Debug\IGC.DataServer.map</MapFileName>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>

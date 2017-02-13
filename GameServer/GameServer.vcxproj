@@ -92,10 +92,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>..\..\Output\GameServer\N\Trunk\GameServer.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>..\..\Output\GameServer\N\Trunk\</AssemblerListingLocation>
-      <ObjectFileName>..\..\Output\GameServer\N\Trunk\</ObjectFileName>
-      <ProgramDataBaseFileName>..\..\Output\GameServer\N\Trunk\$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>..\Output\GameServer\N\Trunk\GameServer.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>..\Output\GameServer\N\Trunk\</AssemblerListingLocation>
+      <ObjectFileName>..\Output\GameServer\N\Trunk\</ObjectFileName>
+      <ProgramDataBaseFileName>..\Output\GameServer\N\Trunk\$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MinimalRebuild>false</MinimalRebuild>
@@ -117,9 +117,9 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\Output\GameServer\N\Release\IGC.GameServer.exe</OutputFile>
+      <OutputFile>..\Output\GameServer\N\Release\IGC.GameServer.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>..\..\Output\GameServer\N\Release\IGC.GameServer.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>..\Output\GameServer\N\Release\IGC.GameServer.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -127,7 +127,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
       <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>..\..\Output\GameServer\N\Release\IGC.GameServer.map</MapFileName>
+      <MapFileName>..\Output\GameServer\N\Release\IGC.GameServer.map</MapFileName>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <LinkStatus>true</LinkStatus>
@@ -135,7 +135,7 @@
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>..\..\Output\GameServer\N\Trunk\GameServer.bsc</OutputFile>
+      <OutputFile>..\Output\GameServer\N\Trunk\GameServer.bsc</OutputFile>
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,11 +153,11 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>..\..\..\Output\Season 9\GameServer\Trunk\IGC.GameServer.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>..\Output\Season 9\GameServer\Trunk\IGC.GameServer.pch</PrecompiledHeaderOutputFile>
       <AssemblerOutput>All</AssemblerOutput>
-      <AssemblerListingLocation>..\..\..\Output\Season 9\GameServer\Trunk\</AssemblerListingLocation>
-      <ObjectFileName>..\..\..\Output\Season 9\GameServer\Trunk\</ObjectFileName>
-      <ProgramDataBaseFileName>..\..\..\Output\Season 9\GameServer\Trunk\$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>..\Output\Season 9\GameServer\Trunk\</AssemblerListingLocation>
+      <ObjectFileName>..\Output\Season 9\GameServer\Trunk\</ObjectFileName>
+      <ProgramDataBaseFileName>..\Output\Season 9\GameServer\Trunk\$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -179,13 +179,13 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>..\..\..\Output\Season 9\GameServer\Debug\IGC.GameServer.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>..\Output\Season 9\GameServer\Debug\IGC.GameServer.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>..\..\..\Output\Season 9\GameServer\Debug\IGC.GameServer.map</MapFileName>
+      <MapFileName>..\Output\Season 9\GameServer\Debug\IGC.GameServer.map</MapFileName>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <OutputFile>..\..\..\Output\Season 9\GameServer\Debug\IGC.GameServer.exe</OutputFile>
+      <OutputFile>..\Output\Season 9\GameServer\Debug\IGC.GameServer.exe</OutputFile>
       <LinkStatus>false</LinkStatus>
       <MinimumRequiredVersion>
       </MinimumRequiredVersion>
@@ -203,7 +203,7 @@
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>..\..\..\Output\Season 9\GameServer\Trunk\GameServer.bsc</OutputFile>
+      <OutputFile>..\Output\Season 9\GameServer\Trunk\GameServer.bsc</OutputFile>
     </Bscmake>
     <Manifest>
       <VerboseOutput>false</VerboseOutput>
