@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLL", "IGC_DLL_S9.vcxproj", "{45CD87AE-7548-4BD0-8A07-9505898EA455}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Debug|Win32.ActiveCfg = Debug|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Debug|Win32.Build.0 = Debug|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Release|Any CPU.ActiveCfg = R_S9|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Release|Mixed Platforms.ActiveCfg = R_S9|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Release|Mixed Platforms.Build.0 = R_S9|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Release|Win32.ActiveCfg = R_S9|Win32
+		{45CD87AE-7548-4BD0-8A07-9505898EA455}.Release|Win32.Build.0 = R_S9|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

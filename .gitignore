@@ -32,3 +32,4 @@
 *.opendb
 *.VC.db
 .idea
+Output/
