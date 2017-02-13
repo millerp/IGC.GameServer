@@ -231,7 +231,11 @@ struct COMMON_CONFIG
 struct Reset
 {
 	bool enable;
-	unsigned short iMinLevel;
+	unsigned short iMinLevelNormal;
+	unsigned short iMinLevelBronze;
+	unsigned short iMinLevelSilver;
+	unsigned short iMinLevelGold;
+	unsigned short iMinLevelPlatinum;
 	int iCost;
 	int iResetLimit;
 	bool ResetML;

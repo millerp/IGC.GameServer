@@ -236,7 +236,11 @@ void CConfigread::ReadConfig()
 
 	this->data.reset.enable = ReadCommon.ReadInt("ResetCMD", "Enable", 1);
 	this->data.reset.iCost = ReadCommon.ReadInt("ResetCMD", "Cost", 4000000);
-	this->data.reset.iMinLevel = ReadCommon.ReadInt("ResetCMD", "MinLevel", 400);
+	this->data.reset.iMinLevelNormal = ReadCommon.ReadInt("ResetCMD", "MinLevelNormal", 400);
+	this->data.reset.iMinLevelBronze = ReadCommon.ReadInt("ResetCMD", "MinLevelBronze", 380);
+	this->data.reset.iMinLevelSilver = ReadCommon.ReadInt("ResetCMD", "MinLevelSilver", 360);
+	this->data.reset.iMinLevelGold = ReadCommon.ReadInt("ResetCMD", "MinLevelGold", 340);
+	this->data.reset.iMinLevelPlatinum = ReadCommon.ReadInt("ResetCMD", "MinLevelPlatinum", 320);
 	this->data.reset.iResetLimit = ReadCommon.ReadInt("ResetCMD", "MaxReset", 100);
 	this->data.reset.ResetML = ReadCommon.ReadInt("ResetCMD", "IsResetMasterLevel", 0);
 	this->data.reset.ResetStats = ReadCommon.ReadInt("ResetCMD", "IsResetStats", 0);

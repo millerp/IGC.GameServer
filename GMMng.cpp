@@ -2233,14 +2233,47 @@ int CGMMng::ManagementProc(LPOBJ lpObj, char* szCmd, int aIndex)
 			break;
 		case 412:
 			{
-				if(!g_ConfigRead.data.reset.enable)
-					return 0;
+				if(!g_ConfigRead.data.reset.enable) {
+                    return 0;
+                }
 
-				if(lpObj->Level < g_ConfigRead.data.reset.iMinLevel)
-				{
-					MsgOutput(aIndex,Lang.GetText(0,458),g_ConfigRead.data.reset.iMinLevel);
-					return 0;
+				switch (lpObj->m_PlayerData->VipType) {
+					case 0:
+						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelNormal) {
+							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelNormal);
+							return 0;
+						}
+						break;
+
+					case 1:
+						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelBronze) {
+							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelBronze);
+							return 0;
+						}
+						break;
+
+					case 2:
+						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelSilver) {
+							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelSilver);
+							return 0;
+						}
+						break;
+
+					case 3:
+						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelGold) {
+							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelGold);
+							return 0;
+						}
+						break;
+
+					case 4:
+						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelPlatinum) {
+							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelPlatinum);
+							return 0;
+						}
+						break;
 				}
+
 				if(lpObj->m_PlayerData->Money < g_ConfigRead.data.reset.iCost)
 				{
 					MsgOutput(aIndex,Lang.GetText(0,459),g_ConfigRead.data.reset.iCost);
@@ -2346,7 +2379,28 @@ int CGMMng::ManagementProc(LPOBJ lpObj, char* szCmd, int aIndex)
 				lpObj->MaxMana = DCInfo.DefClass[lpObj->Class].Mana + ((lpObj->Level+lpObj->m_PlayerData->MasterLevel) - 1) * DCInfo.DefClass[lpObj->Class].LevelMana  + ((lpObj->m_PlayerData->Energy - DCInfo.DefClass[lpObj->Class].Energy ) * DCInfo.DefClass[lpObj->Class].EnergyToMana);
 
 
-				lpObj->m_PlayerData->m_iResets += 1;
+				switch (lpObj->m_PlayerData->VipType) {
+					case 0:
+						lpObj->m_PlayerData->m_iResets += 1;
+						break;
+
+					case 1:
+						lpObj->m_PlayerData->m_iResets += 1;
+						break;
+
+					case 2:
+						lpObj->m_PlayerData->m_iResets += 1;
+						break;
+
+					case 3:
+						lpObj->m_PlayerData->m_iResets += 1;
+						break;
+
+					case 4:
+						lpObj->m_PlayerData->m_iResets += 2;
+						break;
+				}
+
 				gObjNextExpCal(lpObj);
 				lpObj->m_PlayerData->Money -=  g_ConfigRead.data.reset.iCost;
 				GSProtocol.GCMoneySend(aIndex,lpObj->m_PlayerData->Money);
