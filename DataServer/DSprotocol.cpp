@@ -1403,7 +1403,7 @@ void CDataServerProtocol::JGPGetCharList(int aIndex, SDHP_GETCHARLIST * aRecv)
 		{
 			if ( lstrlen(CharName[i]) >= 4 )
 			{
-				if ( this->m_AccDB.ExecQuery("SELECT cLevel, Class, CtlCode FROM vCharacterPreview WHERE Name='%s'", CharName[i]) == TRUE )
+				if ( this->m_AccDB.ExecQuery("SELECT cLevel, Class, CtlCode, RESETS, ResetCountDay, ResetCountWeek, ResetCountMonth FROM vCharacterPreview WHERE Name='%s'", CharName[i]) == TRUE )
 				{
 					char szTemp[200];
 					pCL = (SDHP_CHARLIST *)(cBUFFER + lOfs);
@@ -1412,6 +1412,9 @@ void CDataServerProtocol::JGPGetCharList(int aIndex, SDHP_GETCHARLIST * aRecv)
 					pCL->Level = (WORD)this->m_AccDB.GetAsInteger("cLevel");
 					pCL->Class = (BYTE)this->m_AccDB.GetAsInteger("Class");
 					pCL->Resets = (WORD)this->m_AccDB.GetAsInteger("RESETS");
+					pCL->ResetsDay = (WORD)this->m_AccDB.GetAsInteger("ResetCountDay");
+					pCL->ResetsWeek = (WORD)this->m_AccDB.GetAsInteger("ResetCountWeek");
+					pCL->ResetsMonth = (WORD)this->m_AccDB.GetAsInteger("ResetCountMonth");
 					if ( pCL->Level >= g_MagumsaCreateMinLevel && (pCount->EnableCharacterCreate & 4) != 4 )
 						pCount->EnableCharacterCreate |= 4;
 					
@@ -1450,11 +1453,14 @@ void CDataServerProtocol::JGPGetCharList(int aIndex, SDHP_GETCHARLIST * aRecv)
 						}
 					}
 					
-					this->m_AccDB.ExecQuery("SELECT RESETS FROM Character WHERE Name='%s'", CharName[i]);
+					this->m_AccDB.ExecQuery("SELECT RESETS, ResetCountDay, ResetCountWeek, ResetCountMonth FROM Character WHERE Name='%s'", CharName[i]);
 
 					if(this->m_AccDB.Fetch() != SQL_NO_DATA)
 					{
 						pCL->Resets = (WORD)this->m_AccDB.GetAsInteger("RESETS");
+						pCL->ResetsDay = (WORD)this->m_AccDB.GetAsInteger("ResetCountDay");
+						pCL->ResetsWeek = (WORD)this->m_AccDB.GetAsInteger("ResetCountWeek");
+						pCL->ResetsMonth = (WORD)this->m_AccDB.GetAsInteger("ResetCountMonth");
 					}
 
 					this->m_AccDB.Close();
@@ -1737,7 +1743,7 @@ void CDataServerProtocol::JGGetCharacterInfo(int aIndex, SDHP_DBCHARINFOREQUEST 
 
 	this->m_AccDB.Close();
 
-	if (this->m_CharDB.ExecQuery("SELECT cLevel, mLevel, Class, LevelUpPoint, mlPoint, Experience, mlExperience, mlNextExp, Strength, Dexterity, Vitality, Energy, Money, Life, MaxLife, Mana, MaxMana, MapNumber, MapPosX, MapPosY, MapDir, PkCount, PkLevel, PkTime, CtlCode, Leadership, ChatLimitTime, FruitPoint, RESETS, Married, MarryName, InventoryExpansion, WinDuels, LoseDuels, BlockChatTime, PenaltyMask FROM Character WHERE Name='%s' AND AccountID='%s'", szName, szAccountID) == FALSE)
+	if (this->m_CharDB.ExecQuery("SELECT cLevel, mLevel, Class, LevelUpPoint, mlPoint, Experience, mlExperience, mlNextExp, Strength, Dexterity, Vitality, Energy, Money, Life, MaxLife, Mana, MaxMana, MapNumber, MapPosX, MapPosY, MapDir, PkCount, PkLevel, PkTime, CtlCode, Leadership, ChatLimitTime, FruitPoint, RESETS, ResetCountDay, ResetCountWeek, ResetCountMonth, Married, MarryName, InventoryExpansion, WinDuels, LoseDuels, BlockChatTime, PenaltyMask FROM Character WHERE Name='%s' AND AccountID='%s'", szName, szAccountID) == FALSE)
 	{
 		this->m_CharDB.Close();
 		return;
@@ -1922,6 +1928,9 @@ void CDataServerProtocol::GJSetCharacterInfo(int aIndex, SDHP_DBCHAR_INFOSAVE * 
 	
 	this->m_CharDB.ExecQuery("UPDATE Character SET cLevel=%d, mLevel=%d, Class=%d,LevelUpPoint=%d, mlPoint=%d, Experience=%I64d, mlExperience=%I64d, mlNextExp=%I64d, Strength=%d, Dexterity=%d, Vitality=%d, Energy=%d, Money=%d, Life=%f, MaxLife=%f, Mana=%f, MaxMana=%f, MapNumber=%d, MapPosX=%d, MapPosY=%d, MapDir=%d, PkCount=%d, PkLevel=%d, PkTime=%d, Leadership=%d, ChatLimitTime=%d, FruitPoint=%d, RESETS = %d, ResetCountDay = %d, ResetCountWeek = %d, ResetCountMonth = %d, Married = %d, MarryName = '%s', WinDuels=%d, LoseDuels=%d, BlockChatTime=%I64d, PenaltyMask=%d WHERE Name = '%s'",
 		aRecv->Level, aRecv->mLevel, aRecv->Class, aRecv->LevelUpPoint, aRecv->mlPoint, aRecv->Exp, aRecv->mlExp, aRecv->mlNextExp, aRecv->Str, aRecv->Dex, aRecv->Vit, aRecv->Energy, aRecv->Money, float(aRecv->Life), float(aRecv->MaxLife), float(aRecv->Mana), float(aRecv->MaxMana), aRecv->MapNumber, aRecv->MapX, aRecv->MapY, aRecv->Dir, aRecv->PkCount, aRecv->PkLevel, aRecv->PkTime, aRecv->Leadership, aRecv->ChatLitmitTime, aRecv->iFruitPoint, aRecv->resets, aRecv->resetsDay, aRecv->resetsWeek, aRecv->resetsMonth, aRecv->Married, aRecv->MarryName, aRecv->WinDuels, aRecv->LoseDuels, aRecv->ChatBlockTime, aRecv->PenaltyMask, szName);
+
+	g_Log.Add("UPDATE Character SET cLevel=%d, mLevel=%d, Class=%d,LevelUpPoint=%d, mlPoint=%d, Experience=%I64d, mlExperience=%I64d, mlNextExp=%I64d, Strength=%d, Dexterity=%d, Vitality=%d, Energy=%d, Money=%d, Life=%f, MaxLife=%f, Mana=%f, MaxMana=%f, MapNumber=%d, MapPosX=%d, MapPosY=%d, MapDir=%d, PkCount=%d, PkLevel=%d, PkTime=%d, Leadership=%d, ChatLimitTime=%d, FruitPoint=%d, RESETS = %d, ResetCountDay = %d, ResetCountWeek = %d, ResetCountMonth = %d, Married = %d, MarryName = '%s', WinDuels=%d, LoseDuels=%d, BlockChatTime=%I64d, PenaltyMask=%d WHERE Name = '%s'",
+			  aRecv->Level, aRecv->mLevel, aRecv->Class, aRecv->LevelUpPoint, aRecv->mlPoint, aRecv->Exp, aRecv->mlExp, aRecv->mlNextExp, aRecv->Str, aRecv->Dex, aRecv->Vit, aRecv->Energy, aRecv->Money, float(aRecv->Life), float(aRecv->MaxLife), float(aRecv->Mana), float(aRecv->MaxMana), aRecv->MapNumber, aRecv->MapX, aRecv->MapY, aRecv->Dir, aRecv->PkCount, aRecv->PkLevel, aRecv->PkTime, aRecv->Leadership, aRecv->ChatLitmitTime, aRecv->iFruitPoint, aRecv->resets, aRecv->resetsDay, aRecv->resetsWeek, aRecv->resetsMonth, aRecv->Married, aRecv->MarryName, aRecv->WinDuels, aRecv->LoseDuels, aRecv->ChatBlockTime, aRecv->PenaltyMask, szName);
 
 	char szTemp[128];
 	wsprintf(szTemp, "UPDATE Character SET Inventory=? WHERE Name='%s'", szName);

@@ -2233,226 +2233,218 @@ int CGMMng::ManagementProc(LPOBJ lpObj, char* szCmd, int aIndex)
 				MsgOutput(aIndex,Lang.GetText(0,457));
 			}
 			break;
-		case 412:
-			{
-				if(!g_ConfigRead.data.reset.enable) {
-                    return 0;
-                }
+		case 412: {
+			if (!g_ConfigRead.data.reset.enable) {
+				return 0;
+			}
 
-				switch (lpObj->m_PlayerData->VipType) {
-					case 0:
-						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelNormal) {
-							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelNormal);
-							return 0;
-						}
-						break;
-
-					case 1:
-						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelBronze) {
-							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelBronze);
-							return 0;
-						}
-						break;
-
-					case 2:
-						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelSilver) {
-							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelSilver);
-							return 0;
-						}
-						break;
-
-					case 3:
-						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelGold) {
-							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelGold);
-							return 0;
-						}
-						break;
-
-					case 4:
-						if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelPlatinum) {
-							MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelPlatinum);
-							return 0;
-						}
-						break;
-				}
-
-				if(lpObj->m_PlayerData->Money < g_ConfigRead.data.reset.iCost)
-				{
-					MsgOutput(aIndex,Lang.GetText(0,459),g_ConfigRead.data.reset.iCost);
-					return 0;
-				}
-
-				if(lpObj->m_PlayerData->m_iResets >= g_ConfigRead.data.reset.iResetLimit)
-				{
-					MsgOutput(aIndex,Lang.GetText(0,460));
-					return 0;
-				}
-
-				if (BC_MAP_RANGE(lpObj->MapNumber) || DS_MAP_RANGE(lpObj->MapNumber) || CC_MAP_RANGE(lpObj->MapNumber) || IT_MAP_RANGE(lpObj->MapNumber) ||
-					DG_MAP_RANGE(lpObj->MapNumber) || IMPERIAL_MAP_RANGE(lpObj->MapNumber) || CRYWOLF_MAP_RANGE(lpObj->MapNumber) || lpObj->MapNumber == MAP_INDEX_CASTLESIEGE ||
-					lpObj->MapNumber == MAP_INDEX_CASTLEHUNTZONE || g_GensSystem.IsMapBattleZone(lpObj->MapNumber) || lpObj->MapNumber == MAP_INDEX_KANTURU_BOSS || lpObj->MapNumber == MAP_INDEX_KALIMA1
-					|| lpObj->MapNumber == MAP_INDEX_KALIMA2 || lpObj->MapNumber == MAP_INDEX_KALIMA3 || lpObj->MapNumber == MAP_INDEX_KALIMA4 || lpObj->MapNumber == MAP_INDEX_KALIMA5 || lpObj->MapNumber == MAP_INDEX_KALIMA6
-					|| lpObj->MapNumber == MAP_INDEX_KALIMA7 || lpObj->MapNumber == MAP_INDEX_ARCA_WAR || lpObj->MapNumber == MAP_INDEX_DEBENTER_ARCA_WAR)
-				{
-					MsgOutput(aIndex, Lang.GetText(0,510));
-					return FALSE;
-				}
-
-				if(g_ConfigRead.data.reset.RemoveEquipment)
-				{
-					for(int i=0;i<12;i++)
-					{
-						if(lpObj->pInventory[i].IsItem() == true)
-						{
-							MsgOutput(aIndex,Lang.GetText(0,461));
-							return 0;
-						}
+			switch (lpObj->m_PlayerData->VipType) {
+				case 0: {
+					if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelNormal) {
+						MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelNormal);
+						return 0;
 					}
 				}
+					break;
 
-				if (lpObj->PartyNumber >= 0)
-				{
-					PMSG_PARTYDELUSER pMsg;
-					int pindex = gParty.GetIndex(lpObj->PartyNumber, lpObj->m_Index, lpObj->DBNumber);
-
-					if (pindex >= 0)
-					{
-						pMsg.Number = pindex;
-						GSProtocol.CGPartyDelUser(&pMsg, lpObj->m_Index, 0);
+				case 1: {
+					if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelBronze) {
+						MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelBronze);
+						return 0;
 					}
 				}
+					break;
 
-				if (lpObj->m_SkillInfo.LordSummonTime != 0)
-				{
-					lpObj->m_SkillInfo.LordSummonTime = 0;
-					GSProtocol.GCServerMsgStringSend(Lang.GetText(0, 146), aIndex, 1);
-				}
-
-				if (lpObj->m_PlayerData->m_MuBotEnable == true)
-				{
-					lpObj->m_PlayerData->m_MuBotEnable = false;
-					GSProtocol.GCAnsMuBotUse(lpObj->m_Index, 1, lpObj->m_PlayerData->m_MuBotTotalTime, 0);
-				}
-
-				gObjClearBuffEffect(lpObj, CLEAR_TYPE_NON_PCS_ITEM_EFFECT);
-
-				lpObj->Level = 1;
-				lpObj->m_PlayerData->Experience = 0;
-				lpObj->m_PlayerData->NextExp = 0;
-				bool CharQuit = false;
-
-				if(g_ConfigRead.data.reset.ResetML == true)
-				{
-					lpObj->m_PlayerData->MasterLevel = 0;
-					lpObj->m_PlayerData->MasterExperience = 0;
-					lpObj->m_PlayerData->MasterNextExp = g_MasterLevelSkillTreeSystem.gObjNextMLExpCal(lpObj);
-				}
-
-				if(g_ConfigRead.data.reset.ResetStats == true)
-				{
-					if(g_ConfigRead.data.reset.SaveOldPoint == FALSE)
-					{
-						lpObj->m_PlayerData->LevelUpPoint = 0;
+				case 2: {
+					if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelSilver) {
+						MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelSilver);
+						return 0;
 					}
-
-					EnterCriticalSection(&lpObj->m_PlayerData->AgiCheckCriti);
-					lpObj->m_PlayerData->AgilityCheckDelay = GetTickCount();
-					lpObj->m_PlayerData->Strength = DCInfo.DefClass[lpObj->Class].Strength;
-					lpObj->m_PlayerData->Dexterity = DCInfo.DefClass[lpObj->Class].Dexterity;
-					lpObj->m_PlayerData->Vitality = DCInfo.DefClass[lpObj->Class].Vitality;
-					lpObj->m_PlayerData->Energy = DCInfo.DefClass[lpObj->Class].Energy;
-					lpObj->Leadership = DCInfo.DefClass[lpObj->Class].Leadership;
-					LeaveCriticalSection(&lpObj->m_PlayerData->AgiCheckCriti);
-
-					if (lpObj->m_PlayerData->VipType == 0)
-					{
-						lpObj->m_PlayerData->LevelUpPoint += (lpObj->m_PlayerData->m_iResets + 1) * g_ConfigRead.data.reset.NormalPointPerReset;
-					}
-
-					else if (lpObj->m_PlayerData->VipType > 0)
-					{
-						lpObj->m_PlayerData->LevelUpPoint += (lpObj->m_PlayerData->m_iResets + 1) * g_VipSystem.GetPointPerReset(lpObj);
-					}
-
-					CharQuit = true;
 				}
+					break;
+
+				case 3: {
+					if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelGold) {
+						MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelGold);
+						return 0;
+					}
+				}
+					break;
+
+				case 4: {
+					if (lpObj->Level < g_ConfigRead.data.reset.iMinLevelPlatinum) {
+						MsgOutput(aIndex, Lang.GetText(0, 458), g_ConfigRead.data.reset.iMinLevelPlatinum);
+						return 0;
+					}
+				}
+					break;
+			}
+
+			if (lpObj->m_PlayerData->Money < g_ConfigRead.data.reset.iCost) {
+				MsgOutput(aIndex, Lang.GetText(0, 459), g_ConfigRead.data.reset.iCost);
+				return 0;
+			}
+
+			if (lpObj->m_PlayerData->m_iResets >= g_ConfigRead.data.reset.iResetLimit) {
+				MsgOutput(aIndex, Lang.GetText(0, 460));
+				return 0;
+			}
+
+			if (BC_MAP_RANGE(lpObj->MapNumber) || DS_MAP_RANGE(lpObj->MapNumber) || CC_MAP_RANGE(lpObj->MapNumber) ||
+				IT_MAP_RANGE(lpObj->MapNumber) ||
+				DG_MAP_RANGE(lpObj->MapNumber) || IMPERIAL_MAP_RANGE(lpObj->MapNumber) ||
+				CRYWOLF_MAP_RANGE(lpObj->MapNumber) || lpObj->MapNumber == MAP_INDEX_CASTLESIEGE ||
+				lpObj->MapNumber == MAP_INDEX_CASTLEHUNTZONE || g_GensSystem.IsMapBattleZone(lpObj->MapNumber) ||
+				lpObj->MapNumber == MAP_INDEX_KANTURU_BOSS || lpObj->MapNumber == MAP_INDEX_KALIMA1
+				|| lpObj->MapNumber == MAP_INDEX_KALIMA2 || lpObj->MapNumber == MAP_INDEX_KALIMA3 ||
+				lpObj->MapNumber == MAP_INDEX_KALIMA4 || lpObj->MapNumber == MAP_INDEX_KALIMA5 ||
+				lpObj->MapNumber == MAP_INDEX_KALIMA6
+				|| lpObj->MapNumber == MAP_INDEX_KALIMA7 || lpObj->MapNumber == MAP_INDEX_ARCA_WAR ||
+				lpObj->MapNumber == MAP_INDEX_DEBENTER_ARCA_WAR) {
+				MsgOutput(aIndex, Lang.GetText(0, 510));
+				return FALSE;
+			}
+
+			if (g_ConfigRead.data.reset.RemoveEquipment) {
+				for (int i = 0; i < 12; i++) {
+					if (lpObj->pInventory[i].IsItem() == true) {
+						MsgOutput(aIndex, Lang.GetText(0, 461));
+						return 0;
+					}
+				}
+			}
+
+			if (lpObj->PartyNumber >= 0) {
+				PMSG_PARTYDELUSER pMsg;
+				int pindex = gParty.GetIndex(lpObj->PartyNumber, lpObj->m_Index, lpObj->DBNumber);
+
+				if (pindex >= 0) {
+					pMsg.Number = pindex;
+					GSProtocol.CGPartyDelUser(&pMsg, lpObj->m_Index, 0);
+				}
+			}
+
+			if (lpObj->m_SkillInfo.LordSummonTime != 0) {
+				lpObj->m_SkillInfo.LordSummonTime = 0;
+				GSProtocol.GCServerMsgStringSend(Lang.GetText(0, 146), aIndex, 1);
+			}
+
+			if (lpObj->m_PlayerData->m_MuBotEnable == true) {
+				lpObj->m_PlayerData->m_MuBotEnable = false;
+				GSProtocol.GCAnsMuBotUse(lpObj->m_Index, 1, lpObj->m_PlayerData->m_MuBotTotalTime, 0);
+			}
+
+			gObjClearBuffEffect(lpObj, CLEAR_TYPE_NON_PCS_ITEM_EFFECT);
+
+			lpObj->Level = 1;
+			lpObj->m_PlayerData->Experience = 0;
+			lpObj->m_PlayerData->NextExp = 0;
+			bool CharQuit = false;
+
+			if (g_ConfigRead.data.reset.ResetML == true) {
+				lpObj->m_PlayerData->MasterLevel = 0;
+				lpObj->m_PlayerData->MasterExperience = 0;
+				lpObj->m_PlayerData->MasterNextExp = g_MasterLevelSkillTreeSystem.gObjNextMLExpCal(lpObj);
+			}
+
+			if (g_ConfigRead.data.reset.ResetStats == true) {
+				if (g_ConfigRead.data.reset.SaveOldPoint == FALSE) {
+					lpObj->m_PlayerData->LevelUpPoint = 0;
+				}
+
+				EnterCriticalSection(&lpObj->m_PlayerData->AgiCheckCriti);
+				lpObj->m_PlayerData->AgilityCheckDelay = GetTickCount();
+				lpObj->m_PlayerData->Strength = DCInfo.DefClass[lpObj->Class].Strength;
+				lpObj->m_PlayerData->Dexterity = DCInfo.DefClass[lpObj->Class].Dexterity;
+				lpObj->m_PlayerData->Vitality = DCInfo.DefClass[lpObj->Class].Vitality;
+				lpObj->m_PlayerData->Energy = DCInfo.DefClass[lpObj->Class].Energy;
+				lpObj->Leadership = DCInfo.DefClass[lpObj->Class].Leadership;
+				LeaveCriticalSection(&lpObj->m_PlayerData->AgiCheckCriti);
+
+				if (lpObj->m_PlayerData->VipType == 0) {
+					lpObj->m_PlayerData->LevelUpPoint +=
+							(lpObj->m_PlayerData->m_iResets + 1) * g_ConfigRead.data.reset.NormalPointPerReset;
+				} else if (lpObj->m_PlayerData->VipType > 0) {
+					lpObj->m_PlayerData->LevelUpPoint +=
+							(lpObj->m_PlayerData->m_iResets + 1) * g_VipSystem.GetPointPerReset(lpObj);
+				}
+
+				CharQuit = true;
+			}
 
 				lpObj->MaxLife = DCInfo.DefClass[lpObj->Class].Life + ((lpObj->Level+lpObj->m_PlayerData->MasterLevel) - 1) * DCInfo.DefClass[lpObj->Class].LevelLife  + ((lpObj->m_PlayerData->Vitality - DCInfo.DefClass[lpObj->Class].Vitality ) * DCInfo.DefClass[lpObj->Class].VitalityToLife);
 				lpObj->MaxMana = DCInfo.DefClass[lpObj->Class].Mana + ((lpObj->Level+lpObj->m_PlayerData->MasterLevel) - 1) * DCInfo.DefClass[lpObj->Class].LevelMana  + ((lpObj->m_PlayerData->Energy - DCInfo.DefClass[lpObj->Class].Energy ) * DCInfo.DefClass[lpObj->Class].EnergyToMana);
 
 
-				switch (lpObj->m_PlayerData->VipType) {
-					case 0:
-						lpObj->m_PlayerData->m_iResets += 1;
-						lpObj->m_PlayerData->m_iResetsDay += 1;
-						lpObj->m_PlayerData->m_iResetsWeek += 1;
-						lpObj->m_PlayerData->m_iResetsMonth += 1;
-						break;
-
-					case 1:
-						lpObj->m_PlayerData->m_iResets += 1;
-						lpObj->m_PlayerData->m_iResetsDay += 1;
-						lpObj->m_PlayerData->m_iResetsWeek += 1;
-						lpObj->m_PlayerData->m_iResetsMonth += 1;
-						break;
-
-					case 2:
-						lpObj->m_PlayerData->m_iResets += 1;
-						lpObj->m_PlayerData->m_iResetsDay += 1;
-						lpObj->m_PlayerData->m_iResetsWeek += 1;
-						lpObj->m_PlayerData->m_iResetsMonth += 1;
-						break;
-
-					case 3:
-						lpObj->m_PlayerData->m_iResets += 1;
-						lpObj->m_PlayerData->m_iResetsDay += 1;
-						lpObj->m_PlayerData->m_iResetsWeek += 1;
-						lpObj->m_PlayerData->m_iResetsMonth += 1;
-						break;
-
-					case 4:
-						lpObj->m_PlayerData->m_iResets += 2;
-						lpObj->m_PlayerData->m_iResetsDay += 2;
-						lpObj->m_PlayerData->m_iResetsWeek += 2;
-						lpObj->m_PlayerData->m_iResetsMonth += 2;
-						break;
+			switch (lpObj->m_PlayerData->VipType) {
+				case 0: {
+					lpObj->m_PlayerData->m_iResets += 1;
+					lpObj->m_PlayerData->m_iResetsDay += 1;
+					lpObj->m_PlayerData->m_iResetsWeek += 1;
+					lpObj->m_PlayerData->m_iResetsMonth += 1;
 				}
+					break;
 
-				gObjNextExpCal(lpObj);
-				lpObj->m_PlayerData->Money -=  g_ConfigRead.data.reset.iCost;
-				GSProtocol.GCMoneySend(aIndex,lpObj->m_PlayerData->Money);
-				gObjCalCharacter.CalcCharacter(lpObj->m_Index);
-				GJSetCharacterInfo(lpObj,aIndex,0);
-				GSProtocol.GCLevelUpMsgSend(aIndex,1);
+				case 1:{
+					lpObj->m_PlayerData->m_iResets += 1;
+					lpObj->m_PlayerData->m_iResetsDay += 1;
+					lpObj->m_PlayerData->m_iResetsWeek += 1;
+					lpObj->m_PlayerData->m_iResetsMonth += 1;
+				}
+					break;
 
-				if(g_ConfigRead.data.reset.ResetML == true)
-				{
-					GSProtocol.GCMasterLevelUpMsgSend(aIndex);
+				case 2:{
+					lpObj->m_PlayerData->m_iResets += 1;
+					lpObj->m_PlayerData->m_iResetsDay += 1;
+					lpObj->m_PlayerData->m_iResetsWeek += 1;
+					lpObj->m_PlayerData->m_iResetsMonth += 1;
 				}
+					break;
 
-				if(lpObj->Class == CLASS_ELF)
-				{
-					gObjTeleport(aIndex,3,171,108);
+				case 3:{
+					lpObj->m_PlayerData->m_iResets += 1;
+					lpObj->m_PlayerData->m_iResetsDay += 1;
+					lpObj->m_PlayerData->m_iResetsWeek += 1;
+					lpObj->m_PlayerData->m_iResetsMonth += 1;
 				}
-				else if(lpObj->Class == CLASS_SUMMONER)
-				{
-					gObjTeleport(aIndex,51,51,224);
-				}
-				else
-				{
-					gObjTeleport(aIndex,0,128,135);
-				}
+					break;
 
-				MsgOutput(aIndex,Lang.GetText(0,462),lpObj->m_PlayerData->m_iResets);
-
-				if(CharQuit == true || g_ConfigRead.data.reset.MoveToCharacterSelect == true)
-				{
-					MsgOutput(aIndex, Lang.GetText(0,463));
-					gObjCloseSet(aIndex, 1);
+				case 4:{
+					lpObj->m_PlayerData->m_iResets += 2;
+					lpObj->m_PlayerData->m_iResetsDay += 2;
+					lpObj->m_PlayerData->m_iResetsWeek += 2;
+					lpObj->m_PlayerData->m_iResetsMonth += 2;
 				}
+					break;
 			}
+
+			gObjNextExpCal(lpObj);
+			lpObj->m_PlayerData->Money -= g_ConfigRead.data.reset.iCost;
+			GSProtocol.GCMoneySend(aIndex, lpObj->m_PlayerData->Money);
+			gObjCalCharacter.CalcCharacter(lpObj->m_Index);
+			GJSetCharacterInfo(lpObj, aIndex, 0);
+			GSProtocol.GCLevelUpMsgSend(aIndex, 1);
+
+			if (g_ConfigRead.data.reset.ResetML == true) {
+				GSProtocol.GCMasterLevelUpMsgSend(aIndex);
+			}
+
+			if (lpObj->Class == CLASS_ELF) {
+				gObjTeleport(aIndex, 3, 171, 108);
+			} else if (lpObj->Class == CLASS_SUMMONER) {
+				gObjTeleport(aIndex, 51, 51, 224);
+			} else {
+				gObjTeleport(aIndex, 0, 128, 135);
+			}
+
+			MsgOutput(aIndex, Lang.GetText(0, 462), lpObj->m_PlayerData->m_iResets);
+
+			if (CharQuit == true || g_ConfigRead.data.reset.MoveToCharacterSelect == true) {
+				MsgOutput(aIndex, Lang.GetText(0, 463));
+				gObjCloseSet(aIndex, 1);
+			}
+		}
 			break;
-		break;
 		case 413:
 			g_Kanturu.OperateGmCommand(lpObj->m_Index, 0);
 			break;

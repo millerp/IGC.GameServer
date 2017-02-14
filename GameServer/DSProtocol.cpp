@@ -748,6 +748,9 @@ struct PMSG_RESET_INFO_CHARLIST
 {
 	PBMSG_HEAD2 h;
 	WORD Reset[5];
+	WORD ResetDay[5];
+	WORD ResetWeek[5];
+	WORD ResetMonth[5];
 };
 
 void JGPGetCharList(unsigned char * lpRecv)
@@ -825,6 +828,9 @@ void JGPGetCharList(unsigned char * lpRecv)
 			memset(&pCList, 0, sizeof(pCList));
 			lpCL = (SDHP_CHARLIST *)&lpRecv[lsOfs];
 			pRMsg.Reset[n] = lpCL->Resets;
+			pRMsg.ResetDay[n] = lpCL->ResetsDay;
+			pRMsg.ResetWeek[n] = lpCL->ResetsWeek;
+			pRMsg.ResetMonth[n] = lpCL->ResetsMonth;
 			pCList.Index = lpCL->Index;
 			pCList.Level = lpCL->Level;
 			pCList.CtlCode = lpCL->CtlCode;
@@ -1787,6 +1793,9 @@ void JGGetCharacterInfo(SDHP_DBCHAR_INFORESULT * lpMsg)
 	pRSMsg.h.size = sizeof(pRSMsg);
 	pRSMsg.h.subcode = 0x0B;
 	pRSMsg.Resets = lpObj->m_PlayerData->m_iResets;
+	pRSMsg.ResetsDay = lpObj->m_PlayerData->m_iResetsDay;
+	pRSMsg.ResetsWeek = lpObj->m_PlayerData->m_iResetsWeek;
+	pRSMsg.ResetsMonth = lpObj->m_PlayerData->m_iResetsMonth;
 
 	IOCP.DataSend(aIndex, (UCHAR*)&pRSMsg, pRSMsg.h.size);
 	IOCP.DataSend(aIndex, (UCHAR*)&pjMsg, pjMsg.h.size);

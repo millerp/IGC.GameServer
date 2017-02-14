@@ -230,6 +230,9 @@ struct SDHP_CHARLIST
 	BYTE dbInventory[48];	// 10
 	BYTE btGuildStatus;	// 41
 	WORD Resets;
+	WORD ResetsDay;
+	WORD ResetsWeek;
+	WORD ResetsMonth;
 	BYTE PK_Level;
 };
 

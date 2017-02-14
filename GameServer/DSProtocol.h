@@ -47,6 +47,9 @@ struct SDHP_CHARLIST
 	BYTE dbInventory[48];	// 10
 	BYTE btGuildStatus;	// 41
 	WORD Resets;
+	WORD ResetsDay;
+	WORD ResetsWeek;
+	WORD ResetsMonth;
 	BYTE PK_Level;
 };
 
@@ -554,6 +557,9 @@ struct PMSG_RESET_INGAME_SEND
 {
 	PBMSG_HEAD2 h;
 	WORD Resets;
+	WORD ResetsDay;
+	WORD ResetsWeek;
+	WORD ResetsMonth;
 };
 #pragma pack ()
 
