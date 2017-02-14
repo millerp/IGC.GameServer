@@ -1983,6 +1983,9 @@ struct SDHP_DBCHAR_INFOSAVE
 	WORD ChatLitmitTime;	// 7EE
 	int iFruitPoint;	// 7F0
 	int resets;
+	int resetsDay;
+	int resetsWeek;
+	int resetsMonth;
 	char MarryName[11];
 	char Married;
 	int WinDuels;
@@ -2056,6 +2059,9 @@ void GJSetCharacterInfo(LPOBJ lpObj, int aIndex, BOOL bMapServerMove)
 	pCSave.iFruitPoint = lpObj->m_PlayerData->iFruitPoint;
 	pCSave.CharInfoSave = 0;
 	pCSave.resets = lpObj->m_PlayerData->m_iResets;
+	pCSave.resetsDay = lpObj->m_PlayerData->m_iResetsDay;
+	pCSave.resetsWeek = lpObj->m_PlayerData->m_iResetsWeek;
+	pCSave.resetsMonth = lpObj->m_PlayerData->m_iResetsMonth;
 	memcpy(pCSave.dbQuest, lpObj->m_PlayerData->m_Quest, sizeof(pCSave.dbQuest));
 	memcpy(pCSave.MarryName, lpObj->MarryName, sizeof(pCSave.MarryName));
 	pCSave.Married = lpObj->Married;

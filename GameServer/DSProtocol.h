@@ -126,6 +126,9 @@ struct SDHP_DBCHAR_INFORESULT
 	WORD ChatLitmitTime;	// 7FC
 	int iFruitPoint;	// 800
 	int resets;
+	int resetsDay;
+	int resetsWeek;
+	int resetsMonth;
 	char MarryName[11];
 	char Married;
 	char InventoryExpansion;

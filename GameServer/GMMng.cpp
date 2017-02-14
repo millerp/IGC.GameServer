@@ -2384,22 +2384,37 @@ int CGMMng::ManagementProc(LPOBJ lpObj, char* szCmd, int aIndex)
 				switch (lpObj->m_PlayerData->VipType) {
 					case 0:
 						lpObj->m_PlayerData->m_iResets += 1;
+						lpObj->m_PlayerData->m_iResetsDay += 1;
+						lpObj->m_PlayerData->m_iResetsWeek += 1;
+						lpObj->m_PlayerData->m_iResetsMonth += 1;
 						break;
 
 					case 1:
 						lpObj->m_PlayerData->m_iResets += 1;
+						lpObj->m_PlayerData->m_iResetsDay += 1;
+						lpObj->m_PlayerData->m_iResetsWeek += 1;
+						lpObj->m_PlayerData->m_iResetsMonth += 1;
 						break;
 
 					case 2:
 						lpObj->m_PlayerData->m_iResets += 1;
+						lpObj->m_PlayerData->m_iResetsDay += 1;
+						lpObj->m_PlayerData->m_iResetsWeek += 1;
+						lpObj->m_PlayerData->m_iResetsMonth += 1;
 						break;
 
 					case 3:
 						lpObj->m_PlayerData->m_iResets += 1;
+						lpObj->m_PlayerData->m_iResetsDay += 1;
+						lpObj->m_PlayerData->m_iResetsWeek += 1;
+						lpObj->m_PlayerData->m_iResetsMonth += 1;
 						break;
 
 					case 4:
 						lpObj->m_PlayerData->m_iResets += 2;
+						lpObj->m_PlayerData->m_iResetsDay += 2;
+						lpObj->m_PlayerData->m_iResetsWeek += 2;
+						lpObj->m_PlayerData->m_iResetsMonth += 2;
 						break;
 				}
 

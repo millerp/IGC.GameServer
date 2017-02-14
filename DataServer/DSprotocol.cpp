@@ -1778,6 +1778,9 @@ void CDataServerProtocol::JGGetCharacterInfo(int aIndex, SDHP_DBCHARINFOREQUEST 
 	pResult.ChatLitmitTime = (WORD)this->m_CharDB.GetAsInteger("ChatLimitTime");
 	pResult.iFruitPoint = this->m_CharDB.GetAsInteger("FruitPoint");
 	pResult.resets = this->m_CharDB.GetAsInteger("RESETS");
+	pResult.resetsDay = this->m_CharDB.GetAsInteger("ResetCountDay");
+	pResult.resetsWeek = this->m_CharDB.GetAsInteger("ResetCountWeek");
+	pResult.resetsMonth = this->m_CharDB.GetAsInteger("ResetCountMonth");
 	pResult.InventoryExpansion = this->m_CharDB.GetAsInteger("InventoryExpansion");
 	pResult.WarehouseExpansion = WHExpansion;
 	pResult.WinDuels = this->m_CharDB.GetAsInteger("WinDuels");
@@ -1917,8 +1920,8 @@ void CDataServerProtocol::GJSetCharacterInfo(int aIndex, SDHP_DBCHAR_INFOSAVE * 
 	szAccountID[10] = 0;
 	memcpy(szAccountID, aRecv->AccountID, 10);
 	
-	this->m_CharDB.ExecQuery("UPDATE Character SET cLevel=%d, mLevel=%d, Class=%d,LevelUpPoint=%d, mlPoint=%d, Experience=%I64d, mlExperience=%I64d, mlNextExp=%I64d, Strength=%d, Dexterity=%d, Vitality=%d, Energy=%d, Money=%d, Life=%f, MaxLife=%f, Mana=%f, MaxMana=%f, MapNumber=%d, MapPosX=%d, MapPosY=%d, MapDir=%d, PkCount=%d, PkLevel=%d, PkTime=%d, Leadership=%d, ChatLimitTime=%d, FruitPoint=%d, RESETS = %d, Married = %d, MarryName = '%s', WinDuels=%d, LoseDuels=%d, BlockChatTime=%I64d, PenaltyMask=%d WHERE Name = '%s'",
-		aRecv->Level, aRecv->mLevel, aRecv->Class, aRecv->LevelUpPoint, aRecv->mlPoint, aRecv->Exp, aRecv->mlExp, aRecv->mlNextExp, aRecv->Str, aRecv->Dex, aRecv->Vit, aRecv->Energy, aRecv->Money, float(aRecv->Life), float(aRecv->MaxLife), float(aRecv->Mana), float(aRecv->MaxMana), aRecv->MapNumber, aRecv->MapX, aRecv->MapY, aRecv->Dir, aRecv->PkCount, aRecv->PkLevel, aRecv->PkTime, aRecv->Leadership, aRecv->ChatLitmitTime, aRecv->iFruitPoint, aRecv->resets, aRecv->Married, aRecv->MarryName, aRecv->WinDuels, aRecv->LoseDuels, aRecv->ChatBlockTime, aRecv->PenaltyMask, szName);
+	this->m_CharDB.ExecQuery("UPDATE Character SET cLevel=%d, mLevel=%d, Class=%d,LevelUpPoint=%d, mlPoint=%d, Experience=%I64d, mlExperience=%I64d, mlNextExp=%I64d, Strength=%d, Dexterity=%d, Vitality=%d, Energy=%d, Money=%d, Life=%f, MaxLife=%f, Mana=%f, MaxMana=%f, MapNumber=%d, MapPosX=%d, MapPosY=%d, MapDir=%d, PkCount=%d, PkLevel=%d, PkTime=%d, Leadership=%d, ChatLimitTime=%d, FruitPoint=%d, RESETS = %d, ResetCountDay = %d, ResetCountWeek = %d, ResetCountMonth = %d, Married = %d, MarryName = '%s', WinDuels=%d, LoseDuels=%d, BlockChatTime=%I64d, PenaltyMask=%d WHERE Name = '%s'",
+		aRecv->Level, aRecv->mLevel, aRecv->Class, aRecv->LevelUpPoint, aRecv->mlPoint, aRecv->Exp, aRecv->mlExp, aRecv->mlNextExp, aRecv->Str, aRecv->Dex, aRecv->Vit, aRecv->Energy, aRecv->Money, float(aRecv->Life), float(aRecv->MaxLife), float(aRecv->Mana), float(aRecv->MaxMana), aRecv->MapNumber, aRecv->MapX, aRecv->MapY, aRecv->Dir, aRecv->PkCount, aRecv->PkLevel, aRecv->PkTime, aRecv->Leadership, aRecv->ChatLitmitTime, aRecv->iFruitPoint, aRecv->resets, aRecv->resetsDay, aRecv->resetsWeek, aRecv->resetsMonth, aRecv->Married, aRecv->MarryName, aRecv->WinDuels, aRecv->LoseDuels, aRecv->ChatBlockTime, aRecv->PenaltyMask, szName);
 
 	char szTemp[128];
 	wsprintf(szTemp, "UPDATE Character SET Inventory=? WHERE Name='%s'", szName);

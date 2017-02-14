@@ -1149,6 +1149,9 @@ public:
 	int GuildNumber;	// 2D0
 	DWORD LastMoveTime;
 	int m_iResets;
+	int m_iResetsDay;
+	int m_iResetsWeek;
+	int m_iResetsMonth;
 	BYTE VipType;
 	char VipEffect;
 	BYTE SantaCount;

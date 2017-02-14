@@ -165,6 +165,9 @@ void USER_DATA::Init(bool VipReset)
 	g_kJewelOfHarmonySystem.InitEffectValue(&this->m_JewelOfHarmonyEffect);
 	g_kItemSystemFor380.InitEffectValue(&this->m_ItemOptionExFor380);
 	this->m_iResets = 0;
+	this->m_iResetsDay = 0;
+	this->m_iResetsWeek = 0;
+	this->m_iResetsMonth = 0;
 
 	this->LastAuthTime = 0;	
 	if (g_ConfigRead.server.GetServerType() != SERVER_CASTLE)
@@ -2573,6 +2576,9 @@ bool gObjSetCharacter(LPBYTE lpdata, int aIndex)
 	lpObj->ChatLimitTime = lpMsg->ChatLitmitTime;
 	lpObj->m_PlayerData->iFruitPoint = lpMsg->iFruitPoint;
 	lpObj->m_PlayerData->m_iResets = lpMsg->resets;
+	lpObj->m_PlayerData->m_iResetsDay = lpMsg->resetsDay;
+	lpObj->m_PlayerData->m_iResetsWeek = lpMsg->resetsWeek;
+	lpObj->m_PlayerData->m_iResetsMonth = lpMsg->resetsMonth;
 	lpObj->WinDuels = lpMsg->WinDuels;
 	lpObj->LoseDuels = lpMsg->LoseDuels;
 	lpObj->GameMaster = lpMsg->GmCode;

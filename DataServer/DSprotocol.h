@@ -353,6 +353,9 @@ struct SDHP_DBCHAR_INFORESULT
 	WORD ChatLitmitTime;	// 7FC
 	int iFruitPoint;	// 800
 	int resets;
+	int resetsDay;
+	int resetsWeek;
+	int resetsMonth;
 	char MarryName[11];
 	char Married;
 	char InventoryExpansion;
@@ -590,6 +593,9 @@ struct SDHP_DBCHAR_INFOSAVE
 	WORD ChatLitmitTime;	// 7EE
 	int iFruitPoint;	// 7F0
 	int resets;
+	int resetsDay;
+	int resetsWeek;
+	int resetsMonth;
 	char MarryName[11];
 	char Married;
 	int WinDuels;
