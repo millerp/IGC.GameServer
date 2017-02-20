@@ -33,3 +33,4 @@
 *.VC.db
 .idea
 Output/
+cmake-build-debug/
