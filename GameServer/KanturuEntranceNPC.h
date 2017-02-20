@@ -9,16 +9,17 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CKanturuEntranceNPC
-{
+class CKanturuEntranceNPC {
 
 public:
 
-  CKanturuEntranceNPC();
-  virtual ~CKanturuEntranceNPC();
+    CKanturuEntranceNPC();
 
-  void NotifyEntranceInfo(int iIndex);
-  void NotifyResultEnterKanturuBossMap(int iIndex);
+    virtual ~CKanturuEntranceNPC();
+
+    void NotifyEntranceInfo(int iIndex);
+
+    void NotifyResultEnterKanturuBossMap(int iIndex);
 
 private:
 

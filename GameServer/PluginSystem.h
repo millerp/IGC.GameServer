@@ -2,22 +2,23 @@
 #define PLUGINSYSTEM_H
 #pragma once
 
-struct plugins
-{
-	bool active;
-	int mask;
+struct plugins {
+    bool active;
+    int mask;
 };
 
-class CPluginSystem
-{
+class CPluginSystem {
 public:
-	CPluginSystem();
+    CPluginSystem();
 
-	~CPluginSystem();
+    ~CPluginSystem();
 
-	bool CheckPlugin(int code);
-	plugins m_Data;
-}; extern CPluginSystem g_IGCPlugins;
+    bool CheckPlugin(int code);
+
+    plugins m_Data;
+};
+
+extern CPluginSystem g_IGCPlugins;
 
 
 #endif

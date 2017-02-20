@@ -17,16 +17,16 @@
 
 #define MAX_LOADSTRING 100
 // Global Variables:
-HINSTANCE hInst;								// current instance
+HINSTANCE hInst;                                // current instance
 HWND ghWnd;
 HWND ghGSListView;
 HWND ghPlayerWnd;
 HWND ghPlayerListView;
 HWND ghQueueBar;
 TCHAR szWANIP[150];
-TCHAR szTitle[MAX_LOADSTRING];								// The title bar text
-TCHAR szWindowClass[MAX_LOADSTRING];								// The title bar text
-int g_dwMaxServerGroups=GetPrivateProfileInt("SETTINGS", "MAX_SERVER", 10, ".\\IGCDS.ini") * MAX_SERVER_TYPE;	
+TCHAR szTitle[MAX_LOADSTRING];                                // The title bar text
+TCHAR szWindowClass[MAX_LOADSTRING];                                // The title bar text
+int g_dwMaxServerGroups = GetPrivateProfileInt("SETTINGS", "MAX_SERVER", 10, ".\\IGCDS.ini") * MAX_SERVER_TYPE;
 WORD g_JoinServerListPort = GetPrivateProfileInt("SETTINGS", "JoinServerPort", 55970, ".\\IGCDS.ini");
 WORD g_DataServerListPort = GetPrivateProfileInt("SETTINGS", "DataServerPort", 55960, ".\\IGCDS.ini");
 WORD g_ExDataServerListPort = GetPrivateProfileInt("SETTINGS", "ExDataServerPort", 55906, ".\\IGCDS.ini");
@@ -37,12 +37,13 @@ BOOL g_UseDataServer = GetPrivateProfileInt("SETTINGS", "UseDataServer", 1, ".\\
 BOOL g_UseExDataServer = GetPrivateProfileInt("SETTINGS", "UseExDataServer", 1, ".\\IGCDS.ini");
 DWORD g_GensRankingUpdateTime = 2;
 DWORD g_GensLeaveAfterDays = GetPrivateProfileInt("GensSystem", "GensReJoinDaysLimit", 7, ".\\IGCDS.ini");
-DWORD g_MachineIDConnectionLimitPerGroup = GetPrivateProfileInt("SETTINGS", "MachineIDConnectionLimitPerGroup", 3, ".\\IGCDS.ini");
+DWORD g_MachineIDConnectionLimitPerGroup = GetPrivateProfileInt("SETTINGS", "MachineIDConnectionLimitPerGroup", 3,
+                                                                ".\\IGCDS.ini");
 WORD g_MagumsaCreateMinLevel = GetPrivateProfileInt("SETTINGS", "MagicGladiatorCreateMinLevel", 220, ".\\IGCDS.ini");
 WORD g_DarkLordCreateMinLevel = GetPrivateProfileInt("SETTINGS", "DarkLordCreateMinLevel", 250, ".\\IGCDS.ini");
 WORD g_GrowLancerCreateMinLevel = GetPrivateProfileInt("SETTINGS", "GrowLancerCreateMinLevel", 200, ".\\IGCDS.ini");
-int g_iShowAllQueriesInDS  = GetPrivateProfileInt("SETTINGS", "DisplayAllQueries", 1, ".\\IGCDS.ini");
-int g_iConnectStatSyncEnable =  GetPrivateProfileInt("SETTINGS", "MembStatSync", 0, ".\\IGCDS.ini");;
+int g_iShowAllQueriesInDS = GetPrivateProfileInt("SETTINGS", "DisplayAllQueries", 1, ".\\IGCDS.ini");
+int g_iConnectStatSyncEnable = GetPrivateProfileInt("SETTINGS", "MembStatSync", 0, ".\\IGCDS.ini");;
 
 
 TCHAR g_MuOnlineDNS[64];
@@ -62,194 +63,283 @@ CExDataServerProtocol m_EXDSProtocol;
 HANDLE hQueue1, hQueue2, hQueue3, hQueue4, hQueue5, hJSQueue, hEXDSQueue;
 
 // Foward declarations of functions included in this code module:
-ATOM				MyRegisterClass(HINSTANCE hInstance);
-BOOL				InitInstance(HINSTANCE, int);
-LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK	ManagePlayer(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK AuthWindow(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+ATOM MyRegisterClass(HINSTANCE hInstance);
 
-int APIENTRY WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR     lpCmdLine,
-                     int       nCmdShow)
+BOOL InitInstance(HINSTANCE, int);
+
+LRESULT CALLBACK
+WndProc(HWND, UINT, WPARAM, LPARAM
+);
+LRESULT CALLBACK
+About(HWND, UINT, WPARAM, LPARAM
+);
+LRESULT CALLBACK
+ManagePlayer(HWND, UINT, WPARAM, LPARAM
+);
+LRESULT CALLBACK
+AuthWindow(HWND
+hDlg,
+UINT message, WPARAM
+wParam,
+LPARAM lParam
+);
+
+int APIENTRY
+WinMain(HINSTANCE
+hInstance,
+HINSTANCE hPrevInstance,
+        LPSTR
+lpCmdLine,
+int nCmdShow
+)
 {
- 	// TODO: Place code here.
-	MSG msg;
-	HACCEL hAccelTable;
+// TODO: Place code here.
+MSG msg;
+HACCEL hAccelTable;
 
-	// Initialize global strings
-	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-	LoadString(hInstance, IDC_EDATASERVER, szWindowClass, MAX_LOADSTRING);
-	MyRegisterClass(hInstance);
+// Initialize global strings
+LoadString(hInstance,
+IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+LoadString(hInstance,
+IDC_EDATASERVER, szWindowClass, MAX_LOADSTRING);
+MyRegisterClass(hInstance);
 
-	// Perform application initialization:
-	if (!InitInstance (hInstance, nCmdShow)) 
-	{
-		return FALSE;
-	}
+// Perform application initialization:
+if (!
+InitInstance (hInstance, nCmdShow
+))
+{
+return
+FALSE;
+}
 
-	InitCommonControls();
-	_set_printf_count_output(TRUE);
-	CreateDirectory("LOG", NULL);
-	hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_EDATASERVER);
+InitCommonControls();
 
-	HWND QueueBar = CreateWindowExA(0,STATUSCLASSNAME,NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,ghWnd,(HMENU)130,hInstance,NULL);
-	ghQueueBar = QueueBar;
+_set_printf_count_output(TRUE);
+CreateDirectory("LOG", NULL);
+hAccelTable = LoadAccelerators(hInstance, (LPCTSTR) IDC_EDATASERVER);
 
-	int iQueueBarWidths[] = {130, 260, 390, 520, 650, 780, 910, 1040, 1170, 1300, 1430, 1560, -1};
-	SendMessage(QueueBar, SB_SETPARTS, 8, (LPARAM)iQueueBarWidths);
-	
-	g_Log.LogInit(true, 256);
-	g_Log.AddC(TColor::Green, "Initializing...");
-	g_Log.AddC(TColor::Orange, "DataServer(e) version: %s Compiled at: %s %s", DATASERVER_VERSION, __DATE__, __TIME__);
-	g_Log.LogDateChange();
-	//GetPrivateProfileString(
-	LoadAllowableIpList("./IGC_AllowedIPList.xml");
-	GetPrivateProfileString("SETTINGS", "MapServerInfoPath", "..\\IGCData\\IGC_MapServerInfo.xml", g_MapSvrFilePath, sizeof(g_MapSvrFilePath), ".\\IGCDS.ini");
-	GetPrivateProfileString("SETTINGS","WanIP","127.0.0.1", szWANIP, 150, ".\\IGCDS.ini");
-	memcpy(szWANIP,ValidateAndResolveIP(szWANIP),15);
-	g_MapServerManager.LoadMapData(g_MapSvrFilePath);
-	SendMessage(ghWnd, WM_TIMER, WM_LOG_PAINT, NULL);
+HWND QueueBar = CreateWindowExA(0, STATUSCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, ghWnd, (HMENU) 130,
+                                hInstance, NULL);
+ghQueueBar = QueueBar;
 
-	gObjServerInit();
-	IniteDataServer();
-	IocpServerStart();
+int iQueueBarWidths[] = {130, 260, 390, 520, 650, 780, 910, 1040, 1170, 1300, 1430, 1560, -1};
+SendMessage(QueueBar, SB_SETPARTS,
+8, (LPARAM)iQueueBarWidths);
 
-	// Main message loop:
-	while (GetMessage(&msg, NULL, 0, 0)) 
-	{
-		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) 
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-	}
+g_Log.LogInit(true, 256);
+g_Log.
+AddC(TColor::Green,
+"Initializing...");
+g_Log.
+AddC(TColor::Orange,
+"DataServer(e) version: %s Compiled at: %s %s", DATASERVER_VERSION, __DATE__, __TIME__);
+g_Log.
 
-	return msg.wParam;
+LogDateChange();
+
+//GetPrivateProfileString(
+LoadAllowableIpList("./IGC_AllowedIPList.xml");
+GetPrivateProfileString("SETTINGS", "MapServerInfoPath", "..\\IGCData\\IGC_MapServerInfo.xml", g_MapSvrFilePath, sizeof(g_MapSvrFilePath), ".\\IGCDS.ini");
+GetPrivateProfileString("SETTINGS","WanIP","127.0.0.1", szWANIP, 150, ".\\IGCDS.ini");
+memcpy(szWANIP, ValidateAndResolveIP(szWANIP),
+15);
+g_MapServerManager.
+LoadMapData(g_MapSvrFilePath);
+SendMessage(ghWnd, WM_TIMER, WM_LOG_PAINT, NULL);
+
+gObjServerInit();
+
+IniteDataServer();
+
+IocpServerStart();
+
+// Main message loop:
+while (
+GetMessage(&msg, NULL,
+0, 0))
+{
+if (!
+TranslateAccelerator(msg
+.hwnd, hAccelTable, &msg))
+{
+TranslateMessage(&msg);
+DispatchMessage(&msg);
+}
+}
+
+return msg.
+wParam;
 }
 
 
-bool IniteDataServer()
-{
-	SetTimer(ghWnd, WM_LOG_PAINT, 1000, NULL);
-	SetTimer(ghWnd, WM_LOG_DATE_CHANGE, 300, NULL);
-	SetTimer(ghWnd, WM_FIRST_PROC, 1000, NULL);
-	GetPrivateProfileString("SQL", "MuOnlineDB", "MuOnline", g_MuOnlineDNS, sizeof(g_MuOnlineDNS), ".\\IGCDS.ini");
-	GetPrivateProfileString("SQL", "MeMuOnlineDB", "MuOnline", g_MeMuOnlineDNS, sizeof(g_MeMuOnlineDNS), ".\\IGCDS.ini");
-	GetPrivateProfileString("SQL", "EventDB", "MuEvent", g_EventServerDNS, sizeof(g_EventServerDNS), ".\\IGCDS.ini");
-	GetPrivateProfileString("SQL", "RankingDB", "MuRanking", g_RankingServerDNS, sizeof(g_RankingServerDNS), ".\\IGCDS.ini");
-	GetPrivateProfileString("SQL", "User", "sa", g_UserID, sizeof(g_UserID), ".\\IGCDS.ini");
-	GetPrivateProfileString("SQL", "Pass", "darknes", g_Password, sizeof(g_Password), ".\\IGCDS.ini");
-	GetPrivateProfileString("SQL", "SQLServerName", "(local)", g_ServerName, sizeof(g_ServerName), ".\\IGCDS.ini");
+bool IniteDataServer() {
+    SetTimer(ghWnd, WM_LOG_PAINT, 1000, NULL);
+    SetTimer(ghWnd, WM_LOG_DATE_CHANGE, 300, NULL);
+    SetTimer(ghWnd, WM_FIRST_PROC, 1000, NULL);
+    GetPrivateProfileString("SQL", "MuOnlineDB", "MuOnline", g_MuOnlineDNS, sizeof(g_MuOnlineDNS), ".\\IGCDS.ini");
+    GetPrivateProfileString("SQL", "MeMuOnlineDB", "MuOnline", g_MeMuOnlineDNS, sizeof(g_MeMuOnlineDNS),
+                            ".\\IGCDS.ini");
+    GetPrivateProfileString("SQL", "EventDB", "MuEvent", g_EventServerDNS, sizeof(g_EventServerDNS), ".\\IGCDS.ini");
+    GetPrivateProfileString("SQL", "RankingDB", "MuRanking", g_RankingServerDNS, sizeof(g_RankingServerDNS),
+                            ".\\IGCDS.ini");
+    GetPrivateProfileString("SQL", "User", "sa", g_UserID, sizeof(g_UserID), ".\\IGCDS.ini");
+    GetPrivateProfileString("SQL", "Pass", "darknes", g_Password, sizeof(g_Password), ".\\IGCDS.ini");
+    GetPrivateProfileString("SQL", "SQLServerName", "(local)", g_ServerName, sizeof(g_ServerName), ".\\IGCDS.ini");
 
-	m_DSProtocol.Init();
-	m_JSProtocol.Init();
-	m_EXDSProtocol.Init();
-	g_ItemSerial.Init();
+    m_DSProtocol.Init();
+    m_JSProtocol.Init();
+    m_EXDSProtocol.Init();
+    g_ItemSerial.Init();
 
-	char szText[400];
+    char szText[400];
 
-	if (g_DSMode == TRUE)
-	{
-		wsprintf(szText, "[%s] IGC.DataServer [DS: %d][MD5: %d][MainDB: %s][AccountDB: %s][EventsDB: %s][RankingDB: %s] [Season 9]", DATASERVER_VERSION, g_DataServerListPort, g_PwEncrypt, g_MuOnlineDNS, g_MeMuOnlineDNS, g_EventServerDNS, g_RankingServerDNS);
-	}
-	else if (!g_UseDataServer && !g_UseExDataServer && g_UseJoinServer == TRUE && !g_DSMode)
-	{
-		wsprintf(szText, "[%s] IGC.JoinServer [JS: %d][MD5: %d][AccountDB: %s][Season 9]", DATASERVER_VERSION, g_JoinServerListPort, g_PwEncrypt, g_MeMuOnlineDNS);
-	}
-	else if (!g_UseDataServer && g_UseExDataServer == TRUE && !g_UseJoinServer && !g_DSMode)
-	{
-		wsprintf(szText, "[%s] IGC.ExDataServer [ExDS: %d][MD5: %d][MainDB: %s][AccountDB: %s][EventsDB: %s][RankingDB: %s] [Season 9]", DATASERVER_VERSION, g_ExDataServerListPort, g_PwEncrypt, g_MuOnlineDNS, g_MeMuOnlineDNS, g_EventServerDNS, g_RankingServerDNS);
-	}
-	else
-	{
-		wsprintf(szText, "[%s] IGC.DataServer(e) [DS: %d][ExDS: %d][JS: %d][MD5: %d][MainDB: %s][AccountDB: %s][EventsDB: %s][RankingDB: %s] [Season 9]", DATASERVER_VERSION, g_DataServerListPort, g_ExDataServerListPort, g_JoinServerListPort, g_PwEncrypt, g_MuOnlineDNS, g_MeMuOnlineDNS, g_EventServerDNS, g_RankingServerDNS);
-	}
+    if (g_DSMode == TRUE) {
+        wsprintf(szText,
+                 "[%s] IGC.DataServer [DS: %d][MD5: %d][MainDB: %s][AccountDB: %s][EventsDB: %s][RankingDB: %s] [Season 9]",
+                 DATASERVER_VERSION, g_DataServerListPort, g_PwEncrypt, g_MuOnlineDNS, g_MeMuOnlineDNS,
+                 g_EventServerDNS, g_RankingServerDNS);
+    } else if (!g_UseDataServer && !g_UseExDataServer && g_UseJoinServer == TRUE && !g_DSMode) {
+        wsprintf(szText, "[%s] IGC.JoinServer [JS: %d][MD5: %d][AccountDB: %s][Season 9]", DATASERVER_VERSION,
+                 g_JoinServerListPort, g_PwEncrypt, g_MeMuOnlineDNS);
+    } else if (!g_UseDataServer && g_UseExDataServer == TRUE && !g_UseJoinServer && !g_DSMode) {
+        wsprintf(szText,
+                 "[%s] IGC.ExDataServer [ExDS: %d][MD5: %d][MainDB: %s][AccountDB: %s][EventsDB: %s][RankingDB: %s] [Season 9]",
+                 DATASERVER_VERSION, g_ExDataServerListPort, g_PwEncrypt, g_MuOnlineDNS, g_MeMuOnlineDNS,
+                 g_EventServerDNS, g_RankingServerDNS);
+    } else {
+        wsprintf(szText,
+                 "[%s] IGC.DataServer(e) [DS: %d][ExDS: %d][JS: %d][MD5: %d][MainDB: %s][AccountDB: %s][EventsDB: %s][RankingDB: %s] [Season 9]",
+                 DATASERVER_VERSION, g_DataServerListPort, g_ExDataServerListPort, g_JoinServerListPort, g_PwEncrypt,
+                 g_MuOnlineDNS, g_MeMuOnlineDNS, g_EventServerDNS, g_RankingServerDNS);
+    }
 
-	SetWindowText(ghWnd, szText);
+    SetWindowText(ghWnd, szText);
 
-	g_Log.AddC(TColor::Yellow, "Current Global Connections Limit (HWiD) per ServerGroup: %d", g_MachineIDConnectionLimitPerGroup);
+    g_Log.AddC(TColor::Yellow, "Current Global Connections Limit (HWiD) per ServerGroup: %d",
+               g_MachineIDConnectionLimitPerGroup);
 
-	return true;
+    return true;
 
 }
 
-void eDataServerClose()
-{
+void eDataServerClose() {
 
-	DestroyGIocp();
+    DestroyGIocp();
 
-	if ( hQueue1 != NULL )
-	{
-		TerminateThread(hQueue1, 0);
-	}
+    if (hQueue1 != NULL) {
+        TerminateThread(hQueue1, 0);
+    }
 
-	if ( hQueue2 != NULL )
-	{
-		TerminateThread(hQueue2, 0);
-	}
+    if (hQueue2 != NULL) {
+        TerminateThread(hQueue2, 0);
+    }
 
-	if ( hQueue3 != NULL )
-	{
-		TerminateThread(hQueue3, 0);
-	}
+    if (hQueue3 != NULL) {
+        TerminateThread(hQueue3, 0);
+    }
 
-	if ( hQueue4 != NULL )
-	{
-		TerminateThread(hQueue4, 0);
-	}
+    if (hQueue4 != NULL) {
+        TerminateThread(hQueue4, 0);
+    }
 
-	if (hQueue5 != NULL)
-	{
-		TerminateThread(hQueue5, 0);
-	}
+    if (hQueue5 != NULL) {
+        TerminateThread(hQueue5, 0);
+    }
 
-	if ( hEXDSQueue != NULL )
-	{
-		TerminateThread(hEXDSQueue, 0);
-	}
+    if (hEXDSQueue != NULL) {
+        TerminateThread(hEXDSQueue, 0);
+    }
 
-	if ( hJSQueue != NULL )
-	{
-		TerminateThread(hJSQueue, 0);
-	}
+    if (hJSQueue != NULL) {
+        TerminateThread(hJSQueue, 0);
+    }
 
 }
 
 
-void UpdateInfoBar(HWND hWnd)
+void UpdateInfoBar(HWND
+hWnd)
 {
-	HDC hDC;
-	hDC = GetDC(hWnd);
+HDC hDC;
+hDC = GetDC(hWnd);
 
-	char szTempText[85];
+char szTempText[85];
 
-	wsprintf(szTempText, "DS Queue (1): %d", m_DSQueue1.GetCount_NoLock());
-	SendMessage(ghQueueBar, SB_SETTEXT, 0, (LPARAM)szTempText);
+wsprintf(szTempText,
+"DS Queue (1): %d", m_DSQueue1.
 
-	wsprintf(szTempText, "DS Queue (2): %d", m_DSQueue2.GetCount_NoLock());
-	SendMessage(ghQueueBar, SB_SETTEXT, 1, (LPARAM)szTempText);
+GetCount_NoLock()
 
-	wsprintf(szTempText, "DS Queue (3): %d", m_DSQueue3.GetCount_NoLock());
-	SendMessage(ghQueueBar, SB_SETTEXT, 2, (LPARAM)szTempText);
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+0, (LPARAM)szTempText);
 
-	wsprintf(szTempText, "DS Queue (4): %d", m_DSQueue4.GetCount_NoLock());
-	SendMessage(ghQueueBar, SB_SETTEXT, 3, (LPARAM)szTempText);
+wsprintf(szTempText,
+"DS Queue (2): %d", m_DSQueue2.
 
-	wsprintf(szTempText, "DS Queue (5): %d", m_DSQueue5.GetCount_NoLock());
-	SendMessage(ghQueueBar, SB_SETTEXT, 4, (LPARAM)szTempText);
+GetCount_NoLock()
 
-	wsprintf(szTempText, "JS Queue: %d", m_JSQueue.GetCount_NoLock());
-	SendMessage(ghQueueBar, SB_SETTEXT, 5, (LPARAM)szTempText);
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+1, (LPARAM)szTempText);
 
-	wsprintf(szTempText, "EXDB Queue: %d", m_EXDSQueue.GetCount_NoLock());
-	SendMessage(ghQueueBar, SB_SETTEXT, 6, (LPARAM)szTempText);
+wsprintf(szTempText,
+"DS Queue (3): %d", m_DSQueue3.
 
-	wsprintf(szTempText, "Item Count: %I64d", g_ItemSerial.GetSerialCount());
-	SendMessage(ghQueueBar, SB_SETTEXT, 7, (LPARAM)szTempText);
+GetCount_NoLock()
 
-	ReleaseDC(hWnd, hDC);
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+2, (LPARAM)szTempText);
+
+wsprintf(szTempText,
+"DS Queue (4): %d", m_DSQueue4.
+
+GetCount_NoLock()
+
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+3, (LPARAM)szTempText);
+
+wsprintf(szTempText,
+"DS Queue (5): %d", m_DSQueue5.
+
+GetCount_NoLock()
+
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+4, (LPARAM)szTempText);
+
+wsprintf(szTempText,
+"JS Queue: %d", m_JSQueue.
+
+GetCount_NoLock()
+
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+5, (LPARAM)szTempText);
+
+wsprintf(szTempText,
+"EXDB Queue: %d", m_EXDSQueue.
+
+GetCount_NoLock()
+
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+6, (LPARAM)szTempText);
+
+wsprintf(szTempText,
+"Item Count: %I64d", g_ItemSerial.
+
+GetSerialCount()
+
+);
+SendMessage(ghQueueBar, SB_SETTEXT,
+7, (LPARAM)szTempText);
+
+ReleaseDC(hWnd, hDC
+);
 
 }
 
@@ -266,25 +356,39 @@ void UpdateInfoBar(HWND hWnd)
 //    so that the application will get 'well formed' small icons associated
 //    with it.
 //
-ATOM MyRegisterClass(HINSTANCE hInstance)
+ATOM MyRegisterClass(HINSTANCE
+hInstance)
 {
-	WNDCLASSEX wcex;
+WNDCLASSEX wcex;
 
-	wcex.cbSize = sizeof(WNDCLASSEX); 
+wcex.
+cbSize = sizeof(WNDCLASSEX);
 
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc	= (WNDPROC)WndProc;
-	wcex.cbClsExtra		= 0;
-	wcex.cbWndExtra		= 0;
-	wcex.hInstance		= hInstance;
-	wcex.hIcon			= LoadIcon(hInstance, (LPCTSTR)IDI_EDATASERVER);
-	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszMenuName	= (LPCSTR)IDC_EDATASERVER;
-	wcex.lpszClassName	= szWindowClass;
-	wcex.hIconSm		= LoadIcon(wcex.hInstance, (LPCTSTR)IDI_SMALL);
+wcex.
+style = CS_HREDRAW | CS_VREDRAW;
+wcex.
+lpfnWndProc = (WNDPROC) WndProc;
+wcex.
+cbClsExtra = 0;
+wcex.
+cbWndExtra = 0;
+wcex.
+hInstance = hInstance;
+wcex.
+hIcon = LoadIcon(hInstance, (LPCTSTR) IDI_EDATASERVER);
+wcex.
+hCursor = LoadCursor(NULL, IDC_ARROW);
+wcex.
+hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+wcex.
+lpszMenuName = (LPCSTR) IDC_EDATASERVER;
+wcex.
+lpszClassName = szWindowClass;
+wcex.
+hIconSm = LoadIcon(wcex.hInstance, (LPCTSTR) IDI_SMALL);
 
-	return RegisterClassEx(&wcex);
+return
+RegisterClassEx(&wcex);
 }
 
 //
@@ -297,26 +401,32 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
 //
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+BOOL InitInstance(HINSTANCE
+hInstance,
+int nCmdShow
+)
 {
-   HWND hWnd;
+HWND hWnd;
 
-   hInst = hInstance; // Store instance handle in our global variable
+hInst = hInstance; // Store instance handle in our global variable
 
-   hWnd = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+hWnd = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+                      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+if (!hWnd)
+{
+return
+FALSE;
+}
 
-   ghWnd = hWnd;
+ghWnd = hWnd;
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+ShowWindow(hWnd, nCmdShow
+);
+UpdateWindow(hWnd);
 
-   return TRUE;
+return
+TRUE;
 }
 
 //
@@ -329,225 +439,321 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY	- post a quit message and return
 //
 //
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK
+WndProc(HWND
+hWnd,
+UINT message, WPARAM
+wParam,
+LPARAM lParam
+)
 {
-	int wmId, wmEvent;
+int wmId, wmEvent;
 
-	switch (message) 
-	{
-		case WM_SIZE:
-			SendMessage(ghQueueBar, WM_SIZE, 0, 0);
-			break;
-		case WM_COMMAND:
-			wmId    = LOWORD(wParam); 
-			wmEvent = HIWORD(wParam); 
-			// Parse the menu selections:
-			switch (wmId)
-			{
-				case IDM_ABOUT:
-				   DialogBox(hInst, (LPCTSTR)IDD_ABOUTBOX, hWnd, (DLGPROC)About);
-				   break;
-				case ID_JSDC_MENU:
-					if (g_UseJoinServer == TRUE && g_DSMode == FALSE)
-					{
-						DialogBox(hInst, MAKEINTRESOURCE(IDD_JSDC_DIALOG), hWnd, (DLGPROC)JSDisconnect);
-					}
-					else
-					{
-						g_Log.AddC(TColor::Red, "Option available only with enabled Join Server");
-						return false;
-					}
-					break;
-				case ID_OPTIONS_RESETERROR:
-					g_ServerInfoDisplayer.ResetSQLError();
-					g_Log.AddC(TColor::Yellow, "Error Status Display cleared");
-					break;
-				case ID_GENS_REFRESHRANKING:
-					m_EXDSProtocol.GensManualRefreshRanking(0);
-					break;
-				case ID_GENS_RELOADLEAVEDELAY:
-					 g_GensLeaveAfterDays = GetPrivateProfileInt("GensSystem", "GensReJoinDaysLimit", 7, ".\\IGCDS.ini");
-					 g_Log.AddC(TColor::Yellow, "Gens rejoin day limit  reloaded");
-					 break;
-				//case ID_OPTIONS_PLAYERLIST:
-					//ghPlayerWnd = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, ManagePlayer);
-					//ShowWindow(ghPlayerWnd, SW_SHOW);
-				//	break;
-				case ID_OPTIONS_RELOADHWIDLIMIT:
-					g_MachineIDConnectionLimitPerGroup = GetPrivateProfileInt("SETTINGS", "MachineIDConnectionLimitPerGroup", 3, ".\\IGCDS.ini");
-					g_Log.AddC(TColor::Yellow, "Current Global Connections Limit (HWiD) per ServerGroup: %d", g_MachineIDConnectionLimitPerGroup);
-					break;
-				case IDM_EXIT:
-				   DestroyWindow(hWnd);
-				   break;
-				default:
-				   return DefWindowProc(hWnd, message, wParam, lParam);
-			}
-			break;
-		case WM_TIMER:
-			switch ( wParam )
-			{
-				case WM_LOG_PAINT:
-					{
-						RECT rect;
-						HDC hdc = GetDC(hWnd);
-						GetClientRect(hWnd, &rect);
-						FillRect(hdc, &rect, (HBRUSH)GetStockObject(0));
-						ReleaseDC(hWnd, hdc);
+switch (message)
+{
+case
+WM_SIZE:
+        SendMessage(ghQueueBar, WM_SIZE, 0, 0);
+break;
+case
+WM_COMMAND:
+        wmId = LOWORD(wParam);
+wmEvent = HIWORD(wParam);
+// Parse the menu selections:
+switch (wmId)
+{
+case IDM_ABOUT:
+DialogBox(hInst, (LPCTSTR)
+IDD_ABOUTBOX, hWnd, (DLGPROC)About);
+break;
+case ID_JSDC_MENU:
+if (g_UseJoinServer ==
+TRUE &&g_DSMode
+== FALSE)
+{
+DialogBox(hInst, MAKEINTRESOURCE(IDD_JSDC_DIALOG), hWnd, (DLGPROC)
+JSDisconnect);
+}
+else
+{
+g_Log.
+AddC(TColor::Red,
+"Option available only with enabled Join Server");
+return false;
+}
+break;
+case ID_OPTIONS_RESETERROR:
+g_ServerInfoDisplayer.
 
-						g_Log.LogTextPaint(hWnd);
+ResetSQLError();
 
-						g_ServerInfoDisplayer.Run(hWnd);
-						UpdateInfoBar(ghQueueBar);
-					}
+g_Log.
+AddC(TColor::Yellow,
+"Error Status Display cleared");
+break;
+case ID_GENS_REFRESHRANKING:
+m_EXDSProtocol.GensManualRefreshRanking(0);
+break;
+case ID_GENS_RELOADLEAVEDELAY:
+g_GensLeaveAfterDays = GetPrivateProfileInt("GensSystem", "GensReJoinDaysLimit", 7, ".\\IGCDS.ini");
+g_Log.
+AddC(TColor::Yellow,
+"Gens rejoin day limit  reloaded");
+break;
+//case ID_OPTIONS_PLAYERLIST:
+//ghPlayerWnd = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, ManagePlayer);
+//ShowWindow(ghPlayerWnd, SW_SHOW);
+//	break;
+case ID_OPTIONS_RELOADHWIDLIMIT:
+g_MachineIDConnectionLimitPerGroup = GetPrivateProfileInt("SETTINGS", "MachineIDConnectionLimitPerGroup", 3,
+                                                          ".\\IGCDS.ini");
+g_Log.
+AddC(TColor::Yellow,
+"Current Global Connections Limit (HWiD) per ServerGroup: %d", g_MachineIDConnectionLimitPerGroup);
+break;
+case IDM_EXIT:
+DestroyWindow(hWnd);
+break;
+default:
+return
+DefWindowProc(hWnd, message, wParam, lParam
+);
+}
+break;
+case
+WM_TIMER:
+switch ( wParam )
+{
+case WM_LOG_PAINT:
+{
+RECT rect;
+HDC hdc = GetDC(hWnd);
+GetClientRect(hWnd, &rect
+);
+FillRect(hdc, &rect, (HBRUSH)
+GetStockObject(0));
+ReleaseDC(hWnd, hdc
+);
 
-					break;
-				case WM_LOG_DATE_CHANGE:
-					g_Log.LogDateChange();
-					break;
-				case WM_FIRST_PROC:
-					m_EXDSProtocol.GensRankingProcess();
-					m_JSProtocol.CheckVIPTimeProc();
-					break;
-			}
-			break;
-		case WM_DESTROY:
-			eDataServerClose();
-			PostQuitMessage(0);
-			break;
-		case WM_CLOSE:
-			if ( MessageBox(NULL, "Are you sure to Close?", "Confirmation", MB_YESNO|MB_ICONQUESTION) == IDYES )
-				DestroyWindow(hWnd);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
-   }
-   return 0;
+g_Log.
+LogTextPaint(hWnd);
+
+g_ServerInfoDisplayer.
+Run(hWnd);
+UpdateInfoBar(ghQueueBar);
+}
+
+break;
+case WM_LOG_DATE_CHANGE:
+g_Log.
+
+LogDateChange();
+
+break;
+case WM_FIRST_PROC:
+m_EXDSProtocol.
+
+GensRankingProcess();
+
+m_JSProtocol.
+
+CheckVIPTimeProc();
+
+break;
+}
+break;
+case
+WM_DESTROY:
+        eDataServerClose();
+PostQuitMessage(0);
+break;
+case
+WM_CLOSE:
+if (
+MessageBox(NULL,
+"Are you sure to Close?", "Confirmation", MB_YESNO|MB_ICONQUESTION) == IDYES )
+DestroyWindow(hWnd);
+break;
+default:
+return
+DefWindowProc(hWnd, message, wParam, lParam
+);
+}
+return 0;
 }
 
 // Mesage handler for about box.
-LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK
+About(HWND
+hDlg,
+UINT message, WPARAM
+wParam,
+LPARAM lParam
+)
 {
-	switch (message)
-	{
-		case WM_INITDIALOG:
-				return TRUE;
+switch (message)
+{
+case
+WM_INITDIALOG:
+return
+TRUE;
 
-		case WM_COMMAND:
-			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) 
-			{
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-			break;
-	}
-    return FALSE;
+case
+WM_COMMAND:
+if (
+LOWORD(wParam)
+== IDOK ||
+LOWORD(wParam)
+== IDCANCEL)
+{
+EndDialog(hDlg, LOWORD(wParam)
+);
+return
+TRUE;
+}
+break;
+}
+return
+FALSE;
 }
 
 
 // Handler for disconnect box.
-BOOL CALLBACK JSDisconnect (HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+BOOL CALLBACK
+JSDisconnect (HWND
+hWnd,
+UINT iMessage, WPARAM
+wParam,
+LPARAM lParam
+)
 {
-	switch(iMessage)
-	{
-		case WM_COMMAND:
-		{
-			switch (LOWORD(wParam)) 
-			{
-			case IDC_JSDC_BUTTON:
-				{
-					if ( g_UseJoinServer == FALSE )
-					{
-						g_Log.AddC(TColor::Red, "[JoinServer] - not used");
-						EndDialog(hWnd, 0);
-						break;
-					}
+switch(iMessage)
+{
+case
 
-					char szAccount[11];
-					int sLen = GetDlgItemText(hWnd,IDC_JSDC_ACCOUNT,szAccount,sizeof(szAccount));
-					szAccount[10] = 0;
+WM_COMMAND: {
+    switch (LOWORD(wParam)) {
+        case IDC_JSDC_BUTTON: {
+            if (g_UseJoinServer == FALSE) {
+                g_Log.AddC(TColor::Red, "[JoinServer] - not used");
+                EndDialog(hWnd, 0);
+                break;
+            }
 
-					if(sLen <= 0 || sLen > sizeof(szAccount))
-					{
-						g_Log.AddC(TColor::Red,"[JoinServer] could not read account name");
-					}
-					else
-					{
-						if ( m_JSProtocol.DisconnectPlayer(szAccount) == TRUE )
-						{
-							g_Log.AddC(TColor::Blue,"[JoinServer] Account(%s) disconnected",szAccount);
-						}
+            char szAccount[11];
+            int sLen = GetDlgItemText(hWnd, IDC_JSDC_ACCOUNT, szAccount, sizeof(szAccount));
+            szAccount[10] = 0;
 
-						else
-						{
-							g_Log.AddC(TColor::Red,"[JoinServer] Account(%s) not found online",szAccount);
-						}
-					}
-				}
-				EndDialog(hWnd, 0);
-				break;
-			}
-		}
-		return true;
-		case WM_CLOSE:
-		{
-			EndDialog(hWnd, 0);
-			return true;
-		}
-	}
+            if (sLen <= 0 || sLen > sizeof(szAccount)) {
+                g_Log.AddC(TColor::Red, "[JoinServer] could not read account name");
+            } else {
+                if (m_JSProtocol.DisconnectPlayer(szAccount) == TRUE) {
+                    g_Log.AddC(TColor::Blue, "[JoinServer] Account(%s) disconnected", szAccount);
+                } else {
+                    g_Log.AddC(TColor::Red, "[JoinServer] Account(%s) not found online", szAccount);
+                }
+            }
+        }
+            EndDialog(hWnd, 0);
+            break;
+    }
+}
+
+return true;
+case
+
+WM_CLOSE: {
+    EndDialog(hWnd, 0);
+    return true;
+}
+
+}
 return false;
 }
 
-LRESULT CALLBACK ManagePlayer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK
+ManagePlayer(HWND
+hDlg,
+UINT message, WPARAM
+wParam,
+LPARAM lParam
+)
 {
-    switch (message)
-    {
+switch (message)
+{
 
-    case WM_INITDIALOG:
-			INITCOMMONCONTROLSEX ictrlex;
-			ictrlex.dwSize       = sizeof(INITCOMMONCONTROLSEX);
-			ictrlex.dwICC        = ICC_TREEVIEW_CLASSES ;
-			InitCommonControlsEx(&ictrlex);
+case
+WM_INITDIALOG:
+        INITCOMMONCONTROLSEX
+ictrlex;
+ictrlex.
+dwSize = sizeof(INITCOMMONCONTROLSEX);
+ictrlex.
+dwICC = ICC_TREEVIEW_CLASSES;
+InitCommonControlsEx(&ictrlex);
 
-			RECT rcl;
-			GetClientRect(hDlg, &rcl);
-			ghPlayerListView = CreateWindowEx(0, WC_LISTVIEW, NULL, WS_CHILD | WS_VISIBLE | WS_VSCROLL | LVS_REPORT | LVS_SORTASCENDING, 
-				10, 5, rcl.right - rcl.left - 20, rcl.bottom - rcl.top - 50, hDlg, NULL, hInst, NULL);
+RECT rcl;
+GetClientRect(hDlg, &rcl
+);
+ghPlayerListView = CreateWindowEx(0, WC_LISTVIEW, NULL,
+                                  WS_CHILD | WS_VISIBLE | WS_VSCROLL | LVS_REPORT | LVS_SORTASCENDING,
+                                  10, 5, rcl.right - rcl.left - 20, rcl.bottom - rcl.top - 50, hDlg, NULL, hInst, NULL);
 
-			ListView_SetExtendedListViewStyle(ghPlayerListView, LVS_EX_FULLROWSELECT);
+ListView_SetExtendedListViewStyle(ghPlayerListView, LVS_EX_FULLROWSELECT
+);
 
-			LVCOLUMN lvc;
-			lvc.mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+LVCOLUMN lvc;
+lvc.
+mask = LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 
-			lvc.iSubItem = 0;
-			lvc.cx = 100;
-			lvc.pszText = "Account ID";
-			ListView_InsertColumn(ghPlayerListView, 0, &lvc);
+lvc.
+iSubItem = 0;
+lvc.
+cx = 100;
+lvc.
+pszText = "Account ID";
+ListView_InsertColumn(ghPlayerListView,
+0, &lvc);
 
-			lvc.iSubItem = 1;
-			lvc.cx = 100;
-			lvc.pszText = "IP";
-			ListView_InsertColumn(ghPlayerListView, 1, &lvc);
+lvc.
+iSubItem = 1;
+lvc.
+cx = 100;
+lvc.
+pszText = "IP";
+ListView_InsertColumn(ghPlayerListView,
+1, &lvc);
 
-			lvc.iSubItem = 2;
-			lvc.cx = 200;
-			lvc.pszText = "Server";
-			ListView_InsertColumn(ghPlayerListView, 2, &lvc);
+lvc.
+iSubItem = 2;
+lvc.
+cx = 200;
+lvc.
+pszText = "Server";
+ListView_InsertColumn(ghPlayerListView,
+2, &lvc);
 
-        return TRUE;
+return
+TRUE;
 
-    case WM_COMMAND:
+case
+WM_COMMAND:
 
-        if (LOWORD(wParam) == IDOK)
-        { 
-            EndDialog(hDlg, LOWORD(wParam));
-            return TRUE;
-		}
+if (
+LOWORD(wParam)
+== IDOK)
+{
+EndDialog(hDlg, LOWORD(wParam)
+);
+return
+TRUE;
+}
 
-        break;
+break;
 
-    }
-    return FALSE;
+}
+return
+FALSE;
 }
 
 

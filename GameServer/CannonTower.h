@@ -10,12 +10,13 @@
 #endif // _MSC_VER > 1000
 
 
-class CCannonTower  
-{
+class CCannonTower {
 public:
-	CCannonTower();
-	virtual ~CCannonTower();
-	void CannonTowerAct(int aIndex);
+    CCannonTower();
+
+    virtual ~CCannonTower();
+
+    void CannonTowerAct(int aIndex);
 };
 
 extern CCannonTower g_CsNPC_CannonTower;

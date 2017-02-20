@@ -1,8 +1,8 @@
 #pragma once
 
-class CMiniDump
-{
+class CMiniDump {
 public:
-	static BOOL Begin(VOID);
-	static BOOL End(VOID);
+    static BOOL Begin(VOID);
+
+    static BOOL End(VOID);
 };

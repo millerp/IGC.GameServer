@@ -20,35 +20,44 @@
 class CCamera {
 
 public:
-	bool m_MapView;
+    bool m_MapView;
 
-	float* m_Rot;
-	float* m_Height;
-	float* m_Zoom;
+    float *m_Rot;
+    float *m_Height;
+    float *m_Zoom;
 
-	float m_DestRot;
-	float m_DestHeight;
+    float m_DestRot;
+    float m_DestHeight;
 
-	float* m_RotClip;
-	float* m_XClip;
-	float* m_YClip;
+    float *m_RotClip;
+    float *m_XClip;
+    float *m_YClip;
 
-	float m_LookAtZ;
+    float m_LookAtZ;
 
-	void Init();
-	void Reset();
-	void CamThread();
-	void MouseMove(float MoveX, float MoveY);
-	void CamProc();
-	void SetLookAt();
-	void SetMapView();
-	static void SetLookAtAsm();
-	static void SetRotClip();
-	static void SetClip();
+    void Init();
+
+    void Reset();
+
+    void CamThread();
+
+    void MouseMove(float MoveX, float MoveY);
+
+    void CamProc();
+
+    void SetLookAt();
+
+    void SetMapView();
+
+    static void SetLookAtAsm();
+
+    static void SetRotClip();
+
+    static void SetClip();
 };
 
-void GetCharracterPos(float* vec);
+void GetCharracterPos(float *vec);
 
-extern DWORD* g_Map;
-extern CCamera* g_Camera;
+extern DWORD *g_Map;
+extern CCamera *g_Camera;
 #endif

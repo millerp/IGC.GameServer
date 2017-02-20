@@ -5,27 +5,45 @@
 
 #pragma once
 
-class CMuTimer
-{
+class CMuTimer {
 public:
-	friend VOID WINAPI TimerProcQueue(LPVOID lpParameter, BOOL TimerOrWaitFired);
-	friend VOID WINAPI TimerProcQueue2(LPVOID lpParameter, BOOL TimerOrWaitFired);
-	CMuTimer();
-	virtual ~CMuTimer();
+    friend VOID WINAPI
+    TimerProcQueue(LPVOID
+    lpParameter,
+    BOOL TimerOrWaitFired
+    );
+    friend VOID WINAPI
+    TimerProcQueue2(LPVOID
+    lpParameter,
+    BOOL TimerOrWaitFired
+    );
 
-	void SetMuTimer();
+    CMuTimer();
 
-	void SetTimerEnd() { this->m_bTimerExpire = TRUE; }
-	int GetTimerEnd() { return this->m_bTimerExpire; }
+    virtual ~CMuTimer();
+
+    void SetMuTimer();
+
+    void SetTimerEnd() { this->m_bTimerExpire = TRUE; }
+
+    int GetTimerEnd() { return this->m_bTimerExpire; }
 
 private:
-	CQueueTimer m_MuTimer1;
-	CQueueTimer m_MuTimer2;
-	int m_bTimerExpire;
+    CQueueTimer m_MuTimer1;
+    CQueueTimer m_MuTimer2;
+    int m_bTimerExpire;
 };
 
-VOID WINAPI TimerProcQueue(LPVOID lpParameter, BOOL TimerOrWaitFired);
-VOID WINAPI TimerProcQueue2(LPVOID lpParameter, BOOL TimerOfWaitFired);
+VOID WINAPI
+TimerProcQueue(LPVOID
+lpParameter,
+BOOL TimerOrWaitFired
+);
+VOID WINAPI
+TimerProcQueue2(LPVOID
+lpParameter,
+BOOL TimerOfWaitFired
+);
 
 extern CMuTimer g_MuTimer;
 

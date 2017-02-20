@@ -9,53 +9,49 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define MAX_MONSTER_AI_MOVE_PATH	(300)
+#define MAX_MONSTER_AI_MOVE_PATH    (300)
 
 
-
-
-class TMonsterAIMovePathInfo
-{
+class TMonsterAIMovePathInfo {
 
 public:
 
-	int m_iType;	// 0
-	int m_iMapNumber;	// 4
-	int m_iPathX;	// 8
-	int m_iPathY;	// C
+    int m_iType;    // 0
+    int m_iMapNumber;    // 4
+    int m_iPathX;    // 8
+    int m_iPathY;    // C
 
 public:
 
-	TMonsterAIMovePathInfo()
-	{
-		this->Reset();
-	}
+    TMonsterAIMovePathInfo() {
+        this->Reset();
+    }
 
-	void Reset()
-	{
-		this->m_iType = -1;
-		this->m_iMapNumber = -1;
-		this->m_iPathX = -1;
-		this->m_iPathY = -1;
-	}
+    void Reset() {
+        this->m_iType = -1;
+        this->m_iMapNumber = -1;
+        this->m_iPathX = -1;
+        this->m_iPathY = -1;
+    }
 };
 
 
-class TMonsterAIMovePath  
-{
+class TMonsterAIMovePath {
 public:
 
-	TMonsterAIMovePath();
-	virtual ~TMonsterAIMovePath();
+    TMonsterAIMovePath();
 
-	int LoadData(char* lpszFileName, char* lpszSectionType);
-	int DelAllAIMonsterMovePath();
+    virtual ~TMonsterAIMovePath();
+
+    int LoadData(char *lpszFileName, char *lpszSectionType);
+
+    int DelAllAIMonsterMovePath();
 
 public:
 
-	bool m_bDataLoad;	// 4
-	TMonsterAIMovePathInfo m_MovePathInfo[MAX_MONSTER_AI_MOVE_PATH];	// 8
-	int m_iMovePathSpotCount;	// 12C8
+    bool m_bDataLoad;    // 4
+    TMonsterAIMovePathInfo m_MovePathInfo[MAX_MONSTER_AI_MOVE_PATH];    // 8
+    int m_iMovePathSpotCount;    // 12C8
 
 
 };

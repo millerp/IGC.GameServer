@@ -1,44 +1,38 @@
 #ifndef KANTURU_BATTLE_USER_H____
 #define KANTURU_BATTLE_USER_H____
 
-class CKanturuBattleUser
-{
+class CKanturuBattleUser {
 
 public:
 
-	CKanturuBattleUser()
-	{
-		this->ResetData();
-	}
+    CKanturuBattleUser() {
+        this->ResetData();
+    }
 
-	virtual ~CKanturuBattleUser(){return;}
-	
-	void ResetData()
-	{
-		this->m_iIndex = -1;
-		this->m_bIsUse = FALSE;
-	}
+    virtual ~CKanturuBattleUser() { return; }
 
-	int GetIndex()
-	{
-		return this->m_iIndex;
-	}
+    void ResetData() {
+        this->m_iIndex = -1;
+        this->m_bIsUse = FALSE;
+    }
 
-	void SetIndex(int iIndex)
-	{
-		this->m_iIndex = iIndex;
-		this->m_bIsUse = TRUE;
-	}
+    int GetIndex() {
+        return this->m_iIndex;
+    }
 
-	BOOL IsUseData()
-	{
-		return this->m_bIsUse;
-	}
+    void SetIndex(int iIndex) {
+        this->m_iIndex = iIndex;
+        this->m_bIsUse = TRUE;
+    }
+
+    BOOL IsUseData() {
+        return this->m_bIsUse;
+    }
 
 private:
 
-	int m_iIndex;	// 4
-	BOOL m_bIsUse;	// 8
+    int m_iIndex;    // 4
+    BOOL m_bIsUse;    // 8
 
 };
 

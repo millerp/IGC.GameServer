@@ -10,38 +10,42 @@
 
 #pragma once
 
-class MULua
-{
+class MULua {
 public:
-	MULua(bool UseSync = false);
-	~MULua();
+    MULua(bool UseSync = false);
+
+    ~MULua();
 
 private:
-	bool Create();
+    bool Create();
 
 public:
-	void Release();
+    void Release();
 
-	bool DoFile(const char* szFileName);
-	bool DoFile(char* szBuff, size_t buffSize);
-	bool DoFile(lua_State* L, const char* szFileName);
+    bool DoFile(const char *szFileName);
 
-	bool DoString(std::string kString);
+    bool DoFile(char *szBuff, size_t buffSize);
 
-	lua_State* GetLua();
+    bool DoFile(lua_State *L, const char *szFileName);
 
-	void Register(void* pLua);
-	void RegisterData(const luaL_Reg * Table, char * TableName, char * DataName, size_t Size);
+    bool DoString(std::string kString);
 
-	bool Generic_Call(const char* func, const char* sig, ...);
+    lua_State *GetLua();
 
-	void CreateWinConsole(HINSTANCE hInstance);
-	void DestroyWinConsole();
+    void Register(void *pLua);
+
+    void RegisterData(const luaL_Reg *Table, char *TableName, char *DataName, size_t Size);
+
+    bool Generic_Call(const char *func, const char *sig, ...);
+
+    void CreateWinConsole(HINSTANCE hInstance);
+
+    void DestroyWinConsole();
 
 private:
-	lua_State*			m_luaState;
-	CRITICAL_SECTION	m_luaCritical;
-	bool				m_bUseSync;
+    lua_State *m_luaState;
+    CRITICAL_SECTION m_luaCritical;
+    bool m_bUseSync;
 };
 
 #endif

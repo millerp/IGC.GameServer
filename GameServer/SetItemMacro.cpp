@@ -9,25 +9,20 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CSetItemMacro::CSetItemMacro()
-{
+CSetItemMacro::CSetItemMacro() {
 
 }
 
-CSetItemMacro::~CSetItemMacro()
-{
+CSetItemMacro::~CSetItemMacro() {
 
 }
 
 
-BOOL CSetItemMacro::Load(char * szFileName)
-{
-	return TRUE;
+BOOL CSetItemMacro::Load(char *szFileName) {
+    return TRUE;
 }
 
 
-
-BOOL CSetItemMacro::MakeItem(int aIndex, char * szSetName)
-{
-	return FALSE;
+BOOL CSetItemMacro::MakeItem(int aIndex, char *szSetName) {
+    return FALSE;
 }

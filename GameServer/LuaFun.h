@@ -6,4 +6,5 @@
 #pragma once
 
 void Debug_AddDebugPrintTemp(lua_State *L);
-bool g_Generic_Call(lua_State *L, const char* func, const char* sig, ...);
+
+bool g_Generic_Call(lua_State *L, const char *func, const char *sig, ...);

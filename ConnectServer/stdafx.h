@@ -25,6 +25,7 @@
 
 // WARNING - UNCOMMENT THIS LINE IF YOU ARE PREPARING A VERSION FOR PUBLIC
 #define CONNECTSERVER_VERSION "9.5.1.15"
+
 #include <assert.h>
 #include <pugixml.hpp>
 

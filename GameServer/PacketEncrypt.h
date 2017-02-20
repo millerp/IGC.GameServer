@@ -4,20 +4,21 @@
 #include <rijndael.h>
 #include <rsa.h>
 
-class CPacketEncrypt
-{
+class CPacketEncrypt {
 
 public:
 
-	CPacketEncrypt();
-	virtual ~CPacketEncrypt();
+    CPacketEncrypt();
 
-	int Encrypt(BYTE * lpDest, BYTE * lpSource, int iSize);
-	int Decrypt(BYTE * lpDest, BYTE * lpSource, int iSize);
+    virtual ~CPacketEncrypt();
+
+    int Encrypt(BYTE *lpDest, BYTE *lpSource, int iSize);
+
+    int Decrypt(BYTE *lpDest, BYTE *lpSource, int iSize);
 
 private:
-	CryptoPP::Rijndael::Encryption enc;
-	CryptoPP::Rijndael::Decryption dec;
+    CryptoPP::Rijndael::Encryption enc;
+    CryptoPP::Rijndael::Decryption dec;
 };
 
 extern CPacketEncrypt g_PacketEncrypt;

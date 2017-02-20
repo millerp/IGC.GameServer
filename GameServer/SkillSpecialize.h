@@ -5,17 +5,19 @@
 #include "MuLua.h"
 
 #pragma once
-class CSkillSpecialize
-{
-public:
-	CSkillSpecialize(void);
-	virtual ~CSkillSpecialize(void);
 
-	void LoadScript();
-	int CalcStatBonus(OBJECTSTRUCT *lpObj, int iSkill);
+class CSkillSpecialize {
+public:
+    CSkillSpecialize(void);
+
+    virtual ~CSkillSpecialize(void);
+
+    void LoadScript();
+
+    int CalcStatBonus(OBJECTSTRUCT *lpObj, int iSkill);
 
 private:
-	MULua m_Lua;
+    MULua m_Lua;
 };
 
 extern CSkillSpecialize g_SkillSpec;

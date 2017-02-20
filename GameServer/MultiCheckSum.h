@@ -11,30 +11,33 @@
 
 #include "user.h"
 
-#define MAX_MULTICHECKSUM	10
+#define MAX_MULTICHECKSUM    10
 
-class CMultiCheckSum
-{
+class CMultiCheckSum {
 public:
 
-	int LoadFile();
+    int LoadFile();
 
 
-	CMultiCheckSum();
-	virtual ~CMultiCheckSum();
+    CMultiCheckSum();
 
-	void Init();
-	void SetFilePath(char* filepath);
-	int CompareCheckSum(int aIndex, DWORD TableNum, DWORD Key);
+    virtual ~CMultiCheckSum();
+
+    void Init();
+
+    void SetFilePath(char *filepath);
+
+    int CompareCheckSum(int aIndex, DWORD TableNum, DWORD Key);
 
 private:
 
-	BOOL LoadFile(char* filename, int index);
-	int m_dwLoaded[MAX_MULTICHECKSUM];	// 4
-	DWORD m_dwgCheckSum[MAX_MULTICHECKSUM][MAX_CHECKSUM_KEY];	// 2C
-	char m_sFilePath[255];	// A02C
+    BOOL LoadFile(char *filename, int index);
 
-	
+    int m_dwLoaded[MAX_MULTICHECKSUM];    // 4
+    DWORD m_dwgCheckSum[MAX_MULTICHECKSUM][MAX_CHECKSUM_KEY];    // 2C
+    char m_sFilePath[255];    // A02C
+
+
 };
 
 extern CMultiCheckSum g_MultiChecksum;

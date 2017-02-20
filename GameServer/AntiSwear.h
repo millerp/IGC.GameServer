@@ -1,14 +1,15 @@
 
-class CAntiSwear
-{
+class CAntiSwear {
 public:
-	CAntiSwear(void);
-	virtual ~CAntiSwear(void);
+    CAntiSwear(void);
 
-	bool LoadFile(const char* File);
-	bool CompareText(const char* Text);
+    virtual ~CAntiSwear(void);
 
-	std::vector<std::string> m_SwearWords;
+    bool LoadFile(const char *File);
+
+    bool CompareText(const char *Text);
+
+    std::vector <std::string> m_SwearWords;
 };
 
 extern CAntiSwear SwearFilter;

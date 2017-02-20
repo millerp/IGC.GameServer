@@ -12,25 +12,28 @@
 
 
 #define SKILL_HIT_MAX_INDEX 36
-#define SKILL_HIT_MAX_SUBINDEX	441
+#define SKILL_HIT_MAX_SUBINDEX    441
 
-class CSkillHitBox
-{
+class CSkillHitBox {
 
 public:
 
-	CSkillHitBox();
-	virtual ~CSkillHitBox();
+    CSkillHitBox();
 
-	void Init();
-	int Check(int dir, int x, int y);
-	int HitCheck(int dir, int x, int y, int tx, int ty);
-	BOOL Load(char* filename);
-	
+    virtual ~CSkillHitBox();
+
+    void Init();
+
+    int Check(int dir, int x, int y);
+
+    int HitCheck(int dir, int x, int y, int tx, int ty);
+
+    BOOL Load(char *filename);
+
 
 private:
 
-	BYTE m_Table[SKILL_HIT_MAX_INDEX][SKILL_HIT_MAX_SUBINDEX];	// 4
+    BYTE m_Table[SKILL_HIT_MAX_INDEX][SKILL_HIT_MAX_SUBINDEX];    // 4
 
 };
 

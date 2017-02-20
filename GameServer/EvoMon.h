@@ -1,8 +1,9 @@
 #pragma once
-class CEvoMon
-{
+
+class CEvoMon {
 public:
-	CEvoMon(void);
-	virtual ~CEvoMon(void);
+    CEvoMon(void);
+
+    virtual ~CEvoMon(void);
 };
 

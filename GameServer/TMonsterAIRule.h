@@ -11,28 +11,31 @@
 
 #include "TMonsterAIRuleInfo.h"
 
-#define MAX_MONSTER_AI_RULE_INFO	(200)
-#define MAX_MONSTER_AI_RULE_TABLE	(1000)
+#define MAX_MONSTER_AI_RULE_INFO    (200)
+#define MAX_MONSTER_AI_RULE_TABLE    (1000)
 
-class TMonsterAIRule  
-{
-
-public:
-
-	TMonsterAIRule();
-	virtual ~TMonsterAIRule();
-
-	static bool LoadData(char* lpszFileName);
-	static bool DelAllAIRule();
-	static int GetCurrentAIUnit(int iMonsterClass);
-	static void MonsterAIRuleProc();
+class TMonsterAIRule {
 
 public:
 
-	static bool s_bDataLoad;
-	static int s_iMonsterCurrentAIUnitTable[MAX_MONSTER_AI_RULE_TABLE];
-	static TMonsterAIRuleInfo s_MonsterAIRuleInfoArray[MAX_MONSTER_AI_RULE_INFO];
-	static int s_iMonsterAIRuleInfoCount;
+    TMonsterAIRule();
+
+    virtual ~TMonsterAIRule();
+
+    static bool LoadData(char *lpszFileName);
+
+    static bool DelAllAIRule();
+
+    static int GetCurrentAIUnit(int iMonsterClass);
+
+    static void MonsterAIRuleProc();
+
+public:
+
+    static bool s_bDataLoad;
+    static int s_iMonsterCurrentAIUnitTable[MAX_MONSTER_AI_RULE_TABLE];
+    static TMonsterAIRuleInfo s_MonsterAIRuleInfoArray[MAX_MONSTER_AI_RULE_INFO];
+    static int s_iMonsterAIRuleInfoCount;
 
 };
 

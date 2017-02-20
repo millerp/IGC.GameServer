@@ -14,9 +14,11 @@
 
 void ToolTipFix();
 
-void LoadItem(int id, const char* path, const char* item, int num);
+void LoadItem(int id, const char *path, const char *item, int num);
+
 void LoadItemTex(int id);
-void LoadItemCustom(int id, const char* path, const char* item, int num, const char* folder);
+
+void LoadItemCustom(int id, const char *path, const char *item, int num, const char *folder);
 
 void LoadCustomJewels();
 

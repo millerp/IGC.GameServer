@@ -11,31 +11,42 @@
 
 #include "TMonsterAIGroupMember.h"
 
-#define MAX_MONSTER_AI_GROUP		(50)
-#define MAX_MONSTER_AI_GROUP_MEMBER	(100)
+#define MAX_MONSTER_AI_GROUP        (50)
+#define MAX_MONSTER_AI_GROUP_MEMBER    (100)
 
-class TMonsterAIGroup  
-{
+class TMonsterAIGroup {
 
 public:
 
-	TMonsterAIGroup();
-	virtual ~TMonsterAIGroup();
+    TMonsterAIGroup();
 
-	static void Init(int iGroupNumber);
-	static void InitAll();
-	static bool LoadData(char* lpszFileName);
-	static bool DelAllGroupInfo();
-	static bool DelGroupInstance(int iGroupNumber);
-	static void ChangeAIOrder(int iGroupNumber, int iAIOrder);
-	static TMonsterAIGroupMember* FindGroupMember(int iGroupNumber, int iGuid);
-	static TMonsterAIGroupMember* FindGroupMemberToSommon(int iObjIndex, int iGroupNumber, int iGuid);
-	static TMonsterAIGroupMember* FindGroupMemberToHeal(int iObjIndex, int iGroupNumber, int iGuid, int iDistance);
-	static int FindGroupLeader(int iGroupNumber);
-	static int FindGroupMemberObjectIndex(int iGroupNumber, int iGuid);
-	static bool s_bDataLoad;
-	static TMonsterAIGroupMember s_MonsterAIGroupMemberArray[MAX_MONSTER_AI_GROUP][MAX_MONSTER_AI_GROUP_MEMBER];
-	static int s_iMonsterAIGroupMemberCount[MAX_MONSTER_AI_GROUP];
+    virtual ~TMonsterAIGroup();
+
+    static void Init(int iGroupNumber);
+
+    static void InitAll();
+
+    static bool LoadData(char *lpszFileName);
+
+    static bool DelAllGroupInfo();
+
+    static bool DelGroupInstance(int iGroupNumber);
+
+    static void ChangeAIOrder(int iGroupNumber, int iAIOrder);
+
+    static TMonsterAIGroupMember *FindGroupMember(int iGroupNumber, int iGuid);
+
+    static TMonsterAIGroupMember *FindGroupMemberToSommon(int iObjIndex, int iGroupNumber, int iGuid);
+
+    static TMonsterAIGroupMember *FindGroupMemberToHeal(int iObjIndex, int iGroupNumber, int iGuid, int iDistance);
+
+    static int FindGroupLeader(int iGroupNumber);
+
+    static int FindGroupMemberObjectIndex(int iGroupNumber, int iGuid);
+
+    static bool s_bDataLoad;
+    static TMonsterAIGroupMember s_MonsterAIGroupMemberArray[MAX_MONSTER_AI_GROUP][MAX_MONSTER_AI_GROUP_MEMBER];
+    static int s_iMonsterAIGroupMemberCount[MAX_MONSTER_AI_GROUP];
 
 private:
 

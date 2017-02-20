@@ -12,5 +12,11 @@ extern HWND MuWindow;
 extern HWND LauncherWindowHandle;
 extern bool gLauncherProxyEnabled;
 extern bool gLauncherProxyReconnectInitiated;
-LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK
+WndProc(HWND
+hwnd,
+UINT uMsg, WPARAM
+wParam,
+LPARAM lParam
+);
 #endif

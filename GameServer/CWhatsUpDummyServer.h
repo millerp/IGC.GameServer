@@ -14,25 +14,25 @@ typedef long (__stdcall *WhatsUpDummyServerProc)(HWND, unsigned int, unsigned in
 #define WINSOCK_REQUESTED_VERSION 0x202
 
 
-
-
-class CWhatsUpDummyServer
-{
+class CWhatsUpDummyServer {
 
 public:
 
-	CWhatsUpDummyServer();
-	~CWhatsUpDummyServer();
-	int Start(HWND hWnd, WORD wPort);
+    CWhatsUpDummyServer();
 
-	static LRESULT __cdecl ParentWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
-	static WhatsUpDummyServerProc m_lpOldProc;
+    ~CWhatsUpDummyServer();
+
+    int Start(HWND hWnd, WORD wPort);
+
+    static LRESULT __cdecl ParentWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+
+    static WhatsUpDummyServerProc m_lpOldProc;
 
 private:
 
-	SOCKET m_sckDUMMY;	// 0
-	WORD m_wPORT;	// 4
-	HWND m_hParentWnd;	// 8
+    SOCKET m_sckDUMMY;    // 0
+    WORD m_wPORT;    // 4
+    HWND m_hParentWnd;    // 8
 };
 
 //extern static WNDPROC CWhatsUpDummyServer::m_lpOldProc;

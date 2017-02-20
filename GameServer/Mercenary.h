@@ -7,26 +7,29 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define MAX_MERCENARY_COUNT	100
+#define MAX_MERCENARY_COUNT    100
 
-class CMercenary
-{
+class CMercenary {
 
 public:
 
-	CMercenary();
-	virtual ~CMercenary();
+    CMercenary();
 
-	//int __thiscall UseLifeStoneScroll(int);
-	BOOL CreateMercenary(int iIndex, int iMercenaryTypeIndex, BYTE cTX, BYTE cTY);
-	BOOL DeleteMercenary(int iIndex);
-	BOOL SearchEnemy(struct OBJECTSTRUCT* lpObj);
-	void MercenaryAct(int iIndex);
+    virtual ~CMercenary();
+
+    //int __thiscall UseLifeStoneScroll(int);
+    BOOL CreateMercenary(int iIndex, int iMercenaryTypeIndex, BYTE cTX, BYTE cTY);
+
+    BOOL DeleteMercenary(int iIndex);
+
+    BOOL SearchEnemy(struct OBJECTSTRUCT *lpObj);
+
+    void MercenaryAct(int iIndex);
 
 
 private:
 
-	int  m_iMercenaryCount;	// 4
+    int m_iMercenaryCount;    // 4
 
 
 };

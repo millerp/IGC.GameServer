@@ -4,34 +4,29 @@
 
 CKeyGenerater g_KeyGenerater;
 
-CKeyGenerater::CKeyGenerater()
-{
+CKeyGenerater::CKeyGenerater() {
 }
 
 
-CKeyGenerater::~CKeyGenerater()
-{
+CKeyGenerater::~CKeyGenerater() {
 }
 
-DWORD CKeyGenerater::GenerateSeedValue()
-{
-	return GetLargeRand();
+DWORD CKeyGenerater::GenerateSeedValue() {
+    return GetLargeRand();
 }
 
-DWORD CKeyGenerater::GenerateKeyValue(DWORD dwKeyValue)
-{
-	return KEY_GENERATE_FILTER[dwKeyValue % 0xA][1] + KEY_GENERATE_FILTER[dwKeyValue % 0xA][0] * dwKeyValue - KEY_GENERATE_FILTER[dwKeyValue % 0xA][2] / KEY_GENERATE_FILTER[dwKeyValue % 0xA][3];
+DWORD CKeyGenerater::GenerateKeyValue(DWORD dwKeyValue) {
+    return KEY_GENERATE_FILTER[dwKeyValue % 0xA][1] + KEY_GENERATE_FILTER[dwKeyValue % 0xA][0] * dwKeyValue -
+           KEY_GENERATE_FILTER[dwKeyValue % 0xA][2] / KEY_GENERATE_FILTER[dwKeyValue % 0xA][3];
 }
 
-bool CKeyGenerater::CheckKeyValue(DWORD & dwOldKeyValue, DWORD dwReceiveKeyValue)
-{
-	DWORD dwGeneratedKeyValue = this->GenerateKeyValue(dwOldKeyValue);
+bool CKeyGenerater::CheckKeyValue(DWORD &dwOldKeyValue, DWORD dwReceiveKeyValue) {
+    DWORD dwGeneratedKeyValue = this->GenerateKeyValue(dwOldKeyValue);
 
-	if (dwReceiveKeyValue == dwGeneratedKeyValue)
-	{
-		dwOldKeyValue = dwGeneratedKeyValue;
-		return true;
-	}
+    if (dwReceiveKeyValue == dwGeneratedKeyValue) {
+        dwOldKeyValue = dwGeneratedKeyValue;
+        return true;
+    }
 
-	return false;
+    return false;
 }

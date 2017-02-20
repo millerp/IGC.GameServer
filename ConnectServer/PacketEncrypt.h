@@ -2,23 +2,27 @@
 #define PACKETENCRYPT_H
 
 
-class CPacketEncrypt
-{
+class CPacketEncrypt {
 
 public:
 
-	CPacketEncrypt();
-	virtual ~CPacketEncrypt();
+    CPacketEncrypt();
 
-	int Encrypt(void * lpDest, void * lpSource, int iSize);
-	int Decrypt(void * lpDest, void * lpSource, int iSize);
+    virtual ~CPacketEncrypt();
+
+    int Encrypt(void *lpDest, void *lpSource, int iSize);
+
+    int Decrypt(void *lpDest, void *lpSource, int iSize);
 
 private:
 
-	int EncryptBlock(void *, void *, int);
-	int DecryptBlock(void *, void *);
-	void DecryptBlock(unsigned long* lpdwFrom,unsigned long* lpdwTo);
-	void EncryptBlock(unsigned long* lpdwFrom,unsigned long* lpdwTo);
+    int EncryptBlock(void *, void *, int);
+
+    int DecryptBlock(void *, void *);
+
+    void DecryptBlock(unsigned long *lpdwFrom, unsigned long *lpdwTo);
+
+    void EncryptBlock(unsigned long *lpdwFrom, unsigned long *lpdwTo);
 };
 
 extern CPacketEncrypt g_PacketEncrypt;

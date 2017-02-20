@@ -9,693 +9,559 @@
 //BOOL CGuildClass::SetGuildType(char* szGuildName, int iGuildType) - Special IF
 //	GS-N	1.00.18	JPN	0x004AAE00	-	Completed
 
-CGuildClass::CGuildClass()
-{
-	this->head = NULL;
-	this->tail = NULL;
+CGuildClass::CGuildClass() {
+    this->head = NULL;
+    this->tail = NULL;
 }
 
-CGuildClass::~CGuildClass()
-{
-	this->AllDelete();
+CGuildClass::~CGuildClass() {
+    this->AllDelete();
 }
 
-void CGuildClass::Init()
-{
-	this->m_GuildMap.clear();
-	this->m_GuildNumberMap.clear();
+void CGuildClass::Init() {
+    this->m_GuildMap.clear();
+    this->m_GuildNumberMap.clear();
 }
 
-_GUILD_INFO_STRUCT * CGuildClass::AddGuild(int number, char* guildname, GUILDMARK mark, char * mastername, int score)
-{
-	_GUILD_INFO_STRUCT * pNewNode;
-	_GUILD_INFO_STRUCT * pSearchGuild = this->SearchGuild(guildname);
+_GUILD_INFO_STRUCT *CGuildClass::AddGuild(int number, char *guildname, GUILDMARK mark, char *mastername, int score) {
+    _GUILD_INFO_STRUCT *pNewNode;
+    _GUILD_INFO_STRUCT *pSearchGuild = this->SearchGuild(guildname);
 
-	if ( pSearchGuild != NULL )
-	{
-		return pSearchGuild;
-	}
+    if (pSearchGuild != NULL) {
+        return pSearchGuild;
+    }
 
-	pNewNode = (_GUILD_INFO_STRUCT*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(_GUILD_INFO_STRUCT));
+    pNewNode = (_GUILD_INFO_STRUCT *) HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(_GUILD_INFO_STRUCT));
 
-	if ( pNewNode != NULL )
-	{
-		memset(pNewNode->Name, 0, sizeof(pNewNode->Name));
-		strcpy(pNewNode->Name, guildname);
-		strcpy(pNewNode->Names[0], mastername);
+    if (pNewNode != NULL) {
+        memset(pNewNode->Name, 0, sizeof(pNewNode->Name));
+        strcpy(pNewNode->Name, guildname);
+        strcpy(pNewNode->Names[0], mastername);
 
-		if ( mark != NULL )
-		{
-			memcpy(pNewNode->Mark, mark, sizeof(GUILDMARK));
-		}
+        if (mark != NULL) {
+            memcpy(pNewNode->Mark, mark, sizeof(GUILDMARK));
+        }
 
-		pNewNode->Number = number;
-		pNewNode->Count = 0;
-		pNewNode->TotalCount = 0;
-		pNewNode->PlayScore = 0;
-		pNewNode->TotalScore = score;
-		pNewNode->next = NULL;
-		pNewNode->WarDeclareState = 0;
-		pNewNode->WarState = 0;
-		memset(pNewNode->Notice, 0, sizeof(pNewNode->Notice));
-		pNewNode->iGuildUnion = 0;
-		pNewNode->iGuildRival = 0;
+        pNewNode->Number = number;
+        pNewNode->Count = 0;
+        pNewNode->TotalCount = 0;
+        pNewNode->PlayScore = 0;
+        pNewNode->TotalScore = score;
+        pNewNode->next = NULL;
+        pNewNode->WarDeclareState = 0;
+        pNewNode->WarState = 0;
+        memset(pNewNode->Notice, 0, sizeof(pNewNode->Notice));
+        pNewNode->iGuildUnion = 0;
+        pNewNode->iGuildRival = 0;
 
-		for ( int i=0;i<MAX_USER_GUILD;i++)
-		{
-			pNewNode->Use[i] = FALSE;
-			pNewNode->Index[i] = -1;
-			pNewNode->pServer[i] = -1;
-			pNewNode->GuildStatus[i] = -1;
-		}
+        for (int i = 0; i < MAX_USER_GUILD; i++) {
+            pNewNode->Use[i] = FALSE;
+            pNewNode->Index[i] = -1;
+            pNewNode->pServer[i] = -1;
+            pNewNode->GuildStatus[i] = -1;
+        }
 
-		pNewNode->lpLifeStone = NULL;
+        pNewNode->lpLifeStone = NULL;
 
-		this->BuildMemberTotal(pNewNode);
-		this->AddTail(pNewNode);
+        this->BuildMemberTotal(pNewNode);
+        this->AddTail(pNewNode);
 
-		g_Log.Add("[Guild System] Add Guild (%s) (%d)", guildname, number);
+        g_Log.Add("[Guild System] Add Guild (%s) (%d)", guildname, number);
 
-		return pNewNode;
-	}
-	return NULL;
+        return pNewNode;
+    }
+    return NULL;
 }
 
-void CGuildClass::AddTail(_GUILD_INFO_STRUCT * pNewNode)
-{
-	pNewNode->back = this->tail;
-	pNewNode->next = NULL;
+void CGuildClass::AddTail(_GUILD_INFO_STRUCT *pNewNode) {
+    pNewNode->back = this->tail;
+    pNewNode->next = NULL;
 
-	if ( this->head == NULL )
-	{
-		this->head = pNewNode;
-	}
-	else
-	{
-		this->tail->next = pNewNode;
-	}
+    if (this->head == NULL) {
+        this->head = pNewNode;
+    } else {
+        this->tail->next = pNewNode;
+    }
 
-	this->tail = pNewNode;
-	this->m_GuildMap[pNewNode->Name] = pNewNode;
-	this->m_GuildNumberMap[pNewNode->Number] = pNewNode;
+    this->tail = pNewNode;
+    this->m_GuildMap[pNewNode->Name] = pNewNode;
+    this->m_GuildNumberMap[pNewNode->Number] = pNewNode;
 }
 
 
+void CGuildClass::Print() {
+    _GUILD_INFO_STRUCT *pNode = this->head;
 
-
-void CGuildClass::Print()
-{
-	_GUILD_INFO_STRUCT * pNode = this->head;
-
-	while ( pNode != NULL )
-	{
-		pNode = pNode->next;
-	}
+    while (pNode != NULL) {
+        pNode = pNode->next;
+    }
 }
 
 
-void CGuildClass::PrintGuild(char* guildname)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(guildname);
+void CGuildClass::PrintGuild(char *guildname) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(guildname);
 }
 
 
+void CGuildClass::AllDelete() {
+    _GUILD_INFO_STRUCT *pNode = this->head;
+    _GUILD_INFO_STRUCT *pTemp;
 
-void CGuildClass::AllDelete()
-{
-	_GUILD_INFO_STRUCT * pNode = this->head;
-	_GUILD_INFO_STRUCT * pTemp;
+    while (pNode != NULL) {
+        pTemp = pNode;
+        pNode = pNode->next;
+        HeapFree(GetProcessHeap(), 0, pTemp);
+    }
 
-	while ( pNode != NULL )
-	{
-		pTemp = pNode;
-		pNode = pNode->next;
-		HeapFree(GetProcessHeap(), 0, pTemp);
-	}
-
-	this->head = NULL;
-	this->tail = NULL;
-	this->m_GuildMap.clear();
-	this->m_GuildNumberMap.clear();
+    this->head = NULL;
+    this->tail = NULL;
+    this->m_GuildMap.clear();
+    this->m_GuildNumberMap.clear();
 }
 
 
-
-BOOL CGuildClass::DeleteGuild(char* guildname, char* commander)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(guildname);
-	_GUILD_INFO_STRUCT * pprev;
-	_GUILD_INFO_STRUCT * pnext;
+BOOL CGuildClass::DeleteGuild(char *guildname, char *commander) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(guildname);
+    _GUILD_INFO_STRUCT *pprev;
+    _GUILD_INFO_STRUCT *pnext;
 
 
-	if ( pNode == NULL )
-	{
-		return false;
-	}
+    if (pNode == NULL) {
+        return false;
+    }
 
-	std::map<std::string, _GUILD_INFO_STRUCT *>::iterator Itor = this->m_GuildMap.find(guildname);
+    std::map<std::string, _GUILD_INFO_STRUCT *>::iterator Itor = this->m_GuildMap.find(guildname);
 
-	if( Itor != this->m_GuildMap.end() )
-	{
-		this->m_GuildMap.erase(Itor);
-	}
+    if (Itor != this->m_GuildMap.end()) {
+        this->m_GuildMap.erase(Itor);
+    }
 
-	std::map<int , _GUILD_INFO_STRUCT *>::iterator _Itor = this->m_GuildNumberMap.find(pNode->Number);
+    std::map<int, _GUILD_INFO_STRUCT *>::iterator _Itor = this->m_GuildNumberMap.find(pNode->Number);
 
-	if ( _Itor != this->m_GuildNumberMap.end() )
-	{
-		this->m_GuildNumberMap.erase(_Itor);
-	}
+    if (_Itor != this->m_GuildNumberMap.end()) {
+        this->m_GuildNumberMap.erase(_Itor);
+    }
 
-	pprev = pNode->back;
-	pnext = pNode->next;
+    pprev = pNode->back;
+    pnext = pNode->next;
 
-	if ( pprev == NULL && pnext == NULL )
-	{
+    if (pprev == NULL && pnext == NULL) {
 
-	}
-	else if ( pprev == NULL && pnext != NULL )
-	{
-		pnext->back = NULL;
-		this->head = pnext;
-	}
-	else if ( pprev != NULL && pnext == NULL )
-	{
-		pprev->next = NULL;
-		this->tail = pprev;
-	}
-	else if ( pprev != NULL && pnext != NULL )
-	{
-		pprev->next = pnext;
-		pnext->back = pprev;
-	}
+    } else if (pprev == NULL && pnext != NULL) {
+        pnext->back = NULL;
+        this->head = pnext;
+    } else if (pprev != NULL && pnext == NULL) {
+        pprev->next = NULL;
+        this->tail = pprev;
+    } else if (pprev != NULL && pnext != NULL) {
+        pprev->next = pnext;
+        pnext->back = pprev;
+    }
 
-	HeapFree(GetProcessHeap(), 0, pNode);
+    HeapFree(GetProcessHeap(), 0, pNode);
 
-	if ( pprev == NULL && pnext == NULL )
-	{
-		this->head=NULL;
-		this->tail = NULL;
-	}
+    if (pprev == NULL && pnext == NULL) {
+        this->head = NULL;
+        this->tail = NULL;
+    }
 
-	return true;
+    return true;
 }
 
 
+_GUILD_INFO_STRUCT *CGuildClass::SearchGuild(char *guildname) {
+    std::map<std::string, _GUILD_INFO_STRUCT *>::iterator Itor = this->m_GuildMap.find(guildname);
 
-	
+    if (Itor == this->m_GuildMap.end()) {
+        return NULL;
+    }
 
-_GUILD_INFO_STRUCT * CGuildClass::SearchGuild(char* guildname)
-{
-	std::map<std::string, _GUILD_INFO_STRUCT *>::iterator Itor = this->m_GuildMap.find(guildname);
-
-	if( Itor == this->m_GuildMap.end() )
-	{
-		return NULL;
-	}
-
-	return (*(Itor)).second;
+    return (*(Itor)).second;
 }
 
 
+_GUILD_INFO_STRUCT *CGuildClass::SearchGuild_Number(int number) {
+    std::map<int, _GUILD_INFO_STRUCT *>::iterator Itor = this->m_GuildNumberMap.find(number);
 
+    if (Itor == this->m_GuildNumberMap.end()) {
+        return NULL;
+    }
 
-_GUILD_INFO_STRUCT * CGuildClass::SearchGuild_Number(int number)
-{
-	std::map<int , _GUILD_INFO_STRUCT *>::iterator Itor = this->m_GuildNumberMap.find(number);
-
-	if ( Itor == this->m_GuildNumberMap.end() )
-	{
-		return NULL;
-	}
-
-	return (*(Itor)).second;
+    return (*(Itor)).second;
 }
 
 
+_GUILD_INFO_STRUCT *CGuildClass::SearchGuild_NumberAndId(int number, char *name) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild_Number(number);
 
-_GUILD_INFO_STRUCT * CGuildClass::SearchGuild_NumberAndId(int number, char* name)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild_Number(number);
+    if (pNode != NULL) {
+        for (int i = 0; i < MAX_USER_GUILD; i++) {
+            if (strcmp(pNode->Names[i], name) == 0) {
+                return pNode;
+            }
+        }
+    }
 
-	if ( pNode != NULL )
-	{
-		for ( int i=0;i<MAX_USER_GUILD;i++)
-		{
-			if ( strcmp(pNode->Names[i], name) == 0 )
-			{
-				return pNode;
-			}
-		}
-	}
-
-	return NULL;
+    return NULL;
 }
 
 
-BOOL CGuildClass::ConnectUser(_GUILD_INFO_STRUCT * lpNode, char* guild_name, char* player_name, int aIndex, int pServer)
-{
-	if ( lpNode == NULL )
-	{
-		return false;
-	}
+BOOL
+CGuildClass::ConnectUser(_GUILD_INFO_STRUCT *lpNode, char *guild_name, char *player_name, int aIndex, int pServer) {
+    if (lpNode == NULL) {
+        return false;
+    }
 
-	if ( strcmp(guild_name, lpNode->Name) != 0 )
-	{
-		return false;
-	}
+    if (strcmp(guild_name, lpNode->Name) != 0) {
+        return false;
+    }
 
-	for ( int n = 0; n<MAX_USER_GUILD;n++)
-	{
-		if ( lpNode->Use[n] == TRUE )
-		{
-			if ( strcmp(lpNode->Names[n], player_name) == 0 )
-			{
-				lpNode->Index[n] = aIndex;
-				lpNode->pServer[n] = pServer;
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (lpNode->Use[n] == TRUE) {
+            if (strcmp(lpNode->Names[n], player_name) == 0) {
+                lpNode->Index[n] = aIndex;
+                lpNode->pServer[n] = pServer;
 
-				if ( n == 0 )	// Case if is GuildMaster
-				{
-					lpNode->PlayScore = 0;
-					lpNode->WarDeclareState = 0;
-					lpNode->WarState = 0;
-				}
-				
-				return TRUE;
-			}
-		}
-	}
-	
-	this->AddMember(lpNode, player_name, aIndex, pServer, -1);
-	return false;
+                if (n == 0)    // Case if is GuildMaster
+                {
+                    lpNode->PlayScore = 0;
+                    lpNode->WarDeclareState = 0;
+                    lpNode->WarState = 0;
+                }
+
+                return TRUE;
+            }
+        }
+    }
+
+    this->AddMember(lpNode, player_name, aIndex, pServer, -1);
+    return false;
 }
 
 
+_GUILD_INFO_STRUCT *
+CGuildClass::AddMember(char *guild_name, char *player_name, int aIndex, int totalcount, int iGuildStatus, int pServer) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(guild_name);
+    int blank = -1;
 
-_GUILD_INFO_STRUCT * CGuildClass::AddMember(char* guild_name, char* player_name, int aIndex, int totalcount, int iGuildStatus, int pServer)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(guild_name);
-	int blank = -1;
+    if (pNode == NULL) {
+        return NULL;
+    }
 
-	if ( pNode == NULL )
-	{
-		return NULL;
-	}
+    this->BuildMemberTotal(pNode);
 
-	this->BuildMemberTotal(pNode);
+    if (strcmp(player_name, pNode->Names[0]) == 0) {
+        blank = 0;
+    } else {
+        for (int i = 1; i < MAX_USER_GUILD; i++) {
+            if (pNode->Use[i] == TRUE) {
+                if (strcmp(pNode->Names[i], player_name) == 0) {
+                    if (aIndex != -1) {
+                        pNode->Use[i] = TRUE;
+                        pNode->Index[i] = aIndex;
+                        pNode->pServer[i] = pServer;
+                        pNode->GuildStatus[i] = G_MASTER;
+                    }
 
-	if ( strcmp(player_name, pNode->Names[0] ) == 0 )
-	{
-		blank = 0;
-	}
-	else
-	{
-		for ( int i = 1;i<MAX_USER_GUILD ; i++)
-		{
-			if ( pNode->Use[i] == TRUE )
-			{
-				if ( strcmp(pNode->Names[i], player_name) == 0 )
-				{
-					if ( aIndex != -1 )
-					{
-						pNode->Use[i] = TRUE;
-						pNode->Index[i] = aIndex;
-						pNode->pServer[i] = pServer;
-						pNode->GuildStatus[i] = G_MASTER;
-					}
+                    this->BuildMemberTotal(pNode);
+                    return FALSE;
+                }
+            } else if (blank < 0) {
+                blank = i;
+            }
+        }
+    }
 
-					this->BuildMemberTotal(pNode);
-					return FALSE;
-				}
-			}
-			else if ( blank < 0 )
-			{
-				blank = i;
-			}
-		}
-	}
+    if (blank < 0) {
+        return NULL;
+    }
 
-	if (blank < 0 )
-	{
-		return NULL;
-	}
+    strcpy(pNode->Names[blank], player_name);
+    pNode->Use[blank] = TRUE;
+    pNode->pServer[blank] = pServer;
+    pNode->GuildStatus[blank] = iGuildStatus;
 
-	strcpy(pNode->Names[blank], player_name);
-	pNode->Use[blank] = TRUE;
-	pNode->pServer[blank] = pServer;
-	pNode->GuildStatus[blank] = iGuildStatus;
+    if (aIndex != -1) {
+        pNode->Index[blank] = aIndex;
+        pNode->Count++;
+    }
 
-	if ( aIndex != -1 )
-	{
-		pNode->Index[blank] = aIndex;
-		pNode->Count++;
-	}
+    if (totalcount > 0) {
+        pNode->TotalCount = totalcount;
+    }
 
-	if ( totalcount > 0 )
-	{
-		pNode->TotalCount = totalcount;
-	}
+    this->BuildMemberTotal(pNode);
 
-	this->BuildMemberTotal(pNode);
-
-	return pNode;
+    return pNode;
 }
 
 
+_GUILD_INFO_STRUCT *
+CGuildClass::AddMember(_GUILD_INFO_STRUCT *pNode, char *player_name, int aIndex, int totalcount, int pServer) {
+    int blank = -1;
 
+    if (pNode == NULL) {
+        return NULL;
+    }
 
-_GUILD_INFO_STRUCT * CGuildClass::AddMember(_GUILD_INFO_STRUCT * pNode, char* player_name, int aIndex, int totalcount, int pServer)
-{
-	int blank = -1;
+    if (strcmp(player_name, pNode->Names[0]) == 0) {
+        blank = 0;
+    } else {
+        for (int i = 1; i < MAX_USER_GUILD; i++) {
+            if (pNode->Use[i] == TRUE) {
+                if (strcmp(pNode->Names[i], player_name) == 0) {
+                    if (aIndex != -1) {
+                        pNode->Use[i] = TRUE;
+                        pNode->Index[i] = aIndex;
+                        pNode->pServer[i] = pServer;
+                    }
 
-	if ( pNode == NULL )
-	{
-		return NULL;
-	}
+                    this->BuildMemberTotal(pNode);
+                    return FALSE;
+                }
+            } else if (blank < 0) {
+                blank = i;
+            }
+        }
+    }
 
-	if ( strcmp(player_name, pNode->Names[0] ) == 0 )
-	{
-		blank = 0;
-	}
-	else
-	{
-		for ( int i = 1;i<MAX_USER_GUILD ; i++)
-		{
-			if ( pNode->Use[i] == TRUE )
-			{
-				if ( strcmp(pNode->Names[i], player_name) == 0 )
-				{
-					if ( aIndex != -1 )
-					{
-						pNode->Use[i] = TRUE;
-						pNode->Index[i] = aIndex;
-						pNode->pServer[i] = pServer;
-					}
+    if (blank < 0) {
+        return NULL;
+    }
 
-					this->BuildMemberTotal(pNode);
-					return FALSE;
-				}
-			}
-			else if ( blank < 0 )
-			{
-				blank = i;
-			}
-		}
-	}
+    strcpy(pNode->Names[blank], player_name);
+    pNode->Use[blank] = TRUE;
+    pNode->pServer[blank] = pServer;
 
-	if (blank < 0 )
-	{
-		return NULL;
-	}
+    if (aIndex != -1) {
+        pNode->Index[blank] = aIndex;
+        pNode->Count++;
+    }
 
-	strcpy(pNode->Names[blank], player_name);
-	pNode->Use[blank] = TRUE;
-	pNode->pServer[blank] = pServer;
+    if (totalcount > 0) {
+        pNode->TotalCount = totalcount;
+    }
 
-	if ( aIndex != -1 )
-	{
-		pNode->Index[blank] = aIndex;
-		pNode->Count++;
-	}
+    this->BuildMemberTotal(pNode);
 
-	if ( totalcount > 0 )
-	{
-		pNode->TotalCount = totalcount;
-	}
-
-	this->BuildMemberTotal(pNode);
-
-	return pNode;
+    return pNode;
 }
 
 
-int CGuildClass::GetGuildMemberStatus(char* szGuildName, char* szMemberName)
-{
-	int iGuildStatus = 0;
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(szGuildName);
-	int iKey = -1;
+int CGuildClass::GetGuildMemberStatus(char *szGuildName, char *szMemberName) {
+    int iGuildStatus = 0;
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(szGuildName);
+    int iKey = -1;
 
-	if ( pNode == NULL )
-	{
-		return -1;
-	}
+    if (pNode == NULL) {
+        return -1;
+    }
 
-	for ( int n=0;n<MAX_USER_GUILD;n++)
-	{
-		if ( pNode->Use[n] == TRUE )
-		{
-			if ( strcmp(pNode->Names[n], szMemberName) == 0 )
-			{
-				iKey = n;
-			}
-		}
-	}
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (pNode->Use[n] == TRUE) {
+            if (strcmp(pNode->Names[n], szMemberName) == 0) {
+                iKey = n;
+            }
+        }
+    }
 
-	if ( iKey < 0 )
-	{
-		return -1;
-	}
+    if (iKey < 0) {
+        return -1;
+    }
 
-	iGuildStatus = pNode->GuildStatus[iKey];
-	return iGuildStatus;
+    iGuildStatus = pNode->GuildStatus[iKey];
+    return iGuildStatus;
 }
 
 
+BOOL CGuildClass::SetGuildMemberStatus(char *szGuildName, char *szMemberName, int iGuildStatus) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(szGuildName);
+    int iKey = -1;
 
-BOOL CGuildClass::SetGuildMemberStatus(char* szGuildName, char* szMemberName, int iGuildStatus)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(szGuildName);
-	int iKey = -1;
+    if (pNode == NULL) {
+        return -1;
+    }
 
-	if ( pNode == NULL )
-	{
-		return -1;
-	}
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (pNode->Use[n] == TRUE) {
+            if (strcmp(pNode->Names[n], szMemberName) == 0) {
+                iKey = n;
+            }
+        }
+    }
 
-	for ( int n=0;n<MAX_USER_GUILD;n++)
-	{
-		if ( pNode->Use[n] == TRUE )
-		{
-			if ( strcmp(pNode->Names[n], szMemberName) == 0 )
-			{
-				iKey = n;
-			}
-		}
-	}
+    if (iKey < 0) {
+        return 0;
+    }
 
-	if ( iKey < 0 )
-	{
-		return 0;
-	}
-	
-	pNode->GuildStatus[iKey] = iGuildStatus;
+    pNode->GuildStatus[iKey] = iGuildStatus;
 
-	if ( pNode->Index[iKey] > 0 )
-	{
-		if ( gObjIsConnectedGP(pNode->Index[iKey]) == FALSE )
-		{
-			g_Log.Add("SetGuildMemberStatus() error-L2 : Index %s %d", __FILE__, __LINE__);
-			return false;
-		}
+    if (pNode->Index[iKey] > 0) {
+        if (gObjIsConnectedGP(pNode->Index[iKey]) == FALSE) {
+            g_Log.Add("SetGuildMemberStatus() error-L2 : Index %s %d", __FILE__, __LINE__);
+            return false;
+        }
 
-		if ( !ObjectMaxRange(pNode->Index[iKey]) )
-		{
-			return 0;
-		}
-		
-		LPOBJ lpObj = &gObj[pNode->Index[iKey]];
+        if (!ObjectMaxRange(pNode->Index[iKey])) {
+            return 0;
+        }
 
-		if ( strcmp(lpObj->Name, szMemberName) == 0 )
-		{
-			lpObj->m_PlayerData->GuildStatus = iGuildStatus;
-			GSProtocol.GCGuildViewportNowPaint(lpObj->m_Index, lpObj->m_PlayerData->GuildName, 0, 0);
-		}
+        LPOBJ lpObj = &gObj[pNode->Index[iKey]];
 
-	}
+        if (strcmp(lpObj->Name, szMemberName) == 0) {
+            lpObj->m_PlayerData->GuildStatus = iGuildStatus;
+            GSProtocol.GCGuildViewportNowPaint(lpObj->m_Index, lpObj->m_PlayerData->GuildName, 0, 0);
+        }
 
-	return true;
+    }
+
+    return true;
 }
 
 
+int CGuildClass::GetGuildType(char *szGuildName) {
+    int iGuildType = 0;
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(szGuildName);
 
-int CGuildClass::GetGuildType(char* szGuildName)
-{
-	int iGuildType = 0;
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(szGuildName);
+    if (pNode == NULL) {
+        return -1;
+    }
 
-	if (pNode == NULL )
-	{
-		return -1;
-	}
-
-	iGuildType = pNode->btGuildType;
-	return iGuildType;
+    iGuildType = pNode->btGuildType;
+    return iGuildType;
 }
 
 
-BOOL CGuildClass::SetGuildType(char* szGuildName, int iGuildType)
-{
-	
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(szGuildName);
+BOOL CGuildClass::SetGuildType(char *szGuildName, int iGuildType) {
 
-	if (pNode == NULL )
-	{
-		return FALSE;
-	}
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(szGuildName);
 
-	pNode->btGuildType = iGuildType;
+    if (pNode == NULL) {
+        return FALSE;
+    }
 
-	for ( int n=0;n<MAX_USER_GUILD;n++)
-	{
-		if ( pNode->Use[n] == TRUE )
-		{
-			if ( pNode->Index[n] > 0 )
-			{
-				if ( gObjIsConnectedGP(pNode->Index[n]) == FALSE )
-				{
-					g_Log.Add("SetGuildType() error-L2 : Index %s %d", __FILE__, __LINE__);
-					continue;
-				}
+    pNode->btGuildType = iGuildType;
 
-				if ( !ObjectMaxRange(pNode->Index[n]) )
-				{
-					continue;
-				}
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (pNode->Use[n] == TRUE) {
+            if (pNode->Index[n] > 0) {
+                if (gObjIsConnectedGP(pNode->Index[n]) == FALSE) {
+                    g_Log.Add("SetGuildType() error-L2 : Index %s %d", __FILE__, __LINE__);
+                    continue;
+                }
 
-				LPOBJ lpObj = &gObj[pNode->Index[n]];
-				GSProtocol.GCGuildViewportNowPaint(lpObj->m_Index, lpObj->m_PlayerData->GuildName, 0, 0);
-			}
-		}
-	}
+                if (!ObjectMaxRange(pNode->Index[n])) {
+                    continue;
+                }
 
-	return TRUE;
+                LPOBJ lpObj = &gObj[pNode->Index[n]];
+                GSProtocol.GCGuildViewportNowPaint(lpObj->m_Index, lpObj->m_PlayerData->GuildName, 0, 0);
+            }
+        }
+    }
+
+    return TRUE;
 }
 
-BOOL CGuildClass::BuildMemberTotal(_GUILD_INFO_STRUCT * lpNode)
-{
-	if (lpNode == NULL )
-	{
-		return FALSE;
-	}
+BOOL CGuildClass::BuildMemberTotal(_GUILD_INFO_STRUCT *lpNode) {
+    if (lpNode == NULL) {
+        return FALSE;
+    }
 
-	lpNode->TotalCount = 0;
-	lpNode->Count = 0;
+    lpNode->TotalCount = 0;
+    lpNode->Count = 0;
 
-	for ( int n=0;n<MAX_USER_GUILD;n++)
-	{
-		if ( lpNode->Use[n] == TRUE )
-		{
-			lpNode->TotalCount++;
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (lpNode->Use[n] == TRUE) {
+            lpNode->TotalCount++;
 
-			if ( lpNode->Index[n] != 0 )
-			{
-				lpNode->Count++;
-			}
-		}
-	}
+            if (lpNode->Index[n] != 0) {
+                lpNode->Count++;
+            }
+        }
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 
-BOOL CGuildClass::DelMember(char* guild_name, char* player_name)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(guild_name);
+BOOL CGuildClass::DelMember(char *guild_name, char *player_name) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(guild_name);
 
-	if (pNode == NULL )
-	{
-		return FALSE;
-	}
+    if (pNode == NULL) {
+        return FALSE;
+    }
 
-	for ( int n=0;n<MAX_USER_GUILD;n++)
-	{
-		if ( pNode->Use[n] == TRUE )
-		{
-			if ( strcmp(pNode->Names[n], player_name ) == 0 )
-			{
-				pNode->Use[n] = FALSE;
-				pNode->Count--;
-				this->BuildMemberTotal(pNode);
-				return TRUE;
-			}
-		}
-	}
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (pNode->Use[n] == TRUE) {
+            if (strcmp(pNode->Names[n], player_name) == 0) {
+                pNode->Use[n] = FALSE;
+                pNode->Count--;
+                this->BuildMemberTotal(pNode);
+                return TRUE;
+            }
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 
-BOOL CGuildClass::CloseMember(char* guild_name, char* player_name)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(guild_name);
+BOOL CGuildClass::CloseMember(char *guild_name, char *player_name) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(guild_name);
 
-	if (pNode == NULL )
-	{
-		return FALSE;
-	}
+    if (pNode == NULL) {
+        return FALSE;
+    }
 
-	for ( int n=0;n<MAX_USER_GUILD;n++)
-	{
-		if ( pNode->Use[n] == TRUE )
-		{
-			if ( strcmp(pNode->Names[n], player_name ) == 0 )
-			{
-				pNode->Index[n] = -1;
-				pNode->Count--;
-				pNode->pServer[n] = -1;
-				this->BuildMemberTotal(pNode);
-				return TRUE;
-			}
-		}
-	}
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (pNode->Use[n] == TRUE) {
+            if (strcmp(pNode->Names[n], player_name) == 0) {
+                pNode->Index[n] = -1;
+                pNode->Count--;
+                pNode->pServer[n] = -1;
+                this->BuildMemberTotal(pNode);
+                return TRUE;
+            }
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 
-BOOL CGuildClass::SetServer(char* guild_name, char* player_name, int pServer)
-{
-	_GUILD_INFO_STRUCT * pNode = this->SearchGuild(guild_name);
+BOOL CGuildClass::SetServer(char *guild_name, char *player_name, int pServer) {
+    _GUILD_INFO_STRUCT *pNode = this->SearchGuild(guild_name);
 
-	if (pNode == NULL )
-	{
-		return FALSE;
-	}
+    if (pNode == NULL) {
+        return FALSE;
+    }
 
-	for ( int n=0;n<MAX_USER_GUILD;n++)
-	{
-		if ( pNode->Use[n] == TRUE )
-		{
-			if ( strcmp(pNode->Names[n], player_name ) == 0 )
-			{
-				pNode->pServer[n] = pServer;
-				return TRUE;
-			}
-		}
-	}
+    for (int n = 0; n < MAX_USER_GUILD; n++) {
+        if (pNode->Use[n] == TRUE) {
+            if (strcmp(pNode->Names[n], player_name) == 0) {
+                pNode->pServer[n] = pServer;
+                return TRUE;
+            }
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
-BOOL gGuildNoticeStringCheck(char* notice)
-{
-	int len = strlen(notice);
+BOOL gGuildNoticeStringCheck(char *notice) {
+    int len = strlen(notice);
 
-	for (int i =0; i<len ;i++)
-	{
-		if ( (notice[i] & 0x80 ) != 0 )
-		{
-			return TRUE;
-		}
-		else
-		{
-			if (notice[i] != ' ' )
-			{
-				return TRUE;
-			}
-		}
-	}
+    for (int i = 0; i < len; i++) {
+        if ((notice[i] & 0x80) != 0) {
+            return TRUE;
+        } else {
+            if (notice[i] != ' ') {
+                return TRUE;
+            }
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 				

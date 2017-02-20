@@ -2,48 +2,44 @@
 #include "GameSecurity.h"
 #include "TLog.h"
 #include "user.h"
+
 CGameSecurity gGameSecurity;
 
-CGameSecurity::CGameSecurity()
-{
-	this->m_ASData.clear();
-	InitializeCriticalSection(&lpCritiASData);
+CGameSecurity::CGameSecurity() {
+    this->m_ASData.clear();
+    InitializeCriticalSection(&lpCritiASData);
 }
 
-CGameSecurity::~CGameSecurity()
-{
+CGameSecurity::~CGameSecurity() {
 
 }
 
-void CGameSecurity::DebugInfo(int aIndex)
-{
-	ATTACK_SPEED sAttackSpeed;
-	EnterCriticalSection(&lpCritiASData);
-	std::map<int,ATTACK_SPEED>::iterator iter = this->m_ASData.find(aIndex);
-	
-	if(iter == m_ASData.end())
-	{
-		sAttackSpeed.iPenaltyCount = 0;
-		sAttackSpeed.LastAttackTime = GetTickCount64();
-		this->m_ASData.insert(std::pair<int,ATTACK_SPEED>(aIndex, sAttackSpeed));
-		LeaveCriticalSection(&lpCritiASData);
-		return;
-	}
-	else
-	{
-		sAttackSpeed = iter->second;
+void CGameSecurity::DebugInfo(int aIndex) {
+    ATTACK_SPEED sAttackSpeed;
+    EnterCriticalSection(&lpCritiASData);
+    std::map<int, ATTACK_SPEED>::iterator iter = this->m_ASData.find(aIndex);
 
-		DWORD64 dwTimeNow = GetTickCount64();
+    if (iter == m_ASData.end()) {
+        sAttackSpeed.iPenaltyCount = 0;
+        sAttackSpeed.LastAttackTime = GetTickCount64();
+        this->m_ASData.insert(std::pair<int, ATTACK_SPEED>(aIndex, sAttackSpeed));
+        LeaveCriticalSection(&lpCritiASData);
+        return;
+    } else {
+        sAttackSpeed = iter->second;
 
-		double realAttackSpeed = (double)((double)dwTimeNow - (double)sAttackSpeed.LastAttackTime) / 1000.00;
+        DWORD64 dwTimeNow = GetTickCount64();
 
-		g_Log.AddC(TColor::Orange,"[Debug ANTI-HACK][%d][%s][%s] Attack Speed: %d Time Between last attack = %f",aIndex, gObj[aIndex].AccountID, gObj[aIndex].Name, gObj[aIndex].m_AttackSpeed, realAttackSpeed);
+        double realAttackSpeed = (double) ((double) dwTimeNow - (double) sAttackSpeed.LastAttackTime) / 1000.00;
 
-		iter->second.LastAttackTime = dwTimeNow;
+        g_Log.AddC(TColor::Orange, "[Debug ANTI-HACK][%d][%s][%s] Attack Speed: %d Time Between last attack = %f",
+                   aIndex, gObj[aIndex].AccountID, gObj[aIndex].Name, gObj[aIndex].m_AttackSpeed, realAttackSpeed);
 
-	}
+        iter->second.LastAttackTime = dwTimeNow;
 
-	LeaveCriticalSection(&lpCritiASData);
+    }
+
+    LeaveCriticalSection(&lpCritiASData);
 
 }
 

@@ -1,22 +1,25 @@
 #pragma once
-class CDatabaseInstaller
-{
+
+class CDatabaseInstaller {
 public:
-	CDatabaseInstaller(void);
-	virtual ~CDatabaseInstaller(void);
+    CDatabaseInstaller(void);
 
-	int GetDBVersion();
+    virtual ~CDatabaseInstaller(void);
 
-	void InstallUpdates();
+    int GetDBVersion();
 
-	bool Install7041();
-	bool Install7042();
+    void InstallUpdates();
 
-	void Init();
-	void End();
+    bool Install7041();
 
-	CQuery * Database;
-	
-	bool m_IsConnected;
+    bool Install7042();
+
+    void Init();
+
+    void End();
+
+    CQuery *Database;
+
+    bool m_IsConnected;
 };
 

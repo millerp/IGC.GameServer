@@ -9,13 +9,13 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CCastleCrown  
-{
+class CCastleCrown {
 public:
-	CCastleCrown();
-	virtual ~CCastleCrown();
+    CCastleCrown();
 
-	void CastleCrownAct(int iIndex);
+    virtual ~CCastleCrown();
+
+    void CastleCrownAct(int iIndex);
 
 };
 

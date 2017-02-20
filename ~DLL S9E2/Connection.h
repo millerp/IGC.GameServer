@@ -8,17 +8,18 @@
 #define GSCONNECT_HOOK2 0x004FAB84 // S9
 #define CHATSERVER_PORT 0x004BAC22+1 // S9
 
-enum CONNECTION_TYPE
-{
-	NOT_CONNECTED = 0,
-	CS_CONNECTED,
-	GS_CONNECTED,
+enum CONNECTION_TYPE {
+    NOT_CONNECTED = 0,
+    CS_CONNECTED,
+    GS_CONNECTED,
 };
 
-typedef void (*tmuConnectToCS)(char* hostname, int port);
+typedef void (*tmuConnectToCS)(char *hostname, int port);
+
 extern tmuConnectToCS muConnectToCS;
 
 void OnConnect();
+
 void OnGsConnect();
 
 extern CONNECTION_TYPE g_Connection;

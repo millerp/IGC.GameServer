@@ -2,11 +2,9 @@
 #include "CAntiAFK.h"
 
 
-CAntiAFK::CAntiAFK(void)
-{
+CAntiAFK::CAntiAFK(void) {
 }
 
 
-CAntiAFK::~CAntiAFK(void)
-{
+CAntiAFK::~CAntiAFK(void) {
 }

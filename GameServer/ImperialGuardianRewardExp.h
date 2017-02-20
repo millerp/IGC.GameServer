@@ -1,33 +1,32 @@
 #pragma once
 
-struct _stRewardExpInfo
-{
-	_stRewardExpInfo()
-	{
-		this->m_nMinLevel = 0;
-		this->m_nMaxLevel = 0;
-		this->m_nRewardExp = 0;
-	}
+struct _stRewardExpInfo {
+    _stRewardExpInfo() {
+        this->m_nMinLevel = 0;
+        this->m_nMaxLevel = 0;
+        this->m_nRewardExp = 0;
+    }
 
-	int m_nMinLevel;
-	int m_nMaxLevel;
-	int m_nRewardExp;
+    int m_nMinLevel;
+    int m_nMaxLevel;
+    int m_nRewardExp;
 };
 
-class CImperialGuardianRewardExp
-{
+class CImperialGuardianRewardExp {
 public:
-	CImperialGuardianRewardExp(void);
-	virtual ~CImperialGuardianRewardExp(void);
+    CImperialGuardianRewardExp(void);
 
-	void LoadScript(const char* lpFileName);
-	int GetRewardExp(int nUserIndex);
+    virtual ~CImperialGuardianRewardExp(void);
+
+    void LoadScript(const char *lpFileName);
+
+    int GetRewardExp(int nUserIndex);
 
 private:
-	void Init();
+    void Init();
 
-	bool m_bLoadScript;
-	std::vector<_stRewardExpInfo> m_vtRewardExpInfo;
+    bool m_bLoadScript;
+    std::vector <_stRewardExpInfo> m_vtRewardExpInfo;
 
 };
 

@@ -10,41 +10,41 @@
 #endif // _MSC_VER > 1000
 
 
-#define MAX_SET_ITEM_MACRO	50
+#define MAX_SET_ITEM_MACRO    50
 
-struct SETITEMLIST
-{
-	int SetIndex;	// 0
-	int ItemIndex;	// 4
-	int Level;	// 8
-	int Skill;	// C
-	int Luck;	// 10
-	int Option;	// 14
-	int Ex1;	// 18
-	int Ex2;	// 1C
-	int Ex3;	// 20
-	int Ex4;	// 24
-	int Ex5;	// 28
-	int Ex6;	// 2C
+struct SETITEMLIST {
+    int SetIndex;    // 0
+    int ItemIndex;    // 4
+    int Level;    // 8
+    int Skill;    // C
+    int Luck;    // 10
+    int Option;    // 14
+    int Ex1;    // 18
+    int Ex2;    // 1C
+    int Ex3;    // 20
+    int Ex4;    // 24
+    int Ex5;    // 28
+    int Ex6;    // 2C
 };
 
 
-class CSetItemMacro  
-{
+class CSetItemMacro {
 
 public:
 
-	CSetItemMacro();
-	~CSetItemMacro();
+    CSetItemMacro();
 
-	BOOL Load(char* szFileName);
-	int MakeItem(int aIndex, char* szSetName);
+    ~CSetItemMacro();
+
+    BOOL Load(char *szFileName);
+
+    int MakeItem(int aIndex, char *szSetName);
 
 private:
 
-  SETITEMLIST SubItemList[MAX_SET_ITEM_MACRO][15];	// 0
-  BOOL bLoadItemName[MAX_SET_ITEM_MACRO];	// 8CA0
-  char sMakeItemName[MAX_SET_ITEM_MACRO][255];	// 8D68
+    SETITEMLIST SubItemList[MAX_SET_ITEM_MACRO][15];    // 0
+    BOOL bLoadItemName[MAX_SET_ITEM_MACRO];    // 8CA0
+    char sMakeItemName[MAX_SET_ITEM_MACRO][255];    // 8D68
 
 };
 

@@ -11,21 +11,22 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CViewportGuild
-{
+class CViewportGuild {
 
 public:
 
-	CViewportGuild();
-	virtual ~CViewportGuild();
+    CViewportGuild();
 
-	void Init();
-	BOOL Add(int number, int TargetObj);
+    virtual ~CViewportGuild();
+
+    void Init();
+
+    BOOL Add(int number, int TargetObj);
 
 private:
 
-	short m_GuildNumber[MAX_VIEWPORT];
-	short m_GuildCount;
+    short m_GuildNumber[MAX_VIEWPORT];
+    short m_GuildCount;
 };
 
 #endif

@@ -9,17 +9,17 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define CASTLE_CROWNSWITCH_CLASS_RANGE(x)  ( ((x)< 217 )?FALSE:((x) > 218 )?FALSE:TRUE   ) 
+#define CASTLE_CROWNSWITCH_CLASS_RANGE(x)  ( ((x)< 217 )?FALSE:((x) > 218 )?FALSE:TRUE   )
 
-class CCastleCrownSwitch  
-{
+class CCastleCrownSwitch {
 
 public:
 
-	CCastleCrownSwitch();
-	virtual ~CCastleCrownSwitch();
+    CCastleCrownSwitch();
 
-	void CastleCrownSwitchAct(int iIndex);
+    virtual ~CCastleCrownSwitch();
+
+    void CastleCrownSwitchAct(int iIndex);
 
 };
 

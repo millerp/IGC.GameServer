@@ -19,57 +19,68 @@
 // WinUtil.cpp Functions
 //------------------------------------------
 
-void BuxConvert(char* buf, int size);
-BOOL SQLSyntexCheck(char* SQLString);
-BOOL SQLSyntexCheckConvert(char* SQLString);
-BOOL SpaceSyntexCheck(char* string);
-BOOL StrHangulCheck(char* str);
-void FileSaveString(char* filename, char* string);
-BOOL IsFile(char* filename);
-void GetTodayString(char* szDate);
-void PHeadSetB(LPBYTE lpBuf, BYTE head, int size);
-void PHeadSubSetB(LPBYTE lpBuf, BYTE head, BYTE sub, int size);
-void PHeadSetW( LPBYTE lpBuf, BYTE head, int size) ;
-void PHeadSubSetW(LPBYTE lpBuf, BYTE head, BYTE sub, int size);
-void PHeadSetBE(LPBYTE lpBuf, BYTE head,int size);
-void PHeadSubSetBE(LPBYTE lpBuf, BYTE head,BYTE sub, int size);
-int RandExcOpt(int ExcOpt);
-void ParseHardwareID(char *HWID);
-DWORD CalcFileSize(char * szFilePath);
+void BuxConvert(char *buf, int size);
 
-class char_ID
-{
+BOOL SQLSyntexCheck(char *SQLString);
+
+BOOL SQLSyntexCheckConvert(char *SQLString);
+
+BOOL SpaceSyntexCheck(char *string);
+
+BOOL StrHangulCheck(char *str);
+
+void FileSaveString(char *filename, char *string);
+
+BOOL IsFile(char *filename);
+
+void GetTodayString(char *szDate);
+
+void PHeadSetB(LPBYTE lpBuf, BYTE head, int size);
+
+void PHeadSubSetB(LPBYTE lpBuf, BYTE head, BYTE sub, int size);
+
+void PHeadSetW(LPBYTE lpBuf, BYTE head, int size);
+
+void PHeadSubSetW(LPBYTE lpBuf, BYTE head, BYTE sub, int size);
+
+void PHeadSetBE(LPBYTE lpBuf, BYTE head, int size);
+
+void PHeadSubSetBE(LPBYTE lpBuf, BYTE head, BYTE sub, int size);
+
+int RandExcOpt(int ExcOpt);
+
+void ParseHardwareID(char *HWID);
+
+DWORD CalcFileSize(char *szFilePath);
+
+class char_ID {
 
 public:
 
-	char_ID(LPSTR szName)	// line : 44
-	{
-		memset(this->Name, 0, sizeof(this->Name));
+    char_ID(LPSTR szName)    // line : 44
+    {
+        memset(this->Name, 0, sizeof(this->Name));
 
-		if ( szName != NULL )
-		{
-			memcpy(this->Name, szName, MAX_ACCOUNT_LEN);
-		}
-	}	// line : 49
+        if (szName != NULL) {
+            memcpy(this->Name, szName, MAX_ACCOUNT_LEN);
+        }
+    }    // line : 49
 
-	LPSTR GetBuffer()	// line : 52
-	{
-		return this->Name;
-	}	// line : 54
+    LPSTR GetBuffer()    // line : 52
+    {
+        return this->Name;
+    }    // line : 54
 
-	int  GetLength()	// line : 63
-	{
-		return strlen(this->Name);
-	}	// line : 65
+    int GetLength()    // line : 63
+    {
+        return strlen(this->Name);
+    }    // line : 65
 
 private:
 
-	char Name[MAX_ACCOUNT_LEN+1];	// 0
+    char Name[MAX_ACCOUNT_LEN + 1];    // 0
 
 };
-
-
-
 
 
 #endif

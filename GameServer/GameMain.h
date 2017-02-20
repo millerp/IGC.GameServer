@@ -7,7 +7,7 @@
 //------------------------------------------
 
 #ifndef GAMEMAIN_H
-#define	GAMEMAIN_H
+#define    GAMEMAIN_H
 
 
 #if _MSC_VER > 1000
@@ -33,93 +33,91 @@
 #include "CastleDeepEvent.h"
 #include "Crywolf.h"
 
-struct PMSG_FRIEND_STATE
-{
-	PBMSG_HEAD h;	// C1:C4
-	char Name[10];	// 3
-	BYTE State;	// D
+struct PMSG_FRIEND_STATE {
+    PBMSG_HEAD h;    // C1:C4
+    char Name[10];    // 3
+    BYTE State;    // D
 };
 
 enum MU_EVENT_TYPE {
-	MU_EVENT_ALL = 0x0,
-	MU_EVENT_DEVILSQUARE = 0x1,
-	MU_EVENT_BLOODCASTLE = 0x2,
-	MU_EVENT_ATTACKEVENTTROOP = 0x3,
-	MU_EVENT_GOLDENTROOP = 0x4,
-	MU_EVENT_WHITEMAGETROOP = 0x5,
-	MU_EVENT_LOVEPANGPANG = 0x6,
-	MU_EVENT_FIRECRACKER = 0x7,
-	MU_EVENT_MEDALION = 0x8,
-	MU_EVENT_XMASSTAR = 0x9,
-	MU_EVENT_HEARTOFLOVE = 0xa,
-	MU_EVENT_SAY_HAPPYNEWYEAR = 0xb,
-	MU_EVENT_SAY_MERRYXMAS = 0xc,
-	MU_EVENT_CHAOSCASTLE = 0xd,
-	MU_EVENT_CHRISTMAS_RIBBONBOX = 0xe,
-	MU_EVENT_VALENTINESDAY_CHOCOLATEBOX = 0xf,
-	MU_EVENT_WHITEDAY_CANDYBOX = 0x10,
-	MU_EVENT_ILLUSION_TEMPLE = 0x11,
-	MU_EVENT_CHERRY_BLOSSOM = 0x12
+    MU_EVENT_ALL = 0x0,
+    MU_EVENT_DEVILSQUARE = 0x1,
+    MU_EVENT_BLOODCASTLE = 0x2,
+    MU_EVENT_ATTACKEVENTTROOP = 0x3,
+    MU_EVENT_GOLDENTROOP = 0x4,
+    MU_EVENT_WHITEMAGETROOP = 0x5,
+    MU_EVENT_LOVEPANGPANG = 0x6,
+    MU_EVENT_FIRECRACKER = 0x7,
+    MU_EVENT_MEDALION = 0x8,
+    MU_EVENT_XMASSTAR = 0x9,
+    MU_EVENT_HEARTOFLOVE = 0xa,
+    MU_EVENT_SAY_HAPPYNEWYEAR = 0xb,
+    MU_EVENT_SAY_MERRYXMAS = 0xc,
+    MU_EVENT_CHAOSCASTLE = 0xd,
+    MU_EVENT_CHRISTMAS_RIBBONBOX = 0xe,
+    MU_EVENT_VALENTINESDAY_CHOCOLATEBOX = 0xf,
+    MU_EVENT_WHITEDAY_CANDYBOX = 0x10,
+    MU_EVENT_ILLUSION_TEMPLE = 0x11,
+    MU_EVENT_CHERRY_BLOSSOM = 0x12
 };
 
-enum MU_EVENT_RELOAD 
-{
-	EVENT_BC = 0,
-	EVENT_DS = 1,
-	EVENT_CC = 2,
-	EVENT_IT = 3,
-	EVENT_CS = 4,
-	EVENT_DEEP = 5,
-	EVENT_CW = 6,
-	EVENT_KANTURU = 7,
-	EVENT_RAKLION = 8,
-	EVENT_DG = 9,
-	EVENT_IF = 10,
-	EVENT_RING = 11,
-	EVENT_XMAS = 12,
-	EVENT_ARCA = 13,
-	EVENT_ACHERON  = 14,
-	EVENT_CCF = 15,
-	EVENT_DSF = 16
+enum MU_EVENT_RELOAD {
+    EVENT_BC = 0,
+    EVENT_DS = 1,
+    EVENT_CC = 2,
+    EVENT_IT = 3,
+    EVENT_CS = 4,
+    EVENT_DEEP = 5,
+    EVENT_CW = 6,
+    EVENT_KANTURU = 7,
+    EVENT_RAKLION = 8,
+    EVENT_DG = 9,
+    EVENT_IF = 10,
+    EVENT_RING = 11,
+    EVENT_XMAS = 12,
+    EVENT_ARCA = 13,
+    EVENT_ACHERON = 14,
+    EVENT_CCF = 15,
+    EVENT_DSF = 16
 };
 
 enum MU_ETC_TYPE {
-	MU_ETC_ALL = 0x0,
-	MU_ETC_CREATECHARACTER = 0x1,
-	MU_ETC_GUILD = 0x2,
-	MU_ETC_TRADE = 0x3,
-	MU_ETC_USECHAOSBOX = 0x4,
-	MU_ETC_PERSONALSHOP = 0x5,
-	MU_ETC_PKITEMDROP = 0x6,
-	MU_ETC_ITEMDROPRATE = 0x7,
-	MU_ETC_SPEEDHACK = 0x8,
+    MU_ETC_ALL = 0x0,
+    MU_ETC_CREATECHARACTER = 0x1,
+    MU_ETC_GUILD = 0x2,
+    MU_ETC_TRADE = 0x3,
+    MU_ETC_USECHAOSBOX = 0x4,
+    MU_ETC_PERSONALSHOP = 0x5,
+    MU_ETC_PKITEMDROP = 0x6,
+    MU_ETC_ITEMDROPRATE = 0x7,
+    MU_ETC_SPEEDHACK = 0x8,
 };
 
 enum GAMESERVER_PLAY_TYPE {
-	GS_PLAY_PVP = 0,
-	GS_PLAY_NONPVP = 1,
-	GS_PLAY_GOLD_PVP = 2,
-	GS_PLAY_GOLD_NONPVP = 3
+    GS_PLAY_PVP = 0,
+    GS_PLAY_NONPVP = 1,
+    GS_PLAY_GOLD_PVP = 2,
+    GS_PLAY_GOLD_NONPVP = 3
 };
 
 extern BOOL JoinServerConnected;
 extern BOOL DataServerConnected;
 extern BOOL GameServerCreated;
 extern BOOL IsEventChipServerConnected;
-extern CDragonEvent * DragonEvent;
-extern CAttackEvent * AttackEvent;
+extern CDragonEvent *DragonEvent;
+extern CAttackEvent *AttackEvent;
 
 extern BOOL SpeedHackPlayerBlock;
-extern int	gCheckSumSwitch;
-extern int  gSpeedHackPenalty;
+extern int gCheckSumSwitch;
+extern int gSpeedHackPenalty;
 extern bool gSerialZeroCheck;
 extern BOOL gEnableEventNPCTalk;
 extern BOOL gEnableServerDivision;
 extern BOOL gEvent1;
-extern int  gMonsterHp;
+extern int gMonsterHp;
 extern BOOL gMerryXMasNpcEvent;
 extern BOOL gHappyNewYearNpcEvent;
-extern int  gEvent1ItemDropTodayCount;
+extern int gEvent1ItemDropTodayCount;
 extern char gStalkProtocolId[11];
 extern BOOL gXMasEvent;
 extern BOOL gFireCrackerEvent;
@@ -128,13 +126,13 @@ extern BOOL gMedalEvent;
 extern BOOL gEventChipEvent;
 extern BOOL gWriteSkillLog;
 extern BOOL g_bStoneItemDrop;
-extern int  g_iKundunMarkDropRate;
-extern int  g_iMarkOfTheLord;
-extern int  g_iLuckyCoin;
-extern int	g_iXmasEventLuckNumber1st;
-extern int	g_iXmasEventLuckNumber2nd;
-extern int  g_iDarkLordHeartDropRate;
-extern int  g_iDarkLordHeartOffEventRate;
+extern int g_iKundunMarkDropRate;
+extern int g_iMarkOfTheLord;
+extern int g_iLuckyCoin;
+extern int g_iXmasEventLuckNumber1st;
+extern int g_iXmasEventLuckNumber2nd;
+extern int g_iDarkLordHeartDropRate;
+extern int g_iDarkLordHeartOffEventRate;
 extern int g_iMysteriousBeadDropRate1;
 extern int g_iMysteriousBeadDropRate2;
 extern int g_iHiddenTreasureBoxOfflineRate;
@@ -148,36 +146,36 @@ extern BOOL GSInfoSendFlag;
 //float gItemBuyPriceMultiplier;
 //float gItemSellPriceMultiplier;
 extern DWORD JoinServerDCTime;
-extern CwsGameServer wsGServer;	// line : 213GameServer
-extern wsJoinServerCli wsJServerCli;	// line : 214 Join Server
-extern wsJoinServerCli wsDataCli;	// line : 215 DataServer
-extern wsJoinServerCli wsExDbCli;	// line : 239 Extra DataBase Server
-extern CDirPath gDirPath;	// line : 248 Directory Path
-extern MapClass MapC[MAX_NUMBER_MAP];	// line 249	// Map Manager
-extern CMonsterAttr gMAttr;	// line 250
-extern CMonsterSetBase gMSetBase;	// line 251
-extern classdef DCInfo;	// line 252:
-extern CWhisperCash WhisperCash;	// line 253
-extern PartyClass gParty;	// line 254
-extern CGuildClass Guild;	// line 265
-extern WzUdp gUdpSoc;	// line 256
+extern CwsGameServer wsGServer;    // line : 213GameServer
+extern wsJoinServerCli wsJServerCli;    // line : 214 Join Server
+extern wsJoinServerCli wsDataCli;    // line : 215 DataServer
+extern wsJoinServerCli wsExDbCli;    // line : 239 Extra DataBase Server
+extern CDirPath gDirPath;    // line : 248 Directory Path
+extern MapClass MapC[MAX_NUMBER_MAP];    // line 249	// Map Manager
+extern CMonsterAttr gMAttr;    // line 250
+extern CMonsterSetBase gMSetBase;    // line 251
+extern classdef DCInfo;    // line 252:
+extern CWhisperCash WhisperCash;    // line 253
+extern PartyClass gParty;    // line 254
+extern CGuildClass Guild;    // line 265
+extern WzUdp gUdpSoc;    // line 256
 extern WzUdp gLauncherUdp;
-extern CLoginCount gLCount[3];	// line 329
-extern UINT64 * gLevelExperience;
+extern CLoginCount gLCount[3];    // line 329
+extern UINT64 *gLevelExperience;
 extern char szGameServerExeSerial[24];
 extern BOOL gIsDropDarkLordItem;
-extern int  gSleeveOfLordDropRate;
-extern int  gSleeveOfLordDropLevel;
-extern int  gSoulOfDarkHorseDropRate;
-extern int  gSoulOfDarkHorseropLevel;
-extern int  gSoulOfDarkSpiritDropRate;
-extern int  gSoulOfDarkSpiritDropLevel;
+extern int gSleeveOfLordDropRate;
+extern int gSleeveOfLordDropLevel;
+extern int gSoulOfDarkHorseDropRate;
+extern int gSoulOfDarkHorseropLevel;
+extern int gSoulOfDarkSpiritDropRate;
+extern int gSoulOfDarkSpiritDropLevel;
 extern float gDarkSpiritAddExperience;
 extern BOOL gIsDropGemOfDefend;
-extern int  gGemOfDefendDropRate;
-extern int  gGemOfDefendDropLevel;
-extern int  g_iUseCharacterAutoRecuperationSystem;
-extern int  g_iCharacterRecuperationMaxLevel;
+extern int gGemOfDefendDropRate;
+extern int gGemOfDefendDropLevel;
+extern int g_iUseCharacterAutoRecuperationSystem;
+extern int g_iCharacterRecuperationMaxLevel;
 extern int g_iServerGroupGuildChatting;
 extern int g_iServerGroupUnionChatting;
 extern BOOL g_bRibbonBoxEvent;
@@ -256,14 +254,14 @@ extern int g_MaxEnergy;
 extern int g_MaxCommand;
 
 extern DWORD dwgCheckSum[MAX_CHECKSUM_KEY];
-extern DWORD  gItemNumberCount;
+extern DWORD gItemNumberCount;
 extern BOOL gStalkProtocol;
-extern int  gYear;
+extern int gYear;
 extern BOOL gOnlyFireCrackerEffectUse;
-extern int  giKundunRefillHPSec;
-extern int  giKundunRefillHP;
-extern int  giKundunRefillHPTime;
-extern int  giKundunHPLogSaveTime;
+extern int giKundunRefillHPSec;
+extern int giKundunRefillHP;
+extern int giKundunRefillHPTime;
+extern int giKundunHPLogSaveTime;
 extern BOOL gUseNPGGChecksum;
 extern int g_ShieldSystemOn;
 extern int g_iDamageDevideToSDRate;
@@ -295,46 +293,46 @@ extern BOOL bCanTrade;
 extern BOOL bCanChaosBox;
 extern BOOL bCanWarehouseLock;
 extern BOOL gEnableBattleSoccer;
-extern int  gLootingTime;
-extern int  gItemDropPer;
+extern int gLootingTime;
+extern int gItemDropPer;
 extern int gLevelUpPointNormal;
 extern int gLevelUpPointMGDL;
 extern int gItemDisapearTime;
-extern int  IsMultiWareHouse;
-extern int  g_WareHouseCount;
-extern int  gEvent1ItemDropTodayMax;
-extern int  gEvent1ItemDropTodayPercent;
-extern int  gCharacterDeleteMinLevel;
+extern int IsMultiWareHouse;
+extern int g_WareHouseCount;
+extern int gEvent1ItemDropTodayMax;
+extern int gEvent1ItemDropTodayPercent;
+extern int gCharacterDeleteMinLevel;
 extern BOOL gCreateCharacter;
 extern BOOL gItemSerialCheck;
-extern int  g_XMasEvent_StarOfXMasDropRate;
-extern int  g_XMasEvent_ItemDropRateForStarOfXMas;
-extern int  gFireCrackerDropRate;
-extern int  g_ItemDropRateForgFireCracker;
-extern int  gHeartOfLoveDropRate;
-extern int  g_ItemDropRateForgHeartOfLove;
-extern int  gGoldMedalDropRate;
-extern int  gSilverMedalDropRate;
-extern int  g_ItemDropRateForGoldMedal;
-extern int  g_ItemDropRateForSilverMedal;
-extern int  gBoxOfGoldDropRate;
-extern int  g_ItemDropRateForBoxOfGold;
-extern int  g_EventChipDropRateForBoxOfGold;
-extern int  gDQChaosSuccessRateLevel1;
-extern int  gDQChaosSuccessRateLevel2;
-extern int  gDQChaosSuccessRateLevel3;
-extern int  gDQChaosSuccessRateLevel4;
-extern int  gDQChaosSuccessRateLevel5;
-extern int  gDQChaosSuccessRateLevel6;
-extern int	gDQChaosSuccessRateLevel7;
-extern DWORD  gAttackSpeedTimeLimit;
-extern DWORD  gHackCheckCount;
+extern int g_XMasEvent_StarOfXMasDropRate;
+extern int g_XMasEvent_ItemDropRateForStarOfXMas;
+extern int gFireCrackerDropRate;
+extern int g_ItemDropRateForgFireCracker;
+extern int gHeartOfLoveDropRate;
+extern int g_ItemDropRateForgHeartOfLove;
+extern int gGoldMedalDropRate;
+extern int gSilverMedalDropRate;
+extern int g_ItemDropRateForGoldMedal;
+extern int g_ItemDropRateForSilverMedal;
+extern int gBoxOfGoldDropRate;
+extern int g_ItemDropRateForBoxOfGold;
+extern int g_EventChipDropRateForBoxOfGold;
+extern int gDQChaosSuccessRateLevel1;
+extern int gDQChaosSuccessRateLevel2;
+extern int gDQChaosSuccessRateLevel3;
+extern int gDQChaosSuccessRateLevel4;
+extern int gDQChaosSuccessRateLevel5;
+extern int gDQChaosSuccessRateLevel6;
+extern int gDQChaosSuccessRateLevel7;
+extern DWORD gAttackSpeedTimeLimit;
+extern DWORD gHackCheckCount;
 extern float gDecTimePerAttackSpeed;
-extern int  gMinimumAttackSpeedTime;
-extern int  gDetectedHackKickCount;
+extern int gMinimumAttackSpeedTime;
+extern int gDetectedHackKickCount;
 extern BOOL gItemDropRingOfTransform;
-extern int  gQuestNPCTeleportTime;
-extern int  gZenDurationTime;
+extern int gQuestNPCTeleportTime;
+extern int gZenDurationTime;
 extern BOOL gEnableCheckPenetrationSkill;
 
 extern char gIsDropCmd;
@@ -367,45 +365,76 @@ extern int gIsDropSetItemInCastleHuntZone;
 extern int gSetItemInCastleHuntZoneDropRate;
 extern int gSetItemInCastleHuntZoneDropLevel;
 
-extern CLogToFile * GMLog;
-extern CLogToFile * MsgLog;
-extern CLogToFile * TradeLog;
-extern CLogToFile * AntiHackLog;
-extern CLogToFile * BotShopLog;
-extern CLogToFile * SerialCheck;
+extern CLogToFile *GMLog;
+extern CLogToFile *MsgLog;
+extern CLogToFile *TradeLog;
+extern CLogToFile *AntiHackLog;
+extern CLogToFile *BotShopLog;
+extern CLogToFile *SerialCheck;
 
 //------------------------------------------
 // GameMain.cpp Functions - Prototypes List - Completed
 //------------------------------------------
 void gSetDate();
-BOOL gJoomin15Check(char* szJN);
-BOOL gJoominCheck(char* szJN, int iLimitAge);
+
+BOOL gJoomin15Check(char *szJN);
+
+BOOL gJoominCheck(char *szJN, int iLimitAge);
+
 void GameMainInit(HWND hWnd);
+
 int GetWarehouseUsedHowMuch(int UserLevel, BOOL IsLock);
+
 void GraphPaint(HWND hWnd);
+
 void GameMonsterAllAdd();
+
 void GameMonsterAllCloseAndReLoad();
+
 void AddBots();
+
 void GameMainFree();
-BOOL GMJoinServerConnect(char* ConnectServer, DWORD wMsg);
-BOOL GMDataServerConnect(char* ConnectServer, WPARAM wMsg);
-BOOL ExDataServerConnect(char* ConnectServer, DWORD wMsg);
+
+BOOL GMJoinServerConnect(char *ConnectServer, DWORD wMsg);
+
+BOOL GMDataServerConnect(char *ConnectServer, WPARAM wMsg);
+
+BOOL ExDataServerConnect(char *ConnectServer, DWORD wMsg);
+
 BOOL GameMainServerCreate(DWORD sMsg, DWORD cMsg);
-void GMServerMsgProc( WPARAM wParam, LPARAM lParam);
-void GMClientMsgProc( WPARAM wParam, LPARAM lParam);
+
+void GMServerMsgProc(WPARAM wParam, LPARAM lParam);
+
+void GMClientMsgProc(WPARAM wParam, LPARAM lParam);
+
 void GMJoinClientMsgProc(WPARAM wParam, LPARAM lParam);
+
 void ExDataClientMsgProc(WPARAM wParam, LPARAM lParam);
+
 void GMDataClientMsgProc(WPARAM wParam, LPARAM lParam);
+
 void ReadCommonServerInfo();
+
 void GameServerInfoSendStop();
+
 void GameServerInfoSendStart();
+
 void GameServerInfoSend();
-void CheckSumFileLoad(char * szCheckSum);
+
+void CheckSumFileLoad(char *szCheckSum);
+
 void SetEventTable();
+
 void LoadMapFile();
+
 int GetEventFlag();
+
 void ReadEventInfo(MU_EVENT_TYPE eEventType);
+
 void ReadGameEtcInfo(MU_ETC_TYPE eGameEtcType);
+
 void ReloadEvent(MU_EVENT_RELOAD eReload);
+
 void AuthClientMsgProc(WPARAM wParam, LPARAM lParam);
+
 #endif

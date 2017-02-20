@@ -9,23 +9,26 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CJewelMixSystem
-{
+class CJewelMixSystem {
 
 public:
 
-	CJewelMixSystem();
-	virtual ~CJewelMixSystem();
+    CJewelMixSystem();
 
-	static void LoadMixJewelPrice();
+    virtual ~CJewelMixSystem();
 
-	static int GetJewelCount(int iIndex, int iJewelType);
-	static int GetJewelCountPerLevel(int iJewelType, int iJewelLevel);
-	static int MixJewel(int iIndex, int iJewelType, int iMixType);
-	static int UnMixJewel(int iIndex, int iJewelType, int iJewelLevel, int iInventoryPos);
+    static void LoadMixJewelPrice();
+
+    static int GetJewelCount(int iIndex, int iJewelType);
+
+    static int GetJewelCountPerLevel(int iJewelType, int iJewelLevel);
+
+    static int MixJewel(int iIndex, int iJewelType, int iMixType);
+
+    static int UnMixJewel(int iIndex, int iJewelType, int iJewelLevel, int iInventoryPos);
 
 private:
-	static int UnMixJewelPrice;
+    static int UnMixJewelPrice;
 };
 
 

@@ -9,16 +9,19 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CLifeStone  
-{
+class CLifeStone {
 public:
-	CLifeStone();
-	virtual ~CLifeStone();
+    CLifeStone();
 
-	int CreateLifeStone(int iIndex);
-	int DeleteLifeStone(int iIndex);
-	int SetReSpawnUserXY(int iUserIndex);
-	void LifeStoneAct(int iIndex);
+    virtual ~CLifeStone();
+
+    int CreateLifeStone(int iIndex);
+
+    int DeleteLifeStone(int iIndex);
+
+    int SetReSpawnUserXY(int iUserIndex);
+
+    void LifeStoneAct(int iIndex);
 };
 
 extern CLifeStone g_CsNPC_LifeStone;

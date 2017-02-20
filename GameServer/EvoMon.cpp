@@ -2,11 +2,9 @@
 #include "EvoMon.h"
 
 
-CEvoMon::CEvoMon(void)
-{
+CEvoMon::CEvoMon(void) {
 }
 
 
-CEvoMon::~CEvoMon(void)
-{
+CEvoMon::~CEvoMon(void) {
 }

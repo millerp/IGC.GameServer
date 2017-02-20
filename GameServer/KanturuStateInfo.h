@@ -9,101 +9,88 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CKanturuStateInfo
-{
+class CKanturuStateInfo {
 
 public:
 
-	CKanturuStateInfo();
-	virtual ~CKanturuStateInfo();
+    CKanturuStateInfo();
 
-	void ResetTimeInfo()
-	{
-		this->SetStateInfo(0);
-		this->SetCondition(0);
-		this->SetValue(0);
-	}
+    virtual ~CKanturuStateInfo();
 
-
-	void SetStateInfo(int iStateTimeInfo)
-	{
-		this->m_iState = iStateTimeInfo;
-	}
-
-	//int __thiscall GetStateInfo();
-	void SetCondition(int iCondition)
-	{
-		this->m_iCondition = iCondition;
-	}
+    void ResetTimeInfo() {
+        this->SetStateInfo(0);
+        this->SetCondition(0);
+        this->SetValue(0);
+    }
 
 
-	int GetCondition()
-	{
-		return this->m_iCondition;
-	}
+    void SetStateInfo(int iStateTimeInfo) {
+        this->m_iState = iStateTimeInfo;
+    }
 
-	void SetValue(int iValue)
-	{
-		this->m_iValue = iValue;
-	}
+    //int __thiscall GetStateInfo();
+    void SetCondition(int iCondition) {
+        this->m_iCondition = iCondition;
+    }
 
-	int GetValue()
-	{
-		return this->m_iValue;
-	}
-	void SetAppliedTime()
-	{
-		this->m_dwAppliedTickCount = GetTickCount();
-	}
 
-	int GetAppliedTime()
-	{
-		return this->m_dwAppliedTickCount;
-	}
+    int GetCondition() {
+        return this->m_iCondition;
+    }
 
-	//void __thiscall ResetAppliedTime();
-	int GetElapsedTime()
-	{
-		int iElapsedTime = GetTickCount() - this->GetAppliedTime();
-		return iElapsedTime;
-	}
+    void SetValue(int iValue) {
+        this->m_iValue = iValue;
+    }
 
-	int GetRemainTime()
-	{
-		int iRemainTime = 0;
+    int GetValue() {
+        return this->m_iValue;
+    }
 
-		if ( this->GetCondition() == 1 )
-		{
-			iRemainTime = this->m_iValue - this->GetElapsedTime();
+    void SetAppliedTime() {
+        this->m_dwAppliedTickCount = GetTickCount();
+    }
 
-			if ( iRemainTime <= 0 )
-			{
-				return 0;
-			}
+    int GetAppliedTime() {
+        return this->m_dwAppliedTickCount;
+    }
 
-			iRemainTime /= 1000;
-		}
+    //void __thiscall ResetAppliedTime();
+    int GetElapsedTime() {
+        int iElapsedTime = GetTickCount() - this->GetAppliedTime();
+        return iElapsedTime;
+    }
 
-		return iRemainTime;
-	}
+    int GetRemainTime() {
+        int iRemainTime = 0;
 
-	BOOL IsTimeOut()
-	{
-		if ( this->GetRemainTime() <= 0 )
-		{
-			return TRUE;
-		}
+        if (this->GetCondition() == 1) {
+            iRemainTime = this->m_iValue - this->GetElapsedTime();
 
-		return FALSE;
-	}
+            if (iRemainTime <= 0) {
+                return 0;
+            }
+
+            iRemainTime /= 1000;
+        }
+
+        return iRemainTime;
+    }
+
+    BOOL IsTimeOut() {
+        if (this->GetRemainTime() <= 0) {
+            return TRUE;
+        }
+
+        return FALSE;
+    }
 
 
 private:
 
-	int m_iState;	// 4
-	int m_iCondition;	// 8
-	int m_iValue;	// C
-	DWORD m_dwAppliedTickCount;	// 10
+    int m_iState;    // 4
+    int m_iCondition;    // 8
+    int m_iValue;    // C
+    DWORD m_dwAppliedTickCount;    // 10
 
 };
 

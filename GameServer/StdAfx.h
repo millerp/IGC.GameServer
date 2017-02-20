@@ -12,7 +12,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+#define WIN32_LEAN_AND_MEAN        // Exclude rarely-used stuff from Windows headers
 #define _WIN32_WINNT 0x0601
 #define WINVER 0x0601
 
@@ -101,8 +101,8 @@
 #pragma comment(lib, "Comctl32.lib")
 #pragma comment(lib, "mpir64.lib")
 
-FILE _iob[] = { *stdin, *stdout, *stderr };
-extern "C" FILE * __cdecl __iob_func(void) { return _iob; }
+FILE _iob[] = {*stdin, *stdout, *stderr};
+extern "C" FILE *__cdecl __iob_func(void) { return _iob; }
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

@@ -17,8 +17,8 @@
 #define SET_NUMBERHW(x) ( (WORD)((DWORD)(x)>>(DWORD)16) )
 #define SET_NUMBERLW(x) ( (WORD)((DWORD)(x) & 0xFFFF) )
 
-#define	WM_LOG_PAINT	(0x101)
-#define WM_LOG_DATE_CHANGE	(0x102)
+#define    WM_LOG_PAINT    (0x101)
+#define WM_LOG_DATE_CHANGE    (0x102)
 #define WM_FIRST_PROC 1000
 
 extern HWND ghWnd;
@@ -42,8 +42,11 @@ extern TCHAR g_ServerName[64];
 extern DWORD g_GensRankingUpdateTime;
 extern DWORD g_GensLeaveAfterDays;
 extern DWORD g_MachineIDConnectionLimitPerGroup;
+
 bool IniteDataServer();
+
 void eDataServerClose();
+
 extern CDataServerProtocol m_DSProtocol;
 extern CLoginServerProtocol m_JSProtocol;
 extern CExDataServerProtocol m_EXDSProtocol;
@@ -54,6 +57,12 @@ extern WORD g_DarkLordCreateMinLevel;
 extern WORD g_GrowLancerCreateMinLevel;
 extern int g_iShowAllQueriesInDS;
 extern int g_iConnectStatSyncEnable;
-BOOL CALLBACK JSDisconnect (HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK
+JSDisconnect (HWND
+hWnd,
+UINT iMessage, WPARAM
+wParam,
+LPARAM lParam
+);
 
 #endif // !defined(AFX_EDATASERVER_H__A7C14824_5DD7_49C9_BDFB_C8D813D08CB9__INCLUDED_)

@@ -9,22 +9,25 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CLoginCount
-{
+class CLoginCount {
 
 public:
 
-	CLoginCount();
-	~CLoginCount();
+    CLoginCount();
 
-	void Init();
-	void Add();
-	void Delete();
-	int Get();
+    ~CLoginCount();
+
+    void Init();
+
+    void Add();
+
+    void Delete();
+
+    int Get();
 
 private:
 
-	int m_count;
+    int m_count;
 };
 
 #endif

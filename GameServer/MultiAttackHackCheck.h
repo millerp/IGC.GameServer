@@ -8,34 +8,36 @@
 #define MAX_MULTI_ATTACK_INFO 40
 #define MULTI_ATTACK_SERIAL_SIZE 255
 
-struct MULTIATTACK_HACKCHECK
-{
-	short number;	// 0
-	BYTE Serial[MULTI_ATTACK_SERIAL_SIZE];	// 2
+struct MULTIATTACK_HACKCHECK {
+    short number;    // 0
+    BYTE Serial[MULTI_ATTACK_SERIAL_SIZE];    // 2
 };
 
 
-class CMultiAttackHackCheck
-{
+class CMultiAttackHackCheck {
 
 public:
 
-	CMultiAttackHackCheck();
-	virtual ~CMultiAttackHackCheck();
+    CMultiAttackHackCheck();
 
-	void Init();
-	int Insert(int aTargetIndex, BYTE skillnum, BYTE serial);
-	int CheckPenetrationSkill(int aTargetIndex, BYTE skillnum, BYTE serial);
-	int CheckFireScreamSkill(int iTargetIndex, BYTE btSkillnum, BYTE btSerial);
+    virtual ~CMultiAttackHackCheck();
+
+    void Init();
+
+    int Insert(int aTargetIndex, BYTE skillnum, BYTE serial);
+
+    int CheckPenetrationSkill(int aTargetIndex, BYTE skillnum, BYTE serial);
+
+    int CheckFireScreamSkill(int iTargetIndex, BYTE btSkillnum, BYTE btSerial);
 
 
 private:
 
-	int m_iCount;	// 4
-	MULTIATTACK_HACKCHECK m_Table[MAX_MULTI_ATTACK_INFO];	// 8
+    int m_iCount;    // 4
+    MULTIATTACK_HACKCHECK m_Table[MAX_MULTI_ATTACK_INFO];    // 8
 
 };
 
-extern CMultiAttackHackCheck * gMultiAttackHackCheck;
+extern CMultiAttackHackCheck *gMultiAttackHackCheck;
 
 #endif

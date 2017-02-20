@@ -30,10 +30,13 @@
 #include <tchar.h>
 #include <wingdi.h>
 #include <map>
+
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "mpir.lib")
+
 #include <gl\GL.h>
 #include <gl\GLU.h>
+
 #pragma comment(lib, "Opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "Glee.lib")

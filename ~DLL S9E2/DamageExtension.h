@@ -10,13 +10,23 @@ extern int maxHPDisplay;
 // function headers
 
 void dmgSendHook();
+
 void manaSendHook();
+
 void HPSendHook();
+
 void ManaSendCHook();
+
 void ManaSendDKHook();
+
 void HPSendDKHook();
+
 void HPSendCHook();
+
 void dmgSendRFHook();
+
 void RFSkillDamageDisplayFix();
+
 void FixSkill65k();
+
 #endif

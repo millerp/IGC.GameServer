@@ -9,41 +9,40 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-struct ComboSkillData
-{
+struct ComboSkillData {
 
 public:
 
-	void Init()	// line : 19
-	{
-		this->dwTime = 0;
-		this->Skill[0] = -1;
-		this->Skill[1] = -1;
-		this->Skill[2] = -1;
-		this->ProgressIndex = -1;
-	};	// line : 23
+    void Init()    // line : 19
+    {
+        this->dwTime = 0;
+        this->Skill[0] = -1;
+        this->Skill[1] = -1;
+        this->Skill[2] = -1;
+        this->ProgressIndex = -1;
+    };    // line : 23
 
-	DWORD dwTime;	// 0
-	WORD Skill[3];	// 4
-	int ProgressIndex;	// 8
+    DWORD dwTime;    // 0
+    WORD Skill[3];    // 4
+    int ProgressIndex;    // 8
 
 };
 
-class CComboAttack
-{
+class CComboAttack {
 
 public:
 
-	CComboAttack();
-	virtual ~CComboAttack();
+    CComboAttack();
+
+    virtual ~CComboAttack();
 
 private:
 
-	int GetSkillPos(int skillnum);
+    int GetSkillPos(int skillnum);
 
 public:
 
-	BOOL CheckCombo(int aIndex, int skillnum);
+    BOOL CheckCombo(int aIndex, int skillnum);
 
 };
 

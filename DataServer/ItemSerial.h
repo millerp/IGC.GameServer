@@ -2,24 +2,28 @@
 #define ITEMSERIAL_H
 
 #pragma once
-class CItemSerial
-{
-public:
-	CItemSerial(void);
-	virtual ~CItemSerial(void);
 
-	bool Init();
-	UINT64 GenerateSerial();
-	UINT64 GetSerialCount();
+class CItemSerial {
+public:
+    CItemSerial(void);
+
+    virtual ~CItemSerial(void);
+
+    bool Init();
+
+    UINT64 GenerateSerial();
+
+    UINT64 GetSerialCount();
 
 private:
-	UINT64 MakeSerial();
-	BOOL GetSerialFromDB(UINT64 & serial, int MakeSerialCount);
+    UINT64 MakeSerial();
 
-	CRITICAL_SECTION m_ItemSerialCriti;
-	UINT64 m_dwItemSerial;
-	UINT64 m_dwLastSerial;
-	CQuery m_Query;
+    BOOL GetSerialFromDB(UINT64 &serial, int MakeSerialCount);
+
+    CRITICAL_SECTION m_ItemSerialCriti;
+    UINT64 m_dwItemSerial;
+    UINT64 m_dwLastSerial;
+    CQuery m_Query;
 };
 
 extern CItemSerial g_ItemSerial;

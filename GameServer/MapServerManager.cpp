@@ -1,4 +1,4 @@
- #include "stdafx.h"
+#include "stdafx.h"
 #include "MapServerManager.h"
 #include "MapClass.h"
 #include "GameMain.h"
@@ -10,603 +10,540 @@
 //	GS-N	1.00.18	JPN	0x0054D8C0	-	Completed
 
 
-_MAPSVR_DATA::_MAPSVR_DATA()
-{
-	this->Clear(1);
+_MAPSVR_DATA::_MAPSVR_DATA() {
+    this->Clear(1);
 }
 
-_MAPSVR_DATA::~_MAPSVR_DATA()
-{
-	return;
+_MAPSVR_DATA::~_MAPSVR_DATA() {
+    return;
 }
 
-void _MAPSVR_DATA::Clear(int iInitSetVal)
-{
-	this->m_bIN_USE = FALSE;
-	this->m_btMAPSVR_GROUP = -1;
-	this->m_sSVR_CODE = -1;
-	memset(this->m_cIPADDR, 0, sizeof(this->m_cIPADDR));
-	this->m_wPORT = 0;
+void _MAPSVR_DATA::Clear(int iInitSetVal) {
+    this->m_bIN_USE = FALSE;
+    this->m_btMAPSVR_GROUP = -1;
+    this->m_sSVR_CODE = -1;
+    memset(this->m_cIPADDR, 0, sizeof(this->m_cIPADDR));
+    this->m_wPORT = 0;
 
-	for ( int iMAP_COUNT =0;iMAP_COUNT<MAX_NUMBER_MAP;iMAP_COUNT++)
-	{
-		switch ( iInitSetVal )
-		{
-			case -1:
-				this->m_sMAP_MOVE[iMAP_COUNT] = -2;
-				break;
-			case 0:
-				this->m_sMAP_MOVE[iMAP_COUNT] = -1;
-				break;
-			default:
-				this->m_sMAP_MOVE[iMAP_COUNT] = -3;
-		}
-	}
+    for (int iMAP_COUNT = 0; iMAP_COUNT < MAX_NUMBER_MAP; iMAP_COUNT++) {
+        switch (iInitSetVal) {
+            case -1:
+                this->m_sMAP_MOVE[iMAP_COUNT] = -2;
+                break;
+            case 0:
+                this->m_sMAP_MOVE[iMAP_COUNT] = -1;
+                break;
+            default:
+                this->m_sMAP_MOVE[iMAP_COUNT] = -3;
+        }
+    }
 }
 
 
+CMapServerManager::CMapServerManager() {
+    srand(time(NULL));
+    this->m_bMapDataLoadOk = FALSE;
+    this->m_lpThisMapSvrData = NULL;
 
-
-CMapServerManager::CMapServerManager()
-{
-	srand(time(NULL)); 
-	this->m_bMapDataLoadOk=FALSE;
-	this->m_lpThisMapSvrData = NULL;
-
-	InitializeCriticalSection(&this->m_critSVRCODE_MAP);
+    InitializeCriticalSection(&this->m_critSVRCODE_MAP);
 }
 
 
-CMapServerManager::~CMapServerManager()
-{
-	DeleteCriticalSection(&this->m_critSVRCODE_MAP);
+CMapServerManager::~CMapServerManager() {
+    DeleteCriticalSection(&this->m_critSVRCODE_MAP);
 }
 
 
-void CMapServerManager::Clear()
-{
-	this->m_bMapDataLoadOk = FALSE;
+void CMapServerManager::Clear() {
+    this->m_bMapDataLoadOk = FALSE;
 
-	for ( int iGROUP_COUNT=0;iGROUP_COUNT<MAX_MAP_GROUPS;iGROUP_COUNT++)
-	{
-		this->m_iMAPSVR_GROUP_COUNT[iGROUP_COUNT] = 0;
+    for (int iGROUP_COUNT = 0; iGROUP_COUNT < MAX_MAP_GROUPS; iGROUP_COUNT++) {
+        this->m_iMAPSVR_GROUP_COUNT[iGROUP_COUNT] = 0;
 
-		for ( int iSUB_GROUP_COUNT=0;iSUB_GROUP_COUNT<MAX_MAP_SUBGROUPS;iSUB_GROUP_COUNT++)
-		{
-			this->m_MAPSVR_DATA[iGROUP_COUNT][iSUB_GROUP_COUNT].Clear(1);
-		}
-	}
+        for (int iSUB_GROUP_COUNT = 0; iSUB_GROUP_COUNT < MAX_MAP_SUBGROUPS; iSUB_GROUP_COUNT++) {
+            this->m_MAPSVR_DATA[iGROUP_COUNT][iSUB_GROUP_COUNT].Clear(1);
+        }
+    }
 
-	this->m_mapSVRCODE_MAP.clear();
+    this->m_mapSVRCODE_MAP.clear();
 }
 
-BOOL CMapServerManager::LoadData(char* lpszFileName)
-{
-	if ( (lpszFileName == NULL) || ( strcmp(lpszFileName, "") == 0 ) ) 
-	{
-		g_Log.MsgBox("File not found %s", lpszFileName);
-		ExitProcess(1);
-	}
+BOOL CMapServerManager::LoadData(char *lpszFileName) {
+    if ((lpszFileName == NULL) || (strcmp(lpszFileName, "") == 0)) {
+        g_Log.MsgBox("File not found %s", lpszFileName);
+        ExitProcess(1);
+    }
 
-	EnterCriticalSection(&this->m_critSVRCODE_MAP);
+    EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-	this->Clear();
+    this->Clear();
 
-	pugi::xml_document file;
-	pugi::xml_parse_result res = file.load_file(lpszFileName);
+    pugi::xml_document file;
+    pugi::xml_parse_result res = file.load_file(lpszFileName);
 
-	if (res.status != pugi::status_ok)
-	{
-		g_Log.MsgBox("File not found %s", lpszFileName);
-		ExitProcess(1);	
-	}
+    if (res.status != pugi::status_ok) {
+        g_Log.MsgBox("File not found %s", lpszFileName);
+        ExitProcess(1);
+    }
 
-	pugi::xml_node mapserver = file.child("MapServer");
-	pugi::xml_node serverinfo = mapserver.child("ServerInfo");
-	pugi::xml_node serverlist = mapserver.child("ServerList");
-	pugi::xml_node servermapping = mapserver.child("ServerMapping");
-	char *cvstr;
-	char szTemp[128];
+    pugi::xml_node mapserver = file.child("MapServer");
+    pugi::xml_node serverinfo = mapserver.child("ServerInfo");
+    pugi::xml_node serverlist = mapserver.child("ServerList");
+    pugi::xml_node servermapping = mapserver.child("ServerMapping");
+    char *cvstr;
+    char szTemp[128];
 
-	strcpy(szGameServerExeSerial, serverinfo.attribute("Serial").as_string());
-	strcpy(szTemp, serverinfo.attribute("Version").as_string());
+    strcpy(szGameServerExeSerial, serverinfo.attribute("Serial").as_string());
+    strcpy(szTemp, serverinfo.attribute("Version").as_string());
 
-	cvstr = strtok(szTemp, ".");
-	szClientVersion[0] = cvstr[0];
-	cvstr = strtok(NULL, ".");
-	szClientVersion[1] = cvstr[0];
-	szClientVersion[2] = cvstr[1];
-	cvstr = strtok(NULL, ".");
-	szClientVersion[3] = cvstr[0];
-	szClientVersion[4] = cvstr[1];
+    cvstr = strtok(szTemp, ".");
+    szClientVersion[0] = cvstr[0];
+    cvstr = strtok(NULL, ".");
+    szClientVersion[1] = cvstr[0];
+    szClientVersion[2] = cvstr[1];
+    cvstr = strtok(NULL, ".");
+    szClientVersion[3] = cvstr[0];
+    szClientVersion[4] = cvstr[1];
 
-	for (pugi::xml_node server = serverlist.child("Server"); server; server = server.next_sibling())
-	{
-		char szIpAddr[16] = { 0 };
+    for (pugi::xml_node server = serverlist.child("Server"); server; server = server.next_sibling()) {
+        char szIpAddr[16] = {0};
 
-		short sSVR_CODE = server.attribute("Code").as_int();
-		short sMAPSVR_GROUP = server.attribute("Group").as_int();
-		int iInitSetVal = server.attribute("Initiation").as_int();
+        short sSVR_CODE = server.attribute("Code").as_int();
+        short sMAPSVR_GROUP = server.attribute("Group").as_int();
+        int iInitSetVal = server.attribute("Initiation").as_int();
 
-		memcpy(szIpAddr, server.attribute("IP").as_string(), 16);
-		szIpAddr[15] = 0;
+        memcpy(szIpAddr, server.attribute("IP").as_string(), 16);
+        szIpAddr[15] = 0;
 
-		WORD wPortNum = server.attribute("Port").as_int();
+        WORD wPortNum = server.attribute("Port").as_int();
 
-		if (sSVR_CODE < 0)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : sSVR_CODE < 0 (SVR:%d) - 1",
-				sSVR_CODE);
+        if (sSVR_CODE < 0) {
+            g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : sSVR_CODE < 0 (SVR:%d) - 1",
+                         sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (iInitSetVal != -1 && iInitSetVal != 0 && iInitSetVal != 1)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : iInitSetting Value:%d (SVR:%d) - 1",
-				iInitSetVal, sSVR_CODE);
+        if (iInitSetVal != -1 && iInitSetVal != 0 && iInitSetVal != 1) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : iInitSetting Value:%d (SVR:%d) - 1",
+                    iInitSetVal, sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (!strcmp(szIpAddr, ""))
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : No IpAddress (SVR:%d)",
-				sSVR_CODE);
+        if (!strcmp(szIpAddr, "")) {
+            g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : No IpAddress (SVR:%d)",
+                         sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (CHECK_LIMIT(sMAPSVR_GROUP, MAX_MAP_GROUPS) == FALSE)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : Map Server Group Index (IDX:%d)",
-				sMAPSVR_GROUP);
+        if (CHECK_LIMIT(sMAPSVR_GROUP, MAX_MAP_GROUPS) == FALSE) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : Map Server Group Index (IDX:%d)",
+                    sMAPSVR_GROUP);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (this->m_iMAPSVR_GROUP_COUNT[sMAPSVR_GROUP] >= MAX_MAP_SUBGROUPS)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : No Space to Save SvrInfo (SVR:%d)",
-				sSVR_CODE);
+        if (this->m_iMAPSVR_GROUP_COUNT[sMAPSVR_GROUP] >= MAX_MAP_SUBGROUPS) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : No Space to Save SvrInfo (SVR:%d)",
+                    sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		_MAPSVR_DATA * lpMapSvrData = NULL;
+        _MAPSVR_DATA *lpMapSvrData = NULL;
 
-		lpMapSvrData = &this->m_MAPSVR_DATA[sMAPSVR_GROUP][this->m_iMAPSVR_GROUP_COUNT[sMAPSVR_GROUP]];
+        lpMapSvrData = &this->m_MAPSVR_DATA[sMAPSVR_GROUP][this->m_iMAPSVR_GROUP_COUNT[sMAPSVR_GROUP]];
 
-		lpMapSvrData->Clear(iInitSetVal);
-		lpMapSvrData->m_bIN_USE = TRUE;
-		lpMapSvrData->m_sSVR_CODE = sSVR_CODE;
-		lpMapSvrData->m_btMAPSVR_GROUP = sMAPSVR_GROUP;
-		lpMapSvrData->m_wPORT = wPortNum;
-		memcpy(lpMapSvrData->m_cIPADDR, szIpAddr, 16);
-		lpMapSvrData->m_cIPADDR[15] = 0;
+        lpMapSvrData->Clear(iInitSetVal);
+        lpMapSvrData->m_bIN_USE = TRUE;
+        lpMapSvrData->m_sSVR_CODE = sSVR_CODE;
+        lpMapSvrData->m_btMAPSVR_GROUP = sMAPSVR_GROUP;
+        lpMapSvrData->m_wPORT = wPortNum;
+        memcpy(lpMapSvrData->m_cIPADDR, szIpAddr, 16);
+        lpMapSvrData->m_cIPADDR[15] = 0;
 
-		this->m_mapSVRCODE_MAP.insert(std::pair<int, _MAPSVR_DATA *>(sSVR_CODE, lpMapSvrData));
-		this->m_iMAPSVR_GROUP_COUNT[sMAPSVR_GROUP]++;
-	}
+        this->m_mapSVRCODE_MAP.insert(std::pair<int, _MAPSVR_DATA *>(sSVR_CODE, lpMapSvrData));
+        this->m_iMAPSVR_GROUP_COUNT[sMAPSVR_GROUP]++;
+    }
 
-	for (pugi::xml_node server = servermapping.child("Server"); server; server = server.next_sibling())
-	{
-		_MAPSVR_DATA * lpMapSvrData = NULL;
+    for (pugi::xml_node server = servermapping.child("Server"); server; server = server.next_sibling()) {
+        _MAPSVR_DATA *lpMapSvrData = NULL;
 
-		short sSVR_CODE = server.attribute("Code").as_int();
-		BYTE btNotMoveOption = server.attribute("MoveAble").as_int();
-		WORD wMapNum = server.attribute("MapNumber").as_int();
-		short sDEST_SVR_CODE = server.attribute("DestServerCode").as_int();
+        short sSVR_CODE = server.attribute("Code").as_int();
+        BYTE btNotMoveOption = server.attribute("MoveAble").as_int();
+        WORD wMapNum = server.attribute("MapNumber").as_int();
+        short sDEST_SVR_CODE = server.attribute("DestServerCode").as_int();
 
-		if (sSVR_CODE < 0)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : sSVR_CODE < 0 (SVR:%d) - 2",
-				sSVR_CODE);
+        if (sSVR_CODE < 0) {
+            g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : sSVR_CODE < 0 (SVR:%d) - 2",
+                         sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (sDEST_SVR_CODE < -2)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : sDEST_SVR_CODE < -1 (SVR:%d, DEST_SVR:%d) - 2",
-				sSVR_CODE, sDEST_SVR_CODE);
+        if (sDEST_SVR_CODE < -2) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : sDEST_SVR_CODE < -1 (SVR:%d, DEST_SVR:%d) - 2",
+                    sSVR_CODE, sDEST_SVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sSVR_CODE);
+        std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sSVR_CODE);
 
-		if (it == this->m_mapSVRCODE_MAP.end())
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : sSVR_CODE wasn't registered (SVR:%d)",
-				sSVR_CODE);
+        if (it == this->m_mapSVRCODE_MAP.end()) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : sSVR_CODE wasn't registered (SVR:%d)",
+                    sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		lpMapSvrData = it->second;
+        lpMapSvrData = it->second;
 
-		if (lpMapSvrData == NULL)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData == NULL (SVR:%d)",
-				sSVR_CODE);
+        if (lpMapSvrData == NULL) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData == NULL (SVR:%d)",
+                    sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (lpMapSvrData->m_bIN_USE == FALSE)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_bIN_USE == FALSE (SVR:%d)",
-				sSVR_CODE);
+        if (lpMapSvrData->m_bIN_USE == FALSE) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_bIN_USE == FALSE (SVR:%d)",
+                    sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (lpMapSvrData->m_sSVR_CODE != sSVR_CODE)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_sSVR_CODE != sSVR_CODE (SVR:%d)",
-				sSVR_CODE);
+        if (lpMapSvrData->m_sSVR_CODE != sSVR_CODE) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_sSVR_CODE != sSVR_CODE (SVR:%d)",
+                    sSVR_CODE);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (btNotMoveOption != 0 && btNotMoveOption != 1)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_sSVR_CODE != sSVR_CODE (SVR:%d, OPT:%d)",
-				sSVR_CODE, btNotMoveOption);
+        if (btNotMoveOption != 0 && btNotMoveOption != 1) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_sSVR_CODE != sSVR_CODE (SVR:%d, OPT:%d)",
+                    sSVR_CODE, btNotMoveOption);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		if (CHECK_LIMIT(wMapNum, MAX_NUMBER_MAP) == FALSE)
-		{
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : Map Number is out of bound (SVR:%d, MAP:%d)",
-				sSVR_CODE, wMapNum);
+        if (CHECK_LIMIT(wMapNum, MAX_NUMBER_MAP) == FALSE) {
+            g_Log.MsgBox(
+                    "[MapServerMng] CMapServerManager::LoadData() - file load error : Map Number is out of bound (SVR:%d, MAP:%d)",
+                    sSVR_CODE, wMapNum);
 
-			return FALSE;
-		}
+            return FALSE;
+        }
 
-		switch (btNotMoveOption)
-		{
-		case 0:
-			lpMapSvrData->m_sMAP_MOVE[wMapNum] = sDEST_SVR_CODE;
-			break;
-		case 1:
-			lpMapSvrData->m_sMAP_MOVE[wMapNum] = -3;
-			break;
-		default:
-			g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_sSVR_CODE != sSVR_CODE (SVR:%d, OPT:%d)",
-				sSVR_CODE, btNotMoveOption);
-			break;
-		}
-	}
+        switch (btNotMoveOption) {
+            case 0:
+                lpMapSvrData->m_sMAP_MOVE[wMapNum] = sDEST_SVR_CODE;
+                break;
+            case 1:
+                lpMapSvrData->m_sMAP_MOVE[wMapNum] = -3;
+                break;
+            default:
+                g_Log.MsgBox(
+                        "[MapServerMng] CMapServerManager::LoadData() - file load error : lpMapSvrData->m_sSVR_CODE != sSVR_CODE (SVR:%d, OPT:%d)",
+                        sSVR_CODE, btNotMoveOption);
+                break;
+        }
+    }
 
-	std::map<int  ,_MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(g_ConfigRead.server.GetGameServerCode());
+    std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(g_ConfigRead.server.GetGameServerCode());
 
-	if ( it != this->m_mapSVRCODE_MAP.end() )
-	{
-		this->m_lpThisMapSvrData = it->second;
-	}
+    if (it != this->m_mapSVRCODE_MAP.end()) {
+        this->m_lpThisMapSvrData = it->second;
+    } else {
+        this->m_lpThisMapSvrData = NULL;
+    }
 
-	else
-	{
-		this->m_lpThisMapSvrData = NULL;
-	}
+    if (this->m_lpThisMapSvrData == NULL) {
+        g_Log.MsgBox(
+                "[MapServerMng] CMapServerManager::LoadData() - file load error : This GameServerCode (%d) doesn't Exist at file '%s' != sSVR_CODE",
+                g_ConfigRead.server.GetGameServerCode(), lpszFileName);
 
-	if ( this->m_lpThisMapSvrData == NULL )
-	{
-		g_Log.MsgBox("[MapServerMng] CMapServerManager::LoadData() - file load error : This GameServerCode (%d) doesn't Exist at file '%s' != sSVR_CODE",
-			g_ConfigRead.server.GetGameServerCode(), lpszFileName);
+        return FALSE;
+    }
 
-		return FALSE;
-	}
+    this->m_bMapDataLoadOk = TRUE;
 
-	this->m_bMapDataLoadOk = TRUE;
+    LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-	LeaveCriticalSection(&this->m_critSVRCODE_MAP);
-
-	return TRUE;
+    return TRUE;
 }
 
 
+BOOL CMapServerManager::CheckMapCanMove(int iMAP_NUM) {
+    if (MapNumberCheck(iMAP_NUM) == 0) {
+        return FALSE;
+    }
 
-BOOL CMapServerManager::CheckMapCanMove(int iMAP_NUM)
-{
-	if ( MapNumberCheck(iMAP_NUM) == 0 )
-	{
-		return FALSE;
-	}
+    _MAPSVR_DATA *lpMapSvrData = this->m_lpThisMapSvrData;
 
-	_MAPSVR_DATA * lpMapSvrData = this->m_lpThisMapSvrData;
+    if (lpMapSvrData == NULL) {
+        return FALSE;
+    }
 
-	if ( lpMapSvrData == NULL )
-	{
-		return FALSE;
-	}
+    if (lpMapSvrData->m_bIN_USE == FALSE) {
+        return FALSE;
+    }
 
-	if ( lpMapSvrData->m_bIN_USE == FALSE )
-	{
-		return FALSE;
-	}
+    short sMAP_MOVE_INFO = lpMapSvrData->m_sMAP_MOVE[iMAP_NUM];
 
-	short sMAP_MOVE_INFO = lpMapSvrData->m_sMAP_MOVE[iMAP_NUM];
+    if (sMAP_MOVE_INFO != -3) {
+        return FALSE;
+    }
 
-	if ( sMAP_MOVE_INFO != -3 )
-	{
-		return FALSE;
-	}
-
-	return TRUE;
+    return TRUE;
 }
 
 
+short CMapServerManager::CheckMoveMapSvr(int iIndex, int iMAP_NUM, short sSVR_CODE_BEFORE) {
+    if (this->m_bMapDataLoadOk == FALSE)
+        return g_ConfigRead.server.GetGameServerCode();
 
+    if (!gObjIsConnected(iIndex))
+        return g_ConfigRead.server.GetGameServerCode();
 
+    if (!MapNumberCheck(iMAP_NUM)) {
+        g_Log.AddC(TColor::Red, "[MapServerMng] CheckMoveMapSvr() - Map Index doesn't exist [%s][%s] : %d",
+                   gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM);
 
-short CMapServerManager::CheckMoveMapSvr(int iIndex, int iMAP_NUM, short sSVR_CODE_BEFORE)
-{
-	if ( this->m_bMapDataLoadOk == FALSE )
-		return g_ConfigRead.server.GetGameServerCode();
+        return g_ConfigRead.server.GetGameServerCode();
+    }
 
-	if ( !gObjIsConnected(iIndex))
-		return g_ConfigRead.server.GetGameServerCode();
+    _MAPSVR_DATA *lpMapSvrData = this->m_lpThisMapSvrData;
 
-	if ( !MapNumberCheck(iMAP_NUM))
-	{
-		g_Log.AddC(TColor::Red,  "[MapServerMng] CheckMoveMapSvr() - Map Index doesn't exist [%s][%s] : %d",
-			gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM);
+    if (lpMapSvrData == NULL) {
+        g_Log.AddC(TColor::Red, "[MapServerMng] CheckMoveMapSvr() - m_lpThisMapSvrData == NULL [%s][%s] : %d",
+                   gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM);
 
-		return g_ConfigRead.server.GetGameServerCode();
-	}
+        return g_ConfigRead.server.GetGameServerCode();
+    }
 
-	_MAPSVR_DATA * lpMapSvrData = this->m_lpThisMapSvrData;
+    if (lpMapSvrData->m_bIN_USE == FALSE) {
+        g_Log.AddC(TColor::Red, "[MapServerMng] CheckMoveMapSvr() - lpMapSvrData->m_bIN_USE == FALSE [%s][%s] : %d",
+                   gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM);
 
-	if ( lpMapSvrData == NULL )
-	{
-		g_Log.AddC(TColor::Red,  "[MapServerMng] CheckMoveMapSvr() - m_lpThisMapSvrData == NULL [%s][%s] : %d",
-			gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM);
+        return g_ConfigRead.server.GetGameServerCode();
+    }
 
-		return g_ConfigRead.server.GetGameServerCode();
-	}
+    if (gObj[iIndex].MapNumber == MAP_INDEX_CHAOSCASTLE_SURVIVAL)
+        iMAP_NUM = MAP_INDEX_LORENMARKET;
+    if (ITL_MAP_RANGE(gObj[iIndex].MapNumber))
+        iMAP_NUM = MAP_INDEX_LORENMARKET;
+    if (IT_MAP_RANGE(gObj[iIndex].MapNumber))
+        iMAP_NUM = MAP_INDEX_LORENMARKET;
 
-	if ( lpMapSvrData->m_bIN_USE == FALSE )
-	{
-		g_Log.AddC(TColor::Red,  "[MapServerMng] CheckMoveMapSvr() - lpMapSvrData->m_bIN_USE == FALSE [%s][%s] : %d",
-			gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM);
+    short sMAP_MOVE_INFO = lpMapSvrData->m_sMAP_MOVE[iMAP_NUM];
 
-		return g_ConfigRead.server.GetGameServerCode();
-	}
+    switch (sMAP_MOVE_INFO) {
+        case -1: {
+            _MAPSVR_DATA *lpDestMapSvrData = NULL;
 
-	if (gObj[iIndex].MapNumber == MAP_INDEX_CHAOSCASTLE_SURVIVAL)
-		iMAP_NUM = MAP_INDEX_LORENMARKET;
-	if (ITL_MAP_RANGE(gObj[iIndex].MapNumber))
-		iMAP_NUM = MAP_INDEX_LORENMARKET;
-	if (IT_MAP_RANGE(gObj[iIndex].MapNumber))
-		iMAP_NUM = MAP_INDEX_LORENMARKET;
+            if (sSVR_CODE_BEFORE != -1) {
+                EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-	short sMAP_MOVE_INFO = lpMapSvrData->m_sMAP_MOVE[iMAP_NUM];
+                std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sSVR_CODE_BEFORE);
 
-	switch ( sMAP_MOVE_INFO )
-	{
-		case -1:
-			{
-				_MAPSVR_DATA * lpDestMapSvrData = NULL;
+                if (it != this->m_mapSVRCODE_MAP.end()) {
+                    lpDestMapSvrData = it->second;
+                }
 
-				if ( sSVR_CODE_BEFORE != -1 )
-				{
-					EnterCriticalSection(&this->m_critSVRCODE_MAP);
+                LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-					std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sSVR_CODE_BEFORE);
+                if (lpDestMapSvrData != NULL) {
+                    if (lpDestMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3) {
+                        return sSVR_CODE_BEFORE;
+                    }
+                }
+            }
 
-					if ( it != this->m_mapSVRCODE_MAP.end() )
-					{
-						lpDestMapSvrData = it->second;
-					}
+            std::vector < _MAPSVR_DATA * > vtMapSvrData;
 
-					LeaveCriticalSection(&this->m_critSVRCODE_MAP);
+            EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-					if ( lpDestMapSvrData != NULL )
-					{
-						if ( lpDestMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3 )
-						{
-							return sSVR_CODE_BEFORE;
-						}
-					}
-				}
+            for (std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.begin();
+                 it != this->m_mapSVRCODE_MAP.end(); it++) {
+                _MAPSVR_DATA *lpTempMapSvrData = it->second;
 
-				std::vector<_MAPSVR_DATA *> vtMapSvrData;
+                if (lpTempMapSvrData != NULL &&
+                    lpTempMapSvrData->m_bIN_USE == TRUE &&
+                    lpTempMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3) {
+                    vtMapSvrData.push_back(it->second);
+                }
+            }
 
-				EnterCriticalSection(&this->m_critSVRCODE_MAP);
+            LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-				for ( std::map<int ,_MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.begin() ; it != this->m_mapSVRCODE_MAP.end() ;it++)
-				{
-					_MAPSVR_DATA * lpTempMapSvrData = it->second;
+            short sDestServerCode = -1;
 
-					if ( lpTempMapSvrData != NULL &&
-						 lpTempMapSvrData->m_bIN_USE == TRUE &&
-						 lpTempMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3)
-					{
-						vtMapSvrData.push_back(it->second);
-					}
-				}
+            if (vtMapSvrData.empty() == 0) {
+                sDestServerCode = vtMapSvrData[rand() % vtMapSvrData.size()]->m_sSVR_CODE;
+            }
 
-				LeaveCriticalSection(&this->m_critSVRCODE_MAP);
+            if (sDestServerCode != -1) {
+                g_Log.Add(
+                        "[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d(State Map:%d X:%d Y:%d)",
+                        gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sDestServerCode,
+                        gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
 
-				short sDestServerCode = -1;
+                return sDestServerCode;
+            }
+        }
+            break;
 
-				if ( vtMapSvrData.empty() == 0 )
-				{
-					sDestServerCode = vtMapSvrData[rand()%vtMapSvrData.size()]->m_sSVR_CODE;
-				}
+        case -2: {
+            _MAPSVR_DATA *lpDestMapSvrData = NULL;
 
-				if ( sDestServerCode != -1 )
-				{
-					g_Log.Add("[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d(State Map:%d X:%d Y:%d)",
-						gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sDestServerCode,
-						gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
+            if (sSVR_CODE_BEFORE != -1) {
+                EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-					return sDestServerCode;
-				}
-			}
-			break;
+                std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sSVR_CODE_BEFORE);
 
-		case -2:
-			{
-				_MAPSVR_DATA * lpDestMapSvrData = NULL;
+                if (it != this->m_mapSVRCODE_MAP.end()) {
+                    lpDestMapSvrData = it->second;
+                }
 
-				if ( sSVR_CODE_BEFORE != -1 )
-				{
-					EnterCriticalSection(&this->m_critSVRCODE_MAP);
+                LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-					std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sSVR_CODE_BEFORE);
+                if (lpDestMapSvrData != NULL) {
+                    if (lpDestMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3) {
+                        return sSVR_CODE_BEFORE;
+                    }
+                }
+            }
 
-					if ( it != this->m_mapSVRCODE_MAP.end() )
-					{
-						lpDestMapSvrData = it->second;
-					}
+            short sDestServerCode = -1;
 
-					LeaveCriticalSection(&this->m_critSVRCODE_MAP);
+            EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-					if ( lpDestMapSvrData != NULL )
-					{
-						if ( lpDestMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3 )
-						{
-							return sSVR_CODE_BEFORE;
-						}
-					}
-				}
-				
-				short sDestServerCode = -1;
+            for (std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.begin();
+                 it != this->m_mapSVRCODE_MAP.end(); it++) {
+                _MAPSVR_DATA *lpTempMapSvrData = it->second;
 
-				EnterCriticalSection(&this->m_critSVRCODE_MAP);
+                if (lpTempMapSvrData != NULL &&
+                    lpTempMapSvrData->m_bIN_USE == TRUE &&
+                    lpTempMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3) {
+                    sDestServerCode = lpTempMapSvrData->m_sSVR_CODE;
+                }
+            }
 
-				for ( std::map<int ,_MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.begin() ; it != this->m_mapSVRCODE_MAP.end() ;it++)
-				{
-					_MAPSVR_DATA * lpTempMapSvrData = it->second;
+            LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-					if ( lpTempMapSvrData != NULL &&
-						 lpTempMapSvrData->m_bIN_USE == TRUE &&
-						 lpTempMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3)
-					{
-						sDestServerCode = lpTempMapSvrData->m_sSVR_CODE;
-					}
-				}
+            if (sDestServerCode != -1) {
+                g_Log.Add(
+                        "[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d(State Map:%d X:%d Y:%d)",
+                        gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sDestServerCode,
+                        gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
 
-				LeaveCriticalSection(&this->m_critSVRCODE_MAP);
+                return sDestServerCode;
+            }
+        }
+            break;
 
-				if ( sDestServerCode != -1 )
-				{
-					g_Log.Add("[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d(State Map:%d X:%d Y:%d)",
-						gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sDestServerCode,
-						gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
+        case -3:
+            g_Log.Add(
+                    "[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d (State Map:%d X:%d Y:%d)",
+                    gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, g_ConfigRead.server.GetGameServerCode(),
+                    gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
 
-					return sDestServerCode;
-				}
-			}
-			break;
+            return g_ConfigRead.server.GetGameServerCode();
+            break;
 
-		case -3:
-			g_Log.Add("[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d (State Map:%d X:%d Y:%d)",
-				gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, g_ConfigRead.server.GetGameServerCode(),
-				gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
+        default:
+            if (sMAP_MOVE_INFO > -1) {
+                _MAPSVR_DATA *lpDestMapSvrData = NULL;
 
-			return g_ConfigRead.server.GetGameServerCode();
-			break;
+                EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-		default:
-			if ( sMAP_MOVE_INFO > -1 )
-			{
-				_MAPSVR_DATA * lpDestMapSvrData = NULL;
+                std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sMAP_MOVE_INFO);
 
-				EnterCriticalSection(&this->m_critSVRCODE_MAP);
+                if (it != this->m_mapSVRCODE_MAP.end()) {
+                    lpDestMapSvrData = it->second;
+                }
 
-				std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(sMAP_MOVE_INFO);
+                LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-				if ( it != this->m_mapSVRCODE_MAP.end() )
-				{
-					lpDestMapSvrData = it->second;
-				}
+                if (lpDestMapSvrData != NULL &&
+                    lpDestMapSvrData->m_bIN_USE == TRUE &&
+                    lpDestMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3) {
+                    return sMAP_MOVE_INFO;
+                }
 
-				LeaveCriticalSection(&this->m_critSVRCODE_MAP);
+                short sDestServerCode = -1;
 
-				if ( lpDestMapSvrData != NULL &&
-					 lpDestMapSvrData->m_bIN_USE == TRUE &&
-					 lpDestMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3)
-				{
-					return sMAP_MOVE_INFO;
-				}
+                EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-				short sDestServerCode = -1;
+                for (it = this->m_mapSVRCODE_MAP.begin(); it != this->m_mapSVRCODE_MAP.end(); it++) {
+                    _MAPSVR_DATA *lpTempMapSvrData = it->second;
 
-				EnterCriticalSection(&this->m_critSVRCODE_MAP);
+                    if (lpTempMapSvrData != NULL &&
+                        lpTempMapSvrData->m_bIN_USE == TRUE &&
+                        lpTempMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3) {
+                        sDestServerCode = lpTempMapSvrData->m_sSVR_CODE;
+                    }
+                }
 
-				for ( it = this->m_mapSVRCODE_MAP.begin() ; it != this->m_mapSVRCODE_MAP.end() ;it++)
-				{
-					_MAPSVR_DATA * lpTempMapSvrData = it->second;
+                LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-					if ( lpTempMapSvrData != NULL &&
-						 lpTempMapSvrData->m_bIN_USE == TRUE &&
-						 lpTempMapSvrData->m_sMAP_MOVE[iMAP_NUM] == -3)
-					{
-						sDestServerCode = lpTempMapSvrData->m_sSVR_CODE;
-					}
-				}
-				
-				LeaveCriticalSection(&this->m_critSVRCODE_MAP);
+                if (sDestServerCode != -1) {
+                    g_Log.Add(
+                            "[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d(State Map:%d X:%d Y:%d)",
+                            gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sDestServerCode,
+                            gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
 
-				if ( sDestServerCode != -1 )
-				{
-					g_Log.Add("[MapServerMng] CheckMoveMapSvr() - MapServer Check OK [%s][%s] : MAP-%d / SVR-%d(State Map:%d X:%d Y:%d)",
-						gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sDestServerCode,
-						gObj[iIndex].MapNumber, gObj[iIndex].X, gObj[iIndex].Y);
+                    return sDestServerCode;
+                }
+            } else {
+                g_Log.AddC(TColor::Red,
+                           "[MapServerMng] CheckMoveMapSvr() - Unknown MapMove Info [%s][%s] : MAP-%d / INFO-%d",
+                           gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sMAP_MOVE_INFO);
 
-					return sDestServerCode;
-				}
-			}
-			else
-			{
-				g_Log.AddC(TColor::Red,  "[MapServerMng] CheckMoveMapSvr() - Unknown MapMove Info [%s][%s] : MAP-%d / INFO-%d",
-					gObj[iIndex].AccountID, gObj[iIndex].Name, iMAP_NUM, sMAP_MOVE_INFO);
+                return g_ConfigRead.server.GetGameServerCode();
+            }
+    }
 
-				return g_ConfigRead.server.GetGameServerCode();
-			}
-	}
-
-	return g_ConfigRead.server.GetGameServerCode();
+    return g_ConfigRead.server.GetGameServerCode();
 }
 
 
+BOOL CMapServerManager::GetSvrCodeData(WORD wServerCode, char *lpszIpAddress, WORD *lpwPort) {
+    if (!lpszIpAddress || !lpwPort)
+        return FALSE;
 
+    _MAPSVR_DATA *lpMapSvrData = NULL;
 
-BOOL CMapServerManager::GetSvrCodeData(WORD wServerCode, char* lpszIpAddress, WORD * lpwPort)
-{
-	if ( !lpszIpAddress || !lpwPort )
-		return FALSE;
+    EnterCriticalSection(&this->m_critSVRCODE_MAP);
 
-	_MAPSVR_DATA * lpMapSvrData = NULL;
+    std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(wServerCode);
 
-	EnterCriticalSection(&this->m_critSVRCODE_MAP);
+    if (it != this->m_mapSVRCODE_MAP.end()) {
+        lpMapSvrData = it->second;
+    }
 
-	std::map<int, _MAPSVR_DATA *>::iterator it = this->m_mapSVRCODE_MAP.find(wServerCode);
+    LeaveCriticalSection(&this->m_critSVRCODE_MAP);
 
-	if ( it != this->m_mapSVRCODE_MAP.end() )
-	{
-		lpMapSvrData = it->second;
-	}
+    if (lpMapSvrData == NULL)
+        return FALSE;
 
-	LeaveCriticalSection(&this->m_critSVRCODE_MAP);
+    strcpy(lpszIpAddress, lpMapSvrData->m_cIPADDR);
+    *lpwPort = lpMapSvrData->m_wPORT;
 
-	if ( lpMapSvrData == NULL )
-		return FALSE;
-
-	strcpy(lpszIpAddress, lpMapSvrData->m_cIPADDR);
-	*lpwPort = lpMapSvrData->m_wPORT;
-
-	return TRUE;
+    return TRUE;
 }
 
 
-
-
-	
 CMapServerManager g_MapServerManager;

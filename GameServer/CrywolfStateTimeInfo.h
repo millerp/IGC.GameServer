@@ -9,111 +9,96 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CCrywolfStateTimeInfo
-{
+class CCrywolfStateTimeInfo {
 
 public:
 
-	CCrywolfStateTimeInfo()
-	{
-		this->Reset();
-	}
+    CCrywolfStateTimeInfo() {
+        this->Reset();
+    }
 
-	void Reset()
-	{
-		this->m_bUsed = FALSE;
-		this->m_iStateNumber = -1;	
-		this->m_iYear = -1;	
-		this->m_iMonth = -1;	
-		this->m_iDay = -1;	
-		this->m_iDayOfWeek = -1;	
-		this->m_iHour = -1;	
-		this->m_iMinute = -1;	
-		this->m_iSecond = -1;	
-		this->m_iContinuanceTime = 0;	
-		this->m_dwAppliedTickCount = 0;	
-	}
+    void Reset() {
+        this->m_bUsed = FALSE;
+        this->m_iStateNumber = -1;
+        this->m_iYear = -1;
+        this->m_iMonth = -1;
+        this->m_iDay = -1;
+        this->m_iDayOfWeek = -1;
+        this->m_iHour = -1;
+        this->m_iMinute = -1;
+        this->m_iSecond = -1;
+        this->m_iContinuanceTime = 0;
+        this->m_dwAppliedTickCount = 0;
+    }
 
-	void SetAppliedTime()
-	{
-		this->m_dwAppliedTickCount = GetTickCount();
-	}
+    void SetAppliedTime() {
+        this->m_dwAppliedTickCount = GetTickCount();
+    }
 
-	void ResetAppliedTime()
-	{
-		this->m_dwAppliedTickCount = 0;
-	}
+    void ResetAppliedTime() {
+        this->m_dwAppliedTickCount = 0;
+    }
 
-	BOOL CheckContinuanceTime()
-	{
-		if ( (GetTickCount() - this->m_dwAppliedTickCount ) > this->m_iContinuanceTime )
-		{
-			return FALSE;
-		}
+    BOOL CheckContinuanceTime() {
+        if ((GetTickCount() - this->m_dwAppliedTickCount) > this->m_iContinuanceTime) {
+            return FALSE;
+        }
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 
-	BOOL CheckScheduleTime()
-	{
-		SYSTEMTIME Time;
-		GetLocalTime(&Time);
+    BOOL CheckScheduleTime() {
+        SYSTEMTIME Time;
+        GetLocalTime(&Time);
 
-		int iYear = Time.wYear;
-		int iMonth = Time.wMonth;
-		int iDay = Time.wDay;
-		int iDayOfWeek = Time.wDayOfWeek;
-		int iHour = Time.wHour;
-		int iMinute = Time.wMinute;
-		int iCrywolfState = -1;
+        int iYear = Time.wYear;
+        int iMonth = Time.wMonth;
+        int iDay = Time.wDay;
+        int iDayOfWeek = Time.wDayOfWeek;
+        int iHour = Time.wHour;
+        int iMinute = Time.wMinute;
+        int iCrywolfState = -1;
 
-		if( this->m_iMonth == -1 || this->m_iMonth == iMonth )
-		{
-			if( this->m_iDayOfWeek == -1 || this->m_iDayOfWeek == iDayOfWeek )
-			{
-				if( this->m_iDay == -1 || this->m_iDay == iDay )
-				{
-					if( this->m_iHour == iHour )
-					{
-						if( this->m_iMinute == iMinute )
-						{
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
+        if (this->m_iMonth == -1 || this->m_iMonth == iMonth) {
+            if (this->m_iDayOfWeek == -1 || this->m_iDayOfWeek == iDayOfWeek) {
+                if (this->m_iDay == -1 || this->m_iDay == iDay) {
+                    if (this->m_iHour == iHour) {
+                        if (this->m_iMinute == iMinute) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-	int GetLeftTime()
-	{
-		if ( this->CheckContinuanceTime() )
-		{
-			int iLeftTime = this->m_iContinuanceTime - (GetTickCount() - this->m_dwAppliedTickCount);
+    int GetLeftTime() {
+        if (this->CheckContinuanceTime()) {
+            int iLeftTime = this->m_iContinuanceTime - (GetTickCount() - this->m_dwAppliedTickCount);
 
-			if ( iLeftTime < 0 )
-				iLeftTime = 0;
+            if (iLeftTime < 0)
+                iLeftTime = 0;
 
-			return iLeftTime;
-		}
+            return iLeftTime;
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
 public:
 
-	BOOL m_bUsed;	// 0
-	int m_iStateNumber;	// 4
-	int m_iYear;	// 8
-	int m_iMonth;	// C
-	int m_iDay;	// 10
-	int m_iDayOfWeek;	// 14
-	int m_iHour;	// 18
-	int m_iMinute;	// 1C
-	int m_iSecond;	// 20
-	int m_iContinuanceTime;	// 24
-	DWORD m_dwAppliedTickCount;	// 28
+    BOOL m_bUsed;    // 0
+    int m_iStateNumber;    // 4
+    int m_iYear;    // 8
+    int m_iMonth;    // C
+    int m_iDay;    // 10
+    int m_iDayOfWeek;    // 14
+    int m_iHour;    // 18
+    int m_iMinute;    // 1C
+    int m_iSecond;    // 20
+    int m_iContinuanceTime;    // 24
+    DWORD m_dwAppliedTickCount;    // 28
 
 };
 

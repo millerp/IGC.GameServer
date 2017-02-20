@@ -10,25 +10,27 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CConMember
-{
+class CConMember {
 public:
 
-	CConMember();
-	virtual ~CConMember();
+    CConMember();
 
-	void Init();
-	BOOL IsMember(LPSTR AccountID);
-	void Load(LPSTR filename);
-	void Run();
+    virtual ~CConMember();
+
+    void Init();
+
+    BOOL IsMember(LPSTR AccountID);
+
+    void Load(LPSTR filename);
+
+    void Run();
 
 private:
-	
-	std::map<std::string, int> m_szAccount;
-	DWORD m_dwTickCount;
+
+    std::map<std::string, int> m_szAccount;
+    DWORD m_dwTickCount;
 
 };
-
 
 
 extern CConMember ConMember;

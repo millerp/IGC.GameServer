@@ -11,30 +11,37 @@
 
 #include "MyWinsockBase.h"
 
-class CwsGameServer : public MyWinsockBase
-{
+class CwsGameServer : public MyWinsockBase {
 
 public:
 
-	BOOL SetSocketIndex(SOCKET socket, int aIndex);
-	BOOL SetSocketBuffer(int index, SOCKET socket, LPSTR ip);
-	BOOL AcceptSocket(SOCKET& clientSocket, in_addr& cInAddr);
-	BOOL DataRecv(SOCKET socket);
-	BOOL FDWRITE_MsgDataSend(SOCKET socket);
-	BOOL DataSendW(int uindex, PCHAR buf, int len);
-	BOOL DataSocketSend(SOCKET socket, PCHAR buf, int len);
-	BOOL CreateServer(LPSTR ip_addr, WORD port, DWORD WinServerMsg, DWORD WinClientMsg);
+    BOOL SetSocketIndex(SOCKET socket, int aIndex);
 
-	CwsGameServer();
-	virtual ~CwsGameServer();
+    BOOL SetSocketBuffer(int index, SOCKET socket, LPSTR ip);
+
+    BOOL AcceptSocket(SOCKET &clientSocket, in_addr &cInAddr);
+
+    BOOL DataRecv(SOCKET socket);
+
+    BOOL FDWRITE_MsgDataSend(SOCKET socket);
+
+    BOOL DataSendW(int uindex, PCHAR buf, int len);
+
+    BOOL DataSocketSend(SOCKET socket, PCHAR buf, int len);
+
+    BOOL CreateServer(LPSTR ip_addr, WORD port, DWORD WinServerMsg, DWORD WinClientMsg);
+
+    CwsGameServer();
+
+    virtual ~CwsGameServer();
 
 public:
 
-	int m_SendSec;	// 1C
-	int m_SendSecTmp;	// 20
-	int m_RecvSec;	// 24
-	int m_RecvSecTmp;	// 28
-	DWORD m_WinClientMsg;	// 2C
+    int m_SendSec;    // 1C
+    int m_SendSecTmp;    // 20
+    int m_RecvSec;    // 24
+    int m_RecvSecTmp;    // 28
+    DWORD m_WinClientMsg;    // 2C
 };
 
 

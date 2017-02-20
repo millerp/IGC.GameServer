@@ -9,21 +9,22 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CDirPath
-{
+class CDirPath {
 
 public:
 
-	CDirPath();
-	virtual ~CDirPath();
+    CDirPath();
 
-	void SetFirstPath(LPSTR dir_path);
-	LPSTR GetNewPath(LPSTR npath);
+    virtual ~CDirPath();
+
+    void SetFirstPath(LPSTR dir_path);
+
+    LPSTR GetNewPath(LPSTR npath);
 
 private:
 
-	char m_path[260];	// 4
-	char m_newpath[260];	// 108
+    char m_path[260];    // 4
+    char m_newpath[260];    // 108
 };
 
 #endif

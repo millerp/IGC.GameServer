@@ -9,12 +9,10 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CCrywolfObjInfo::CCrywolfObjInfo()
-{
+CCrywolfObjInfo::CCrywolfObjInfo() {
 
 }
 
-CCrywolfObjInfo::~CCrywolfObjInfo()
-{
+CCrywolfObjInfo::~CCrywolfObjInfo() {
 
 }

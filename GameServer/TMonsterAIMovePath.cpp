@@ -11,98 +11,82 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-TMonsterAIMovePath::TMonsterAIMovePath()
-{
-	this->DelAllAIMonsterMovePath();
+TMonsterAIMovePath::TMonsterAIMovePath() {
+    this->DelAllAIMonsterMovePath();
 }
 
 
-
-TMonsterAIMovePath::~TMonsterAIMovePath()
-{
-	return;
+TMonsterAIMovePath::~TMonsterAIMovePath() {
+    return;
 }
 
 
+BOOL TMonsterAIMovePath::LoadData(LPSTR lpszFileName, LPSTR lpszSectionType) {
+    this->m_bDataLoad = FALSE;
 
+    if (!lpszFileName || !strcmp(lpszFileName, "")) {
+        g_Log.MsgBox("[Monster AI MovePath] - File load error : File Name Error");
+        return FALSE;
+    }
 
-BOOL TMonsterAIMovePath::LoadData(LPSTR lpszFileName, LPSTR lpszSectionType)
-{
-	this->m_bDataLoad = FALSE;
+    if (!lpszSectionType || !strcmp(lpszSectionType, "")) {
+        g_Log.MsgBox("[Monster AI MovePath] - File load error : Section Name Error");
+        return FALSE;
+    }
 
-	if ( !lpszFileName || !strcmp(lpszFileName, ""))
-	{
-		g_Log.MsgBox("[Monster AI MovePath] - File load error : File Name Error");
-		return FALSE;
-	}
+    try {
+        pugi::xml_document file;
+        pugi::xml_parse_result res = file.load_file(lpszFileName);
 
-	if ( !lpszSectionType || !strcmp(lpszSectionType, ""))
-	{
-		g_Log.MsgBox("[Monster AI MovePath] - File load error : Section Name Error");
-		return FALSE;
-	}
+        if (res.status != pugi::status_ok) {
+            g_Log.MsgBox("[Monster AI MovePath] - Can't Load %s (%s)", lpszFileName, res.description());
+            return FALSE;
+        }
 
-	try
-	{
-		pugi::xml_document file;
-		pugi::xml_parse_result res = file.load_file(lpszFileName);
+        this->DelAllAIMonsterMovePath();
 
-		if ( res.status != pugi::status_ok )
-		{
-			g_Log.MsgBox("[Monster AI MovePath] - Can't Load %s (%s)", lpszFileName, res.description());
-			return FALSE;
-		}
+        pugi::xml_node main = file.child("AIMovePath");
+        pugi::xml_node section = main.child(lpszSectionType);
 
-		this->DelAllAIMonsterMovePath();
+        for (pugi::xml_node spot = main.child("Spot"); spot; spot = spot.next_sibling()) {
+            int iSpotType = spot.attribute("Type").as_int();
+            int iMapNumber = spot.attribute("MapNumber").as_int();
+            int iX = spot.attribute("PosX").as_int();
+            int iY = spot.attribute("PosY").as_int();
 
-		pugi::xml_node main = file.child("AIMovePath");
-		pugi::xml_node section = main.child(lpszSectionType);
+            this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iType = iSpotType;
+            this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iMapNumber = iMapNumber;
+            this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iPathX = iX;
+            this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iPathY = iY;
 
-		for (pugi::xml_node spot = main.child("Spot"); spot; spot = spot.next_sibling())
-		{
-			int iSpotType = spot.attribute("Type").as_int();
-			int iMapNumber = spot.attribute("MapNumber").as_int();
-			int iX = spot.attribute("PosX").as_int();
-			int iY = spot.attribute("PosY").as_int();
+            this->m_iMovePathSpotCount++;
 
-			this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iType = iSpotType;
-			this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iMapNumber = iMapNumber;
-			this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iPathX = iX;
-			this->m_MovePathInfo[this->m_iMovePathSpotCount].m_iPathY = iY;
+            if (this->m_iMovePathSpotCount > MAX_MONSTER_AI_MOVE_PATH) {
+                g_Log.MsgBox("[Monster AI MovePath] Exceed Max Move Path-Spot ");
+                this->DelAllAIMonsterMovePath();
+                return FALSE;
+            }
+        }
 
-			this->m_iMovePathSpotCount++;
+        g_Log.AddC(TColor::Red, "[Monster AI MovePath ] - %s file is Loaded", lpszFileName);
+        this->m_bDataLoad = TRUE;
+    }
 
-			if ( this->m_iMovePathSpotCount > MAX_MONSTER_AI_MOVE_PATH )
-			{
-				g_Log.MsgBox("[Monster AI MovePath] Exceed Max Move Path-Spot ");
-				this->DelAllAIMonsterMovePath();
-				return FALSE;
-			}
-		}
+    catch (DWORD) {
+        g_Log.MsgBox("[Monster AI MovePath] - Loading Exception Error (%s) File. ", lpszFileName);
+    }
 
-		g_Log.AddC(TColor::Red,  "[Monster AI MovePath ] - %s file is Loaded", lpszFileName);
-		this->m_bDataLoad = TRUE;
-	}
-
-	catch(DWORD)
-	{
-		g_Log.MsgBox("[Monster AI MovePath] - Loading Exception Error (%s) File. ", lpszFileName);
-	}
-
-	return FALSE;
+    return FALSE;
 }
 
 
+BOOL TMonsterAIMovePath::DelAllAIMonsterMovePath() {
+    for (int i = 0; i < MAX_MONSTER_AI_MOVE_PATH; i++) {
+        this->m_MovePathInfo[i].Reset();
+    }
 
-BOOL TMonsterAIMovePath::DelAllAIMonsterMovePath()
-{
-	for ( int i=0;i<MAX_MONSTER_AI_MOVE_PATH;i++)
-	{
-		this->m_MovePathInfo[i].Reset();
-	}
+    this->m_iMovePathSpotCount = 0;
+    this->m_bDataLoad = FALSE;
 
-	this->m_iMovePathSpotCount = 0;
-	this->m_bDataLoad = FALSE;
-
-	return FALSE;
+    return FALSE;
 }

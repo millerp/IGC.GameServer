@@ -10,20 +10,21 @@
 #endif // _MSC_VER > 1000
 
 
-class TSync
-{
+class TSync {
 public:
 
-	TSync();
-	~TSync();
+    TSync();
 
-	void Lock();
-	void Unlock();
+    ~TSync();
+
+    void Lock();
+
+    void Unlock();
 
 private:
 
-	CRITICAL_SECTION m_cs;	// 0
-	LONG m_nLock;	// 18
+    CRITICAL_SECTION m_cs;    // 0
+    LONG m_nLock;    // 18
 };
 
 #endif

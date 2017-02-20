@@ -15,9 +15,9 @@
 #define MU_WINDOW_SIZE 0x1206F10 // S9
 #define MU_DRAW_VERSION 0x004DF445 // S9
 
-extern DWORD* g_Map;
+extern DWORD *g_Map;
 
-#define MAKE_NUMBERW(x,y)  ( (WORD)(((BYTE)((y)&0xFF)) |   ((BYTE)((x)&0xFF)<<8 ))  )
+#define MAKE_NUMBERW(x, y)  ( (WORD)(((BYTE)((y)&0xFF)) |   ((BYTE)((x)&0xFF)<<8 ))  )
 
 #define MU_GET_CHARR_POS1 0x00969F14 // S9
 #define MU_GET_CHARR_POS2 0x00829DDE // S9
@@ -44,23 +44,22 @@ extern DWORD* g_Map;
 
 //123CA8C
 
-#define pGameWindow				*(HWND*)(0x123CA8C)
+#define pGameWindow                *(HWND*)(0x123CA8C)
 
 //00958F37   55               PUSH EBP
 
 
-#define pGetPreviewStruct		((DWORD(__thiscall*)(LPVOID This, int ViewportID)) 0x958F37)
-#define pPreviewThis			((LPVOID(*)()) 0x437357)
+#define pGetPreviewStruct        ((DWORD(__thiscall*)(LPVOID This, int ViewportID)) 0x958F37)
+#define pPreviewThis            ((LPVOID(*)()) 0x437357)
 
 
 // UI
-#define pMessageBoxThis			((DWORD(__cdecl*)()) 0x00969F14) // S9
+#define pMessageBoxThis            ((DWORD(__cdecl*)()) 0x00969F14) // S9
 
-enum ObjState
-{
-	SelectServer	= 2,
-	SwitchCharacter = 4,
-	GameProcess		= 5,
+enum ObjState {
+    SelectServer = 2,
+    SwitchCharacter = 4,
+    GameProcess = 5,
 };
 
-#define pPlayerState			*(int*)0x1205338 // s9e2
+#define pPlayerState            *(int*)0x1205338 // s9e2

@@ -3,219 +3,272 @@
 
 #include "user.h"
 
-struct __ITR_USER_DATA
-{
-	__ITR_USER_DATA()
-	{
-		this->m_nIndex = -1;
-	}
+struct __ITR_USER_DATA {
+    __ITR_USER_DATA() {
+        this->m_nIndex = -1;
+    }
 
-	int m_nIndex;
-	BYTE m_btTeam;
-	DWORD m_dwSkillProdectionTime;
-	DWORD m_dwSkillRestraintTime;
-	BYTE m_btUserKillCount;
-	BYTE m_byOccupiedCount;
-	BYTE m_byInvalidationCount;
-	int m_bReward;
-	bool m_bEnterOk;
-	int m_nPartyIdx;
-	int m_nRelicsInvenPos;
+    int m_nIndex;
+    BYTE m_btTeam;
+    DWORD m_dwSkillProdectionTime;
+    DWORD m_dwSkillRestraintTime;
+    BYTE m_btUserKillCount;
+    BYTE m_byOccupiedCount;
+    BYTE m_byInvalidationCount;
+    int m_bReward;
+    bool m_bEnterOk;
+    int m_nPartyIdx;
+    int m_nRelicsInvenPos;
 };
 
-struct __ITR_PARTYTEAM
-{
-	int nPartyIndex;
-	int nTeamIndex;
+struct __ITR_PARTYTEAM {
+    int nPartyIndex;
+    int nTeamIndex;
 };
 
-struct __ITR_OBJECT_DATA
-{
-	int m_nIndex;
-	WORD m_wType;
-	short m_wPosNum;
-	BYTE m_byStatus;
-	BYTE byMapTagIndex;
+struct __ITR_OBJECT_DATA {
+    int m_nIndex;
+    WORD m_wType;
+    short m_wPosNum;
+    BYTE m_byStatus;
+    BYTE byMapTagIndex;
 };
 
-struct ITR_NPC_POSITIONINFO
-{
-	WORD wNpcType;
-	BYTE byMapNumber;
-	BYTE byDistance;
-	BYTE byX;
-	BYTE byY;
-	BYTE byDir;
-	BYTE byMapTagIndex;
+struct ITR_NPC_POSITIONINFO {
+    WORD wNpcType;
+    BYTE byMapNumber;
+    BYTE byDistance;
+    BYTE byX;
+    BYTE byY;
+    BYTE byDir;
+    BYTE byMapTagIndex;
 };
 
 #pragma once
-class CIllusionTempleProcess_Renewal
-{
+
+class CIllusionTempleProcess_Renewal {
 public:
-	CIllusionTempleProcess_Renewal();
-	virtual ~CIllusionTempleProcess_Renewal();
+    CIllusionTempleProcess_Renewal();
 
-	void ITR_ProcessInit(int nTempleNum);
-	void ClearUserData(int nIndex);
-	void CheckSync();
+    virtual ~CIllusionTempleProcess_Renewal();
 
-	void Proc_ITR(int nCurTime);
-	void Proc_ITRState_RoundBreak(int nCurTime);
-	void Proc_ITRState_None(int nCurTime);
-	void Proc_ITRState_Ready(int nCurTime);
-	void Proc_ITRState_Playing(int nCurTime);
-	void Proc_ITRState_End(int nCurTime);
+    void ITR_ProcessInit(int nTempleNum);
 
-	void Set_ITRState(BYTE btState);
-	BYTE GetIllusionTempleState();
+    void ClearUserData(int nIndex);
 
-	void Set_ITRState_None();
-	void Set_ITRState_Ready();
-	void Set_ITRState_RoundBreak();
-	void Set_ITRState_Playing();
-	void Set_ITRState_End();
+    void CheckSync();
 
-	BOOL EnterUserIllusionTemple(int aIndex, BYTE btTempleIndex, int nPartyIdx);
-	BOOL LeaveUserIllusionTemple(int aIndex);
+    void Proc_ITR(int nCurTime);
 
-	bool CanStartITRBattle(BYTE & ALLIED, BYTE & ILLUSION);
-	void CheckUsersOnConnect();
+    void Proc_ITRState_RoundBreak(int nCurTime);
 
-	int GetRemainTimeMin();
-	int GetEnterRemainTimeMin();
+    void Proc_ITRState_None(int nCurTime);
 
-	int SearchRelicsItem(int iIndex);
-	void DeleteAllRelicsItem();
-	int FindITRUser(int index);
-	void DropRelicsItem(int iIndex, BYTE byAct);
-	char CheckHaveRelics(int aIndex);
-	void SetRelicsInventoryPos(int aIndex, BYTE btPos);
+    void Proc_ITRState_Ready(int nCurTime);
 
-	void SendRelicsUserInfo(OBJECTSTRUCT *lpObj, BYTE byGet);
+    void Proc_ITRState_Playing(int nCurTime);
 
-	void SetRemainTime();
+    void Proc_ITRState_End(int nCurTime);
 
-	void AddITRNpcInfo(WORD wNpcType, BYTE byMapNumber, BYTE byDistance, BYTE byX, BYTE byY, BYTE byDir);
-	void ResetITRNpcInfo();
+    void Set_ITRState(BYTE btState);
 
-	void ResetITRPosNum();
-	void RemoveAllObj();
+    BYTE GetIllusionTempleState();
 
-	void SendRelicsError(OBJECTSTRUCT *lpObj, int index, BYTE byError, BYTE byAct);
-	void Check_GetRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj, WORD wNpcType);
-	void GetRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj, WORD wNpcType);
-	void Check_RegisterRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj);
-	void RegisterRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj);
+    void Set_ITRState_None();
 
-	void FirstRegen_OccupiedStone();
-	void FirstRegen_CursedStone();
-	void RegenCursedStoneStatus(BYTE byRound);
+    void Set_ITRState_Ready();
 
-	void SetStatusRegenTime();
-	void AddITROccupiedStonePos(WORD wNpcType, int index, int Count, BYTE byMapTagIndex);
-	void AddITRCursedStonePos(WORD wNpcType, int index, BYTE byMapTagIndex);
-	void SetNpc();
-	void RegenOccupiedStoneStatus();
+    void Set_ITRState_RoundBreak();
 
-	void SendNoticeMessage(char *lpMsg);
-	void Send_ITR_StoneInfo(int userindex, WORD wNpcType, BYTE byState, int NpcIndex, BYTE byMapTagIndex);
-	void Send_ITR_PlayState(BYTE btTeam);
-	void SendIllusionTempleState(BYTE btTempleState, int nIndex);
+    void Set_ITRState_Playing();
 
-	BYTE GetUserTeam(int nIndex);
-	void IncUserKillCount(int nIndex);
-	void ResetKillCount();
+    void Set_ITRState_End();
 
-	void ITR_UseSkill(int nIndex, WORD wSkillNumber, int nTargetIndex, BYTE btDis);
-	void ITRSkillProc(OBJECTSTRUCT *lpObj);
-	void Send_ITR_SkillEnd(OBJECTSTRUCT *lpObj, WORD wSkillNumber);
-	int UseSkillProdection(OBJECTSTRUCT *lpObj);
-	int UseSkillRestraint(OBJECTSTRUCT *lpObj, OBJECTSTRUCT* lpTargetObj);
-	int UseSkillTeleport(OBJECTSTRUCT *lpObj);
-	int UseSkillShieldBurn(OBJECTSTRUCT *lpObj, OBJECTSTRUCT* lpTargetObj);
-	void SendUseSkillResult(int nIndex, int nTargetIndex, WORD wSkillNumber, BYTE btResult);
+    BOOL EnterUserIllusionTemple(int aIndex, BYTE btTempleIndex, int nPartyIdx);
 
-	void ITRUserDie(OBJECTSTRUCT* lpObj);
-	void GetOccupiedStoneCount(BYTE &byAllied, BYTE &byIllusion);
+    BOOL LeaveUserIllusionTemple(int aIndex);
 
-	void CalCursetTempleResult();
-	void DropITR_RewardBox(int nIndex);
+    bool CanStartITRBattle(BYTE &ALLIED, BYTE &ILLUSION);
 
-	void SendAllUserAnyMsg(char *lpMsg);
+    void CheckUsersOnConnect();
 
-	int GetRealRemainTimeMin();
+    int GetRemainTimeMin();
 
-	BOOL CheckSkillProdection(int iIllusionTempleIndex);
-	BOOL CheckSkillRestraint(int iIllusionTempleIndex);
+    int GetEnterRemainTimeMin();
 
-	void SendITRResult();
-	void MoveToStartPoint_WhenRoundBreak();
-	void CalcKillCountByTeam(BYTE &byAlliedKillSum, BYTE &byIllusionKillSum);
+    int SearchRelicsItem(int iIndex);
 
-	void ResetUserFlag_DoingRelicsThing(OBJECTSTRUCT *lpObj);
-	void CancleStoneStateProcess(WORD wNpcType, BYTE byState);
-	int GetRelicsUserIndex(OBJECTSTRUCT *lpObj);
+    void DeleteAllRelicsItem();
 
-	BYTE FindEmptyPartySlot(int partyindex, BYTE &byEmptySlot);
-	BYTE SetPartyTeam(BYTE bySlotOrder, int nPartyIdx, int nUserIndex);
-	BYTE DeletePartyInfo(int partyindex);
-	BYTE Find_SameParty(int partyindex, int &nUserIndex);
-	BYTE Find_PartySlot(int partyindex, BYTE &bySlotNum);
+    int FindITRUser(int index);
 
-	bool GetEntrance() { return this->m_bEntrance; }
-	void SetAllCheckSync() { this->m_bAllCheckSync = true; }
-	bool GetAllCheckSync() { return this->m_bAllCheckSync; }
+    void DropRelicsItem(int iIndex, BYTE byAct);
+
+    char CheckHaveRelics(int aIndex);
+
+    void SetRelicsInventoryPos(int aIndex, BYTE btPos);
+
+    void SendRelicsUserInfo(OBJECTSTRUCT *lpObj, BYTE byGet);
+
+    void SetRemainTime();
+
+    void AddITRNpcInfo(WORD wNpcType, BYTE byMapNumber, BYTE byDistance, BYTE byX, BYTE byY, BYTE byDir);
+
+    void ResetITRNpcInfo();
+
+    void ResetITRPosNum();
+
+    void RemoveAllObj();
+
+    void SendRelicsError(OBJECTSTRUCT *lpObj, int index, BYTE byError, BYTE byAct);
+
+    void Check_GetRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj, WORD wNpcType);
+
+    void GetRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj, WORD wNpcType);
+
+    void Check_RegisterRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj);
+
+    void RegisterRelics(OBJECTSTRUCT *lpNpc, OBJECTSTRUCT *lpObj);
+
+    void FirstRegen_OccupiedStone();
+
+    void FirstRegen_CursedStone();
+
+    void RegenCursedStoneStatus(BYTE byRound);
+
+    void SetStatusRegenTime();
+
+    void AddITROccupiedStonePos(WORD wNpcType, int index, int Count, BYTE byMapTagIndex);
+
+    void AddITRCursedStonePos(WORD wNpcType, int index, BYTE byMapTagIndex);
+
+    void SetNpc();
+
+    void RegenOccupiedStoneStatus();
+
+    void SendNoticeMessage(char *lpMsg);
+
+    void Send_ITR_StoneInfo(int userindex, WORD wNpcType, BYTE byState, int NpcIndex, BYTE byMapTagIndex);
+
+    void Send_ITR_PlayState(BYTE btTeam);
+
+    void SendIllusionTempleState(BYTE btTempleState, int nIndex);
+
+    BYTE GetUserTeam(int nIndex);
+
+    void IncUserKillCount(int nIndex);
+
+    void ResetKillCount();
+
+    void ITR_UseSkill(int nIndex, WORD wSkillNumber, int nTargetIndex, BYTE btDis);
+
+    void ITRSkillProc(OBJECTSTRUCT *lpObj);
+
+    void Send_ITR_SkillEnd(OBJECTSTRUCT *lpObj, WORD wSkillNumber);
+
+    int UseSkillProdection(OBJECTSTRUCT *lpObj);
+
+    int UseSkillRestraint(OBJECTSTRUCT *lpObj, OBJECTSTRUCT *lpTargetObj);
+
+    int UseSkillTeleport(OBJECTSTRUCT *lpObj);
+
+    int UseSkillShieldBurn(OBJECTSTRUCT *lpObj, OBJECTSTRUCT *lpTargetObj);
+
+    void SendUseSkillResult(int nIndex, int nTargetIndex, WORD wSkillNumber, BYTE btResult);
+
+    void ITRUserDie(OBJECTSTRUCT *lpObj);
+
+    void GetOccupiedStoneCount(BYTE &byAllied, BYTE &byIllusion);
+
+    void CalCursetTempleResult();
+
+    void DropITR_RewardBox(int nIndex);
+
+    void SendAllUserAnyMsg(char *lpMsg);
+
+    int GetRealRemainTimeMin();
+
+    BOOL CheckSkillProdection(int iIllusionTempleIndex);
+
+    BOOL CheckSkillRestraint(int iIllusionTempleIndex);
+
+    void SendITRResult();
+
+    void MoveToStartPoint_WhenRoundBreak();
+
+    void CalcKillCountByTeam(BYTE &byAlliedKillSum, BYTE &byIllusionKillSum);
+
+    void ResetUserFlag_DoingRelicsThing(OBJECTSTRUCT *lpObj);
+
+    void CancleStoneStateProcess(WORD wNpcType, BYTE byState);
+
+    int GetRelicsUserIndex(OBJECTSTRUCT *lpObj);
+
+    BYTE FindEmptyPartySlot(int partyindex, BYTE &byEmptySlot);
+
+    BYTE SetPartyTeam(BYTE bySlotOrder, int nPartyIdx, int nUserIndex);
+
+    BYTE DeletePartyInfo(int partyindex);
+
+    BYTE Find_SameParty(int partyindex, int &nUserIndex);
+
+    BYTE Find_PartySlot(int partyindex, BYTE &bySlotNum);
+
+    bool GetEntrance() { return this->m_bEntrance; }
+
+    void SetAllCheckSync() { this->m_bAllCheckSync = true; }
+
+    bool GetAllCheckSync() { return this->m_bAllCheckSync; }
 
 private:
-	CRITICAL_SECTION m_critUserData;
+    CRITICAL_SECTION m_critUserData;
 
-	__ITR_USER_DATA m_UserData[10];
-	__ITR_PARTYTEAM m_PartyTeam[2];
+    __ITR_USER_DATA m_UserData[10];
+    __ITR_PARTYTEAM m_PartyTeam[2];
 
-	int m_nUserCount;
-	char m_nTempleNumber;
-	BYTE m_btIllusionTempleState;
+    int m_nUserCount;
+    char m_nTempleNumber;
+    BYTE m_btIllusionTempleState;
 
-	__ITR_OBJECT_DATA m_Cursed_StoneStatus;
-	__ITR_OBJECT_DATA m_Occupied_StoneStatus[10];
+    __ITR_OBJECT_DATA m_Cursed_StoneStatus;
+    __ITR_OBJECT_DATA m_Occupied_StoneStatus[10];
 
-	int m_bEntrance;
-	BYTE m_byITRRound;
-	bool m_bITRRoundStartFail;
-	bool m_bNobodyWinLose;
+    int m_bEntrance;
+    BYTE m_byITRRound;
+    bool m_bITRRoundStartFail;
+    bool m_bNobodyWinLose;
 
-	int m_StatusRegenTime;
-	int m_nRemainTimeMin;
-	int m_nRemainTimeMsec;
-	int m_nTickCount;
-	int m_nNextTimeMin;
-	int m_nRoundBreakCount;
-	bool m_bRoundBreak;
+    int m_StatusRegenTime;
+    int m_nRemainTimeMin;
+    int m_nRemainTimeMsec;
+    int m_nTickCount;
+    int m_nNextTimeMin;
+    int m_nRoundBreakCount;
+    bool m_bRoundBreak;
 
-	int m_nEventEndRemainTime;
-	bool m_bGameEndPosMove;
-	bool m_bSendMsgBeforeReady;
-	bool m_bSendMsgBeforePlay;
+    int m_nEventEndRemainTime;
+    bool m_bGameEndPosMove;
+    bool m_bSendMsgBeforeReady;
+    bool m_bSendMsgBeforePlay;
 
-	int m_nAlliedUserCount;
-	int m_nIllusionUserCount;
+    int m_nAlliedUserCount;
+    int m_nIllusionUserCount;
 
-	BYTE m_btWinTeam;
-	BYTE m_btLoseTeam;
+    BYTE m_btWinTeam;
+    BYTE m_btLoseTeam;
 
-	int m_bAllCheckSync;
+    int m_bAllCheckSync;
 
-	BYTE m_byIllusionTeamPoint;
-	BYTE m_byAlliedTeamPoint;
+    BYTE m_byIllusionTeamPoint;
+    BYTE m_byAlliedTeamPoint;
 
-	ITR_NPC_POSITIONINFO m_ITRNpcInfo[11];
-	BYTE m_byNpcCount;
-	bool m_bIsSetNpc;
-	bool m_bFirstRegen_CursedStone;
-	bool m_bFirstRegen_OccStone;
+    ITR_NPC_POSITIONINFO m_ITRNpcInfo[11];
+    BYTE m_byNpcCount;
+    bool m_bIsSetNpc;
+    bool m_bFirstRegen_CursedStone;
+    bool m_bFirstRegen_OccStone;
 
-	int m_bSendResult;
+    int m_bSendResult;
 };
 
 #endif

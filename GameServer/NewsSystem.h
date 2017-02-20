@@ -1,25 +1,25 @@
 #pragma once
 
-struct NEWS_DATA
-{
-	int	GUID;
-	std::string News[3];
+struct NEWS_DATA {
+    int GUID;
+    std::string News[3];
 };
 
-class CNewsSystem
-{
+class CNewsSystem {
 public:
-	CNewsSystem(void);
-	~CNewsSystem(void);
+    CNewsSystem(void);
 
-	bool LoadFile(LPSTR lpFile);
-	void Run();
+    ~CNewsSystem(void);
 
-	bool m_bEnable;
-	std::vector<NEWS_DATA> m_NewsData;
-	int	m_iMaxGUID;
-	int m_iMinuteDelay;
-	ULONGLONG m_i64Tick;
+    bool LoadFile(LPSTR lpFile);
+
+    void Run();
+
+    bool m_bEnable;
+    std::vector <NEWS_DATA> m_NewsData;
+    int m_iMaxGUID;
+    int m_iMinuteDelay;
+    ULONGLONG m_i64Tick;
 };
 
 extern CNewsSystem g_NewsSystem;

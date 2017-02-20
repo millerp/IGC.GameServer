@@ -9,40 +9,31 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CSkillDelay::CSkillDelay()
-{
-	Init();
+CSkillDelay::CSkillDelay() {
+    Init();
 }
 
-CSkillDelay::~CSkillDelay()
-{
+CSkillDelay::~CSkillDelay() {
 
 }
 
-void CSkillDelay::Init()
-{
-	memset(LastSkillUseTime, 0, sizeof(LastSkillUseTime));
+void CSkillDelay::Init() {
+    memset(LastSkillUseTime, 0, sizeof(LastSkillUseTime));
 }
 
-BOOL CSkillDelay::Check(WORD skill)
-{
-	int skilldelaytime = MagicDamageC.GetDelayTime(skill);
+BOOL CSkillDelay::Check(WORD skill) {
+    int skilldelaytime = MagicDamageC.GetDelayTime(skill);
 
-	if (skilldelaytime == 0)
-	{
-		return TRUE;
-	}
+    if (skilldelaytime == 0) {
+        return TRUE;
+    }
 
-	ULONGLONG dwtime = GetTickCount64();
+    ULONGLONG dwtime = GetTickCount64();
 
-	if (skilldelaytime + this->LastSkillUseTime[skill] >= dwtime)
-	{
-		return FALSE;
-	}
-
-	else
-	{
-		this->LastSkillUseTime[skill] = dwtime;
-		return TRUE;
-	}
+    if (skilldelaytime + this->LastSkillUseTime[skill] >= dwtime) {
+        return FALSE;
+    } else {
+        this->LastSkillUseTime[skill] = dwtime;
+        return TRUE;
+    }
 }

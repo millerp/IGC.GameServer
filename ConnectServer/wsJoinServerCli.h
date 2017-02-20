@@ -12,30 +12,34 @@
 #include "MyWinsockBase.h"
 
 
-#define MAX_WS_BUF_LEN	819200
+#define MAX_WS_BUF_LEN    819200
 
 
-class wsJoinServerCli : public MyWinsockBase
-{
+class wsJoinServerCli : public MyWinsockBase {
 
 public:
 
-	BOOL SetProtocolCore(WsProtocolCore pc);
-	BOOL FDWRITE_MsgDataSend();
-	BOOL DataRecv();
-	BOOL DataSend(PCHAR buf, int len);
-	BOOL Connect(LPSTR ip_addr, WORD port, DWORD WinMsgNum);
+    BOOL SetProtocolCore(WsProtocolCore pc);
 
-	wsJoinServerCli();
-	virtual ~wsJoinServerCli();
+    BOOL FDWRITE_MsgDataSend();
+
+    BOOL DataRecv();
+
+    BOOL DataSend(PCHAR buf, int len);
+
+    BOOL Connect(LPSTR ip_addr, WORD port, DWORD WinMsgNum);
+
+    wsJoinServerCli();
+
+    virtual ~wsJoinServerCli();
 
 protected:
-	
-	BYTE m_SendBuf[MAX_WS_BUF_LEN];	// 1C
-	int m_SendBufLen;	// C801C
-	BYTE m_RecvBuf[MAX_WS_BUF_LEN];	// C8020
-	int  m_RecvBufLen;	// 190020
-	WsProtocolCore wsProtocolCore;	// 190024
+
+    BYTE m_SendBuf[MAX_WS_BUF_LEN];    // 1C
+    int m_SendBufLen;    // C801C
+    BYTE m_RecvBuf[MAX_WS_BUF_LEN];    // C8020
+    int m_RecvBufLen;    // 190020
+    WsProtocolCore wsProtocolCore;    // 190024
 };
 
 #endif

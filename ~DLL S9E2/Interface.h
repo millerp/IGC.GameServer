@@ -2,7 +2,9 @@
 #define INTERFACE_H
 
 void muDrawVersionCB();
+
 void MoveWndFix();
+
 void ScaleFormAction(DWORD Form, LPSTR ElementName, LPSTR Command, ...);
 //004F2C53   90               NOP
 

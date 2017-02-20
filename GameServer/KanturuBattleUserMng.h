@@ -11,34 +11,44 @@
 
 #include "KanturuBattleUser.h"
 
-#define MAX_KANTURU_BATTLE_USER	15
+#define MAX_KANTURU_BATTLE_USER    15
 
-class CKanturuBattleUserMng
-{
-
-public:
-
-	CKanturuBattleUserMng();
-	virtual ~CKanturuBattleUserMng();
-
-	void ResetAllData();
-	int AddUserData(int iIndex);
-	int DeleteUserData(int iIndex);
-	void CheckUserState();
-	int MoveAllUser(int iGateNumber);
-	int GetUserCount();
-	int IsEmpty();
-	int IsOverMaxUser();
-	//int __thiscall IsBattleUser(int);
-	void SetMaxUser(int iMaxUser);
-	int GetMaxUser();
-	void LogBattleWinnerUserInfo(BYTE btFlag, int iElapsedTime);
+class CKanturuBattleUserMng {
 
 public:
 
-	CKanturuBattleUser m_BattleUser[MAX_KANTURU_BATTLE_USER];	// 4
-	int m_iBattleUserCount;	// B8
-	int m_iBattleMaxUser;	// BC
+    CKanturuBattleUserMng();
+
+    virtual ~CKanturuBattleUserMng();
+
+    void ResetAllData();
+
+    int AddUserData(int iIndex);
+
+    int DeleteUserData(int iIndex);
+
+    void CheckUserState();
+
+    int MoveAllUser(int iGateNumber);
+
+    int GetUserCount();
+
+    int IsEmpty();
+
+    int IsOverMaxUser();
+
+    //int __thiscall IsBattleUser(int);
+    void SetMaxUser(int iMaxUser);
+
+    int GetMaxUser();
+
+    void LogBattleWinnerUserInfo(BYTE btFlag, int iElapsedTime);
+
+public:
+
+    CKanturuBattleUser m_BattleUser[MAX_KANTURU_BATTLE_USER];    // 4
+    int m_iBattleUserCount;    // B8
+    int m_iBattleMaxUser;    // BC
 
 };
 

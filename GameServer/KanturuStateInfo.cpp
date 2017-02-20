@@ -9,12 +9,10 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CKanturuStateInfo::CKanturuStateInfo()
-{
-	this->ResetTimeInfo();
+CKanturuStateInfo::CKanturuStateInfo() {
+    this->ResetTimeInfo();
 }
 
-CKanturuStateInfo::~CKanturuStateInfo()
-{
-	return;
+CKanturuStateInfo::~CKanturuStateInfo() {
+    return;
 }

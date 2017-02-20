@@ -6,104 +6,121 @@ class WZMD5 {
 public:
 
 //---------------------------------------------
-//	WZMD5 Ãß°¡µÈ ¸Þ¼­µåµé
-bool WZMD5_EncodeKeyVal	(					// ÀÔ·ÂµÈ ¹®ÀÚ¿­°ú Å°ÀÎµ¦½º (0~255)¸¦ »ç¿ëÇÏ¿© 128 bits (16 bytes) ÀÇ WZMD5 Å°°ª »ý¼º
-	  char * lpszInputStr,					// ÀÔ·Â ¹®ÀÚ¿­
-	  char * lpszOutputKeyVal,				// Ãâ·Â ¹öÆÛ
-	  int iKeyIndex							// Å°ÀÎµ¦½º (0~255)
-	  );
+//	WZMD5 ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½
+    bool
+    WZMD5_EncodeKeyVal(                    // ï¿½Ô·Âµï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ Å°ï¿½Îµï¿½ï¿½ï¿½ (0~255)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ 128 bits (16 bytes) ï¿½ï¿½ WZMD5 Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            char *lpszInputStr,                    // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½
+            char *lpszOutputKeyVal,                // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            int iKeyIndex                            // Å°ï¿½Îµï¿½ï¿½ï¿½ (0~255)
+    );
 
-bool WZMD5_EncodeString	(					// ÀÔ·ÂµÈ ¹®ÀÚ¿­°ú Å°ÀÎµ¦½º (0~255)¸¦ »ç¿ëÇÏ¿© 128 x 2 bits (32 bytes) ÀÇ WZMD5 ¹®ÀÚ¿­ Å°°ª »ý¼º
-	  char * lpszInputStr,					// ÀÔ·Â ¹®ÀÚ¿­
-	  char * lpszOutputStr,					// Ãâ·Â ¹öÆÛ
-	  int iKeyIndex							// Å°ÀÎµ¦½º (0~255)
-	  );
+    bool
+    WZMD5_EncodeString(                    // ï¿½Ô·Âµï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ Å°ï¿½Îµï¿½ï¿½ï¿½ (0~255)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ 128 x 2 bits (32 bytes) ï¿½ï¿½ WZMD5 ï¿½ï¿½ï¿½Ú¿ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            char *lpszInputStr,                    // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½
+            char *lpszOutputStr,                    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            int iKeyIndex                            // Å°ï¿½Îµï¿½ï¿½ï¿½ (0~255)
+    );
 
-bool WZMD5_CheckValue	(						// ¹®ÀÚ¿­°ú WZMD5 Å°°ª°ú Å°ÀÎµ¦½º (0~255) ¸¦ ÀÔ·Â¹Þ¾Æ Å°°ªÀ» ÀÎÁõÇÔ (true : ¸ÂÀ½ / false : Æ²¸²)
-											// P.S.> Å°°ªÀº ¹®ÀÚ¿­(256 bits)ÀÌ ¾Æ´Ñ 128 bits WZMD5 Å°¿©¾ß ÇÑ´Ù.
-	  char * lpszInputStr,					// ÀÔ·Â ¹®ÀÚ¿­
-	  char * szKeyVal,						// ÀÔ·Â WZMD5 Å°°ª
-	  int iKeyIndex							// Å°ÀÎµ¦½º (0~255)
-	  );
+    bool
+    WZMD5_CheckValue(                        // ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ WZMD5 Å°ï¿½ï¿½ï¿½ï¿½ Å°ï¿½Îµï¿½ï¿½ï¿½ (0~255) ï¿½ï¿½ ï¿½Ô·Â¹Þ¾ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (true : ï¿½ï¿½ï¿½ï¿½ / false : Æ²ï¿½ï¿½)
+            // P.S.> Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½(256 bits)ï¿½ï¿½ ï¿½Æ´ï¿½ 128 bits WZMD5 Å°ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+            char *lpszInputStr,                    // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½
+            char *szKeyVal,                        // ï¿½Ô·ï¿½ WZMD5 Å°ï¿½ï¿½
+            int iKeyIndex                            // Å°ï¿½Îµï¿½ï¿½ï¿½ (0~255)
+    );
 
 
 //---------------------------------------------
-//	WZMD5 ±âÁ¸ ¸Þ¼­µåµé
+//	WZMD5 ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½
 
 // methods for controlled operation:
-  WZMD5              ();  // simple initializer
-  void  update     (unsigned char *input, unsigned int input_length);
-  void  update     (std::istream& stream);
-  void  update     (FILE *file);
-  void  update     (std::ifstream& stream);
-  void  finalize   ();
-  
+    WZMD5();  // simple initializer
+    void update(unsigned char *input, unsigned int input_length);
+
+    void update(std::istream &stream);
+
+    void update(FILE *file);
+
+    void update(std::ifstream &stream);
+
+    void finalize();
+
 // constructors for special circumstances.  All these constructors finalize
 // the WZMD5 context.
-  WZMD5              (unsigned char *string); // digest string, finalize
-  WZMD5              (std::istream& stream);       // digest stream, finalize
-  WZMD5              (FILE *file);            // digest file, close, finalize
-  WZMD5              (std::ifstream& stream);      // digest stream, close, finalize
+    WZMD5(unsigned char *string); // digest string, finalize
+    WZMD5(std::istream &stream);       // digest stream, finalize
+    WZMD5(FILE *file);            // digest file, close, finalize
+    WZMD5(std::ifstream &stream);      // digest stream, close, finalize
 
 // methods to acquire finalized result
-  unsigned char    *raw_digest ();  // digest as a 16-byte binary array
-  char *            hex_digest ();  // digest as a 33-byte ascii-hex string
-  friend std::ostream&   operator<< (std::ostream&, WZMD5 context);
-
+    unsigned char *raw_digest();  // digest as a 16-byte binary array
+    char *hex_digest();  // digest as a 33-byte ascii-hex string
+    friend std::ostream &operator<<(std::ostream &, WZMD5 context);
 
 
 private:
 
 //---------------------------------------------
-//	WZMD5 Ãß°¡µÈ ¸Þ¼­µåµé
-  void setmagicnum (int keyindex);
+//	WZMD5 ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½
+    void setmagicnum(int keyindex);
 
 
 //---------------------------------------------
-//	WZMD5 Ãß°¡µÈ ¸â¹ö º¯¼öµé
-	unsigned char	m_cRaw_digest[16];  
-	char			m_cHex_digest[33];  
+//	WZMD5 ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    unsigned char m_cRaw_digest[16];
+    char m_cHex_digest[33];
 
 
 
 //---------------------------------------------
-//	WZMD5 ±âÁ¸ ¸â¹ö º¯¼öµé
+//	WZMD5 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 // first, some types:
-  typedef unsigned       int uint4; // assumes integer is 4 words long
-  typedef unsigned short int uint2; // assumes short integer is 2 words long
-  typedef unsigned      char uint1; // assumes char is 1 word long
+    typedef unsigned int uint4; // assumes integer is 4 words long
+    typedef unsigned short int uint2; // assumes short integer is 2 words long
+    typedef unsigned char uint1; // assumes char is 1 word long
 
 // next, the private data:
-  uint4 state[4];
-  uint4 count[2];     // number of *bits*, mod 2^64
-  uint1 buffer[64];   // input buffer
-  uint1 digest[16];
-  uint1 finalized;
+    uint4 state[4];
+    uint4 count[2];     // number of *bits*, mod 2^64
+    uint1 buffer[64];   // input buffer
+    uint1 digest[16];
+    uint1 finalized;
 
 // last, the private methods, mostly static:
-  void init             ();               // called by all constructors
-  void transform        (uint1 *buffer);  // does the real update work.  Note 
-                                          // that length is implied to be 64.
+    void init();               // called by all constructors
+    void transform(uint1 *buffer);  // does the real update work.  Note
+    // that length is implied to be 64.
 
-  static void encode    (uint1 *dest, uint4 *src, uint4 length);
-  static void decode    (uint4 *dest, uint1 *src, uint4 length);
-  static void memcpy    (uint1 *dest, uint1 *src, uint4 length);
-  static void memset    (uint1 *start, uint1 val, uint4 length);
+    static void encode(uint1 *dest, uint4 *src, uint4 length);
 
-  static inline uint4  rotate_left (uint4 x, uint4 n);
-  static inline uint4  F           (uint4 x, uint4 y, uint4 z);
-  static inline uint4  G           (uint4 x, uint4 y, uint4 z);
-  static inline uint4  H           (uint4 x, uint4 y, uint4 z);
-  static inline uint4  I           (uint4 x, uint4 y, uint4 z);
-  static inline void   FF  (uint4& a, uint4 b, uint4 c, uint4 d, uint4 x, 
-			    uint4 s, uint4 ac);
-  static inline void   GG  (uint4& a, uint4 b, uint4 c, uint4 d, uint4 x, 
-			    uint4 s, uint4 ac);
-  static inline void   HH  (uint4& a, uint4 b, uint4 c, uint4 d, uint4 x, 
-			    uint4 s, uint4 ac);
-  static inline void   II  (uint4& a, uint4 b, uint4 c, uint4 d, uint4 x, 
-			    uint4 s, uint4 ac);
+    static void decode(uint4 *dest, uint1 *src, uint4 length);
+
+    static void memcpy(uint1 *dest, uint1 *src, uint4 length);
+
+    static void memset(uint1 *start, uint1 val, uint4 length);
+
+    static inline uint4 rotate_left(uint4 x, uint4 n);
+
+    static inline uint4 F(uint4 x, uint4 y, uint4 z);
+
+    static inline uint4 G(uint4 x, uint4 y, uint4 z);
+
+    static inline uint4 H(uint4 x, uint4 y, uint4 z);
+
+    static inline uint4 I(uint4 x, uint4 y, uint4 z);
+
+    static inline void FF(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x,
+                          uint4 s, uint4 ac);
+
+    static inline void GG(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x,
+                          uint4 s, uint4 ac);
+
+    static inline void HH(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x,
+                          uint4 s, uint4 ac);
+
+    static inline void II(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x,
+                          uint4 s, uint4 ac);
 
 };
 

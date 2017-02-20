@@ -6,7 +6,6 @@
 #define RENDER_HP_BAR_CALLBACK 0x0082141C// S9
 
 
-
 extern int g_UserQuit;
 extern int g_ReconnectProcess;
 extern int g_MuBotEnabled;
@@ -18,11 +17,18 @@ extern BYTE bCharacter[16];
 extern BYTE bServer[6];
 
 void HookDCFunc();
-bool ConnectToServer(char* ip, WORD port);
+
+bool ConnectToServer(char *ip, WORD port);
+
 void ReconnectThread();
+
 void CGLiveThread();
+
 void RenderLoadingBar();
+
 void HookExitCharSelectFunc();
+
 void HookExitFunc();
+
 extern BYTE *reconnectBuf;
 #endif

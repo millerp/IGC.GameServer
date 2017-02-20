@@ -9,28 +9,30 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define STAT_TABLE_SIZE	500
+#define STAT_TABLE_SIZE    500
 
-class CStatMng
-{
+class CStatMng {
 
 public:
 
-	CStatMng();
-	virtual ~CStatMng();
+    CStatMng();
 
-	void Init();
-	int GetMaxStat(int level, int Class);
-	int GetMaxMinusStat(int iLevel, int iClass);
+    virtual ~CStatMng();
+
+    void Init();
+
+    int GetMaxStat(int level, int Class);
+
+    int GetMaxMinusStat(int iLevel, int iClass);
 
 private:
 
-	int gObjNormalAddStatTable[STAT_TABLE_SIZE];	// 4
-	int gObjMagumAddStatTable[STAT_TABLE_SIZE];	// 7D4
-	int gObjDarkLordAddStatTable[STAT_TABLE_SIZE];	// FA4
-	int gObjNormalMinusStatTable[STAT_TABLE_SIZE];	// 1774
-	int gObjMagumMinusStatTable[STAT_TABLE_SIZE];	// 1F44
-	int gObjDarkLordMinusStatTable[STAT_TABLE_SIZE];	// 2714
+    int gObjNormalAddStatTable[STAT_TABLE_SIZE];    // 4
+    int gObjMagumAddStatTable[STAT_TABLE_SIZE];    // 7D4
+    int gObjDarkLordAddStatTable[STAT_TABLE_SIZE];    // FA4
+    int gObjNormalMinusStatTable[STAT_TABLE_SIZE];    // 1774
+    int gObjMagumMinusStatTable[STAT_TABLE_SIZE];    // 1F44
+    int gObjDarkLordMinusStatTable[STAT_TABLE_SIZE];    // 2714
 
 };
 

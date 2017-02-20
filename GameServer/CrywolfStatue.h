@@ -14,60 +14,55 @@
 #define CRYWOLF_STATUE_CHECK(iClass) ( ( ((iClass)) == 204 )?TRUE:FALSE)
 
 
-
-class CCrywolfShield
-{
+class CCrywolfShield {
 
 public:
 
-	CCrywolfShield()
-	{
-		this->Reset();
-	}
+    CCrywolfShield() {
+        this->Reset();
+    }
 
-	void Reset()
-	{
-		this->m_iPriestNumber = 0;
-		this->m_iShieldHP = 0;	
-		this->m_iShieldMaxHP = 0;	
-		this->m_iShieldState = 0;	
-	}
-		
-	int GetHPPercentage()
-	{
-		if ( this->m_iShieldMaxHP )
-		{
-			return (this->m_iShieldHP * 100) / this->m_iShieldMaxHP;
-		}
+    void Reset() {
+        this->m_iPriestNumber = 0;
+        this->m_iShieldHP = 0;
+        this->m_iShieldMaxHP = 0;
+        this->m_iShieldState = 0;
+    }
 
-		return 0;
-	}
+    int GetHPPercentage() {
+        if (this->m_iShieldMaxHP) {
+            return (this->m_iShieldHP * 100) / this->m_iShieldMaxHP;
+        }
+
+        return 0;
+    }
 
 public:
 
-	int m_iShieldMaxHP;	// 0
-	int m_iShieldHP;	// 4
-	int m_iShieldState;	// 8
-	int m_iPriestNumber;	// C
+    int m_iShieldMaxHP;    // 0
+    int m_iShieldHP;    // 4
+    int m_iShieldState;    // 8
+    int m_iPriestNumber;    // C
 };
 
 
-
-class CCrywolfStatue 
-{
-	
-public:
-
-	CCrywolfStatue();
-	virtual ~CCrywolfStatue();
-
-	void CrywolfStatueAct(int iIndex);
-	int GetStatueViewState(int iPriestNumber);
-	void SetStatueViewState(OBJECTSTRUCT *lpObj, int iPriestNumber);
+class CCrywolfStatue {
 
 public:
 
-	CCrywolfShield m_Shield;	// 4
+    CCrywolfStatue();
+
+    virtual ~CCrywolfStatue();
+
+    void CrywolfStatueAct(int iIndex);
+
+    int GetStatueViewState(int iPriestNumber);
+
+    void SetStatueViewState(OBJECTSTRUCT *lpObj, int iPriestNumber);
+
+public:
+
+    CCrywolfShield m_Shield;    // 4
 
 };
 

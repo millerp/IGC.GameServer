@@ -9,24 +9,24 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define MAX_ITEM_ADD_OPTION	100
+#define MAX_ITEM_ADD_OPTION    100
 
-#define ADD_OPTION_SPEED	1
-#define ADD_OPTION_ATTACK_DAMAGE	2
-#define ADD_OPTION_DEFENSE	3
-#define ADD_OPTION_LIFE	4
-#define ADD_OPTION_MANA	5
-#define ADD_OPTION_EXPERIENCE	6
-#define ADD_OPTION_DROP_RATE	7
+#define ADD_OPTION_SPEED    1
+#define ADD_OPTION_ATTACK_DAMAGE    2
+#define ADD_OPTION_DEFENSE    3
+#define ADD_OPTION_LIFE    4
+#define ADD_OPTION_MANA    5
+#define ADD_OPTION_EXPERIENCE    6
+#define ADD_OPTION_DROP_RATE    7
 #define ADD_OPTION_DISABLE_EXPERIENCE 8
-#define ADD_OPTION_STRENGTH	9
-#define ADD_OPTION_DEXTERITY	10
-#define ADD_OPTION_VITALITY	11
-#define ADD_OPTION_ENERGY	12
-#define ADD_OPTION_LEADERSHIP	13
-#define ADD_OPTION_FORCE	14
-#define ADD_OPTION_MAGIC	15
-#define ADD_OPTION_MOVEABLE	16
+#define ADD_OPTION_STRENGTH    9
+#define ADD_OPTION_DEXTERITY    10
+#define ADD_OPTION_VITALITY    11
+#define ADD_OPTION_ENERGY    12
+#define ADD_OPTION_LEADERSHIP    13
+#define ADD_OPTION_FORCE    14
+#define ADD_OPTION_MAGIC    15
+#define ADD_OPTION_MOVEABLE    16
 #define ADD_OPTION_DARKLORD_CRITICALDMG 17
 #define ADD_OPTION_DOT 18
 #define ADD_OPTION_POISON 19
@@ -57,8 +57,8 @@
 #define ADD_OPTION_GUARDIAN 62
 #define ADD_OPTION_ITEMPROTECT 63
 #define ADD_OPTION_ZEN_DROP 64
-#define ADD_OPTION_SD	66
-#define ADD_OPTION_AG	67
+#define ADD_OPTION_SD    66
+#define ADD_OPTION_AG    67
 #define ADD_OPTION_PARTYEXP 68
 #define ADD_OPTION_VITALITY2 69
 #define ADD_OPTION_ADDBP 70
@@ -71,40 +71,41 @@
 #define ADD_OPTION_BIND 77
 #define ADD_OPTION_DARKNESS 78
 
-typedef struct ITEMEFFECT
-{
-	WORD wOptionType;
-	WORD wEffectType1;
-	WORD wEffectType2;
-	int iItemNumber;
-	int iItemType;
-	int iItemIndex;
-	int iEffectValue1;
-	int iEffectValue2;
-	int iEffectValidTime;
+typedef struct ITEMEFFECT {
+    WORD wOptionType;
+    WORD wEffectType1;
+    WORD wEffectType2;
+    int iItemNumber;
+    int iItemType;
+    int iItemIndex;
+    int iEffectValue1;
+    int iEffectValue2;
+    int iEffectValidTime;
 
-} ITEMEFFECT, * LPITEMEFFECT;
+} ITEMEFFECT, *LPITEMEFFECT;
 
-class CItemAddOption  
-{
+class CItemAddOption {
 public:
 
-	CItemAddOption();
-	virtual ~CItemAddOption();
+    CItemAddOption();
 
-	void Load(PCHAR chFileName);
-	void Initialize();
+    virtual ~CItemAddOption();
 
-	bool IsValidEffect(int iItemNumber);
-	LPITEMEFFECT GetItemEffectData(int iItemNumber);
+    void Load(PCHAR chFileName);
+
+    void Initialize();
+
+    bool IsValidEffect(int iItemNumber);
+
+    LPITEMEFFECT GetItemEffectData(int iItemNumber);
 
 private:
 
-	LPITEMEFFECT SearchItemEffect(int iItemNumber);
+    LPITEMEFFECT SearchItemEffect(int iItemNumber);
 
-	ITEMEFFECT m_ItemAddOption[100];
+    ITEMEFFECT m_ItemAddOption[100];
 };
 
-extern CItemAddOption	g_ItemAddOption;
+extern CItemAddOption g_ItemAddOption;
 
 #endif // !defined(AFX_ITEMADDOPTION_H__96FEC421_39C3_40DD_9D47_EE1D86DD8A21__INCLUDED_)

@@ -11,44 +11,39 @@
 
 #include "TMonsterSkillUnit.h"
 
-#define MAX_MONSTER_SKILL_UNIT_INFO		(10)
+#define MAX_MONSTER_SKILL_UNIT_INFO        (10)
 
-class TMonsterSkillInfo
-{
-
-public:
-
-	TMonsterSkillInfo()
-	{
-		this->Reset();
-	}
-
-	void Reset()
-	{
-		this->m_iMonsterIndex = -1;
-		this->m_iSkillUnitCount = 0;
-
-		for ( int i = 0; i < MAX_MONSTER_SKILL_UNIT_INFO; i++)
-		{
-			this->m_iSkillUnitTypeArray[MAX_MONSTER_SKILL_UNIT_INFO] = -1;
-			this->m_lpSkillUnitArray[MAX_MONSTER_SKILL_UNIT_INFO] = NULL;
-		}
-	}
-
-	BOOL IsValid()
-	{
-		if ( this->m_iMonsterIndex == -1 || this->m_iSkillUnitCount == 0 )
-			return FALSE;
-
-		return TRUE;
-	}
+class TMonsterSkillInfo {
 
 public:
 
-	int m_iMonsterIndex;	// 0
-	int m_iSkillUnitCount;	// 4
-	int m_iSkillUnitTypeArray[MAX_MONSTER_SKILL_UNIT_INFO];	// 8
-	TMonsterSkillUnit* m_lpSkillUnitArray[MAX_MONSTER_SKILL_UNIT_INFO];	// 1C
+    TMonsterSkillInfo() {
+        this->Reset();
+    }
+
+    void Reset() {
+        this->m_iMonsterIndex = -1;
+        this->m_iSkillUnitCount = 0;
+
+        for (int i = 0; i < MAX_MONSTER_SKILL_UNIT_INFO; i++) {
+            this->m_iSkillUnitTypeArray[MAX_MONSTER_SKILL_UNIT_INFO] = -1;
+            this->m_lpSkillUnitArray[MAX_MONSTER_SKILL_UNIT_INFO] = NULL;
+        }
+    }
+
+    BOOL IsValid() {
+        if (this->m_iMonsterIndex == -1 || this->m_iSkillUnitCount == 0)
+            return FALSE;
+
+        return TRUE;
+    }
+
+public:
+
+    int m_iMonsterIndex;    // 0
+    int m_iSkillUnitCount;    // 4
+    int m_iSkillUnitTypeArray[MAX_MONSTER_SKILL_UNIT_INFO];    // 8
+    TMonsterSkillUnit *m_lpSkillUnitArray[MAX_MONSTER_SKILL_UNIT_INFO];    // 1C
 };
 // <size 0x30>
 

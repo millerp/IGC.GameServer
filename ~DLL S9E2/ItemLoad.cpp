@@ -41,48 +41,48 @@ action
 	*/
 
 int tipCurrId = 0;
-void __declspec(naked) ToolTipFix()
-{
 
-	__asm {
-		MOV EDX,DWORD PTR SS:[EBP-0x10];
-		PUSH EDX;
-		MOV EAX,DWORD PTR SS:[EBP-0x114];
-		PUSH EAX;
-		MOV EDX, TOOLTIP_FIX_XOR_BUFF;
-		CALL EDX;
-		ADD ESP,0x8;
+void __declspec(naked) ToolTipFix() {
 
-		MOV EAX, DWORD PTR SS:[EBP-0x114];
-		XOR EDX, EDX;
-		MOV DL, BYTE PTR DS:[EAX+4];
-		CMP EDX, 0;
-		JE LeaveLoop;
+    __asm {
+    MOV EDX, DWORD PTR SS:[EBP-0x10];
+    PUSH EDX;
+    MOV EAX, DWORD PTR SS:[EBP-0x114];
+    PUSH EAX;
+    MOV EDX, TOOLTIP_FIX_XOR_BUFF;
+    CALL EDX;
+    ADD ESP, 0x8;
 
-		MOV ECX,DWORD PTR SS:[EBP-0x10];
-		PUSH ECX;
-		MOV EDX,DWORD PTR SS:[EBP-0x114];
-		PUSH EDX;
+    MOV EAX, DWORD PTR SS:[EBP-0x114];
+    XOR EDX, EDX;
+    MOV DL, BYTE PTR DS:[EAX+4];
+    CMP EDX, 0;
+    JE LeaveLoop;
+
+    MOV ECX, DWORD PTR SS:[EBP-0x10];
+    PUSH ECX;
+    MOV EDX, DWORD PTR SS:[EBP-0x114];
+    PUSH EDX;
 //		MOV EAX,DWORD PTR SS:[EBP-0x118];
-		MOV EAX, tipCurrId;
-		IMUL EAX,EAX,0x7C;
-		MOV ECX,DWORD PTR SS:[EBP-0x224];
-		LEA EDX,DWORD PTR DS:[ECX+EAX+0x4];
-		PUSH EDX;
-		MOV EDX, TOOLTIP_FIX_ADD_LINE;
-		CALL EDX;
-		ADD ESP,0xC;
+    MOV EAX, tipCurrId;
+    IMUL EAX, EAX, 0x7C;
+    MOV ECX, DWORD PTR SS:[EBP-0x224];
+    LEA EDX, DWORD PTR DS:[ECX+EAX+0x4];
+    PUSH EDX;
+    MOV EDX, TOOLTIP_FIX_ADD_LINE;
+    CALL EDX;
+    ADD ESP, 0xC;
 
-		MOV EAX, tipCurrId;
-		ADD EAX, 1;
-		MOV tipCurrId, EAX;
+    MOV EAX, tipCurrId;
+    ADD EAX, 1;
+    MOV tipCurrId, EAX;
 
-LeaveLoop:
-		MOV EAX,DWORD PTR SS:[EBP-0x114];
-		ADD EAX,DWORD PTR SS:[EBP-0x10];
-		MOV DWORD PTR SS:[EBP-0x114],EAX;
+    LeaveLoop:
+    MOV EAX, DWORD PTR SS:[EBP-0x114];
+    ADD EAX, DWORD PTR SS:[EBP-0x10];
+    MOV DWORD PTR SS:[EBP-0x114], EAX;
 
-		MOV EDX, TOOLTIP_FIX_BACK_JMP;
-		JMP EDX;
-	}
-}
+    MOV EDX, TOOLTIP_FIX_BACK_JMP;
+    JMP EDX;
+    }
+    }

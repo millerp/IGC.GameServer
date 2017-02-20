@@ -2,20 +2,20 @@
 #define MONSTER_KILL_COUNT_H
 
 
-
-class CKillCountMng
-{
+class CKillCountMng {
 public:
-	CKillCountMng();
-	~CKillCountMng();
+    CKillCountMng();
 
-	void ReadConfig(LPSTR szFile);
+    ~CKillCountMng();
 
-	void CheckMonsterKillCount(int monsterid, LPOBJ lpObj);
+    void ReadConfig(LPSTR szFile);
+
+    void CheckMonsterKillCount(int monsterid, LPOBJ lpObj);
 
 private:
-	int i_MonsterIds[MAX_MONSTER_TYPE];
-	
+    int i_MonsterIds[MAX_MONSTER_TYPE];
+
 };
+
 extern CKillCountMng g_KillCountMng;
 #endif

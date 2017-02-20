@@ -10,35 +10,35 @@
 #endif // _MSC_VER > 1000
 
 
-
 typedef BOOL (__stdcall *MINIDUMPWRITEDUMP)(
-  HANDLE hProcess,
-  DWORD ProcessId,
-  HANDLE hFile,
-  MINIDUMP_TYPE DumpType,
-  PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam,
-  PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
-  PMINIDUMP_CALLBACK_INFORMATION CallbackParam
+        HANDLE hProcess,
+        DWORD ProcessId,
+        HANDLE hFile,
+        MINIDUMP_TYPE DumpType,
+        PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam,
+        PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
+        PMINIDUMP_CALLBACK_INFORMATION CallbackParam
 );
 
 
-class CCrashDump  
-{
+class CCrashDump {
 public:
-	CCrashDump();
-	virtual ~CCrashDump();
+    CCrashDump();
 
-	void SetCrashCallFun(void (*fn)());
+    virtual ~CCrashDump();
+
+    void SetCrashCallFun(void (*fn)());
 
 
-	static void (*m_fn)();
-	static MINIDUMPWRITEDUMP m_fnMiniDump;
+    static void (*m_fn)();
+
+    static MINIDUMPWRITEDUMP m_fnMiniDump;
 
 
 private:
-	HMODULE m_hDll;
+    HMODULE m_hDll;
 
-	static LONG __stdcall TopLevelFilter( struct _EXCEPTION_POINTERS *pExceptionInfo );
+    static LONG __stdcall TopLevelFilter(struct _EXCEPTION_POINTERS *pExceptionInfo);
 
 };
 

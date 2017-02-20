@@ -14,68 +14,73 @@
 #include "TMonsterSkillUnit.h"
 #include "user.h"
 
-#define MAX_MONSTER_SKILL_INFO_ARRAY	(1000)
-#define MAX_MONSTER_SKILL_DELAY_INFO_ARRAY	(3000)
+#define MAX_MONSTER_SKILL_INFO_ARRAY    (1000)
+#define MAX_MONSTER_SKILL_DELAY_INFO_ARRAY    (3000)
 
-struct _ST_MONSTER_SKILL_DELAYTIME_INFO
-{
-	void RESET()
-	{
-		this->iIndex = -1;
-		this->iTargetIndex = -1;
-		this->dwDelayTime = 0;
-		this->bIsUsed = FALSE;
-		this->lpMonsterSkillUnit = NULL;
-	}
+struct _ST_MONSTER_SKILL_DELAYTIME_INFO {
+    void RESET() {
+        this->iIndex = -1;
+        this->iTargetIndex = -1;
+        this->dwDelayTime = 0;
+        this->bIsUsed = FALSE;
+        this->lpMonsterSkillUnit = NULL;
+    }
 
 
-	BOOL IsValid()
-	{
-		if ( !ObjectMaxRange(this->iIndex) || !ObjectMaxRange(this->iTargetIndex) )
-			return FALSE;
+    BOOL IsValid() {
+        if (!ObjectMaxRange(this->iIndex) || !ObjectMaxRange(this->iTargetIndex))
+            return FALSE;
 
-		if ( this->lpMonsterSkillUnit == NULL )
-			return FALSE;
+        if (this->lpMonsterSkillUnit == NULL)
+            return FALSE;
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 
-	_ST_MONSTER_SKILL_DELAYTIME_INFO()
-	{
-		this->RESET();
-	}
+    _ST_MONSTER_SKILL_DELAYTIME_INFO() {
+        this->RESET();
+    }
 
-	BOOL bIsUsed;	// 0
-	int iIndex;	// 4
-	int iTargetIndex;	// 8
-	DWORD dwDelayTime;	// C
-	TMonsterSkillUnit* lpMonsterSkillUnit;	// 10
+    BOOL bIsUsed;    // 0
+    int iIndex;    // 4
+    int iTargetIndex;    // 8
+    DWORD dwDelayTime;    // C
+    TMonsterSkillUnit *lpMonsterSkillUnit;    // 10
 };
 
 
-class TMonsterSkillManager  
-{
+class TMonsterSkillManager {
 
 public:
 
-	TMonsterSkillManager();
-	~TMonsterSkillManager();
+    TMonsterSkillManager();
 
-	static int LoadData(char* lpszFileName);
-	static void DelAllSkillManagerInfo();
-	static int CheckMonsterSkill(int iMonsterClass);
-	static void TMonsterSkillManager::UseMonsterSkill(int iIndex, int iTargetIndex, int iMonsterSkillUnitType, int iMonsterSkillUnit, CMagicInf * lpMagic);
-	static class TMonsterSkillUnit* FindMonsterSkillUnit(int iIndex, int iMonsterSkillUnitType);
-	static void MonsterSkillProc();
-	static int AddMonsterSkillDelayInfo(int iIndex, int iTargetIndex, int iDelayTime, TMonsterSkillUnit* lpMonsterSkillUnit);
-	static bool FindMagicInf(TMonsterSkillUnit* lpMonsterSkillUnit, CMagicInf* lpOutMagic);
+    ~TMonsterSkillManager();
+
+    static int LoadData(char *lpszFileName);
+
+    static void DelAllSkillManagerInfo();
+
+    static int CheckMonsterSkill(int iMonsterClass);
+
+    static void TMonsterSkillManager::UseMonsterSkill(int iIndex, int iTargetIndex, int iMonsterSkillUnitType,
+                                                      int iMonsterSkillUnit, CMagicInf *lpMagic);
+
+    static class TMonsterSkillUnit *FindMonsterSkillUnit(int iIndex, int iMonsterSkillUnitType);
+
+    static void MonsterSkillProc();
+
+    static int
+    AddMonsterSkillDelayInfo(int iIndex, int iTargetIndex, int iDelayTime, TMonsterSkillUnit *lpMonsterSkillUnit);
+
+    static bool FindMagicInf(TMonsterSkillUnit *lpMonsterSkillUnit, CMagicInf *lpOutMagic);
 
 public:
 
-	static TSync s_Sync;
-	static BOOL s_bDataLoad;
-	static TMonsterSkillInfo s_MonsterSkillInfoArray[MAX_MONSTER_SKILL_INFO_ARRAY];
-	static _ST_MONSTER_SKILL_DELAYTIME_INFO s_MonsterSkillDelayInfoArray[MAX_MONSTER_SKILL_DELAY_INFO_ARRAY];
+    static TSync s_Sync;
+    static BOOL s_bDataLoad;
+    static TMonsterSkillInfo s_MonsterSkillInfoArray[MAX_MONSTER_SKILL_INFO_ARRAY];
+    static _ST_MONSTER_SKILL_DELAYTIME_INFO s_MonsterSkillDelayInfoArray[MAX_MONSTER_SKILL_DELAY_INFO_ARRAY];
 
 };
 

@@ -9,85 +9,96 @@
 #include "CWhatsUpDummyServer.h"
 #include "GameServer.h"
 
-WhatsUpDummyServerProc CWhatsUpDummyServer::m_lpOldProc=0;
+WhatsUpDummyServerProc CWhatsUpDummyServer::m_lpOldProc = 0;
 
-CWhatsUpDummyServer::CWhatsUpDummyServer()
-{
-	WSADATA wsaVer;
-	this->m_sckDUMMY = INVALID_SOCKET;	// INVALID_SOCKET
-	this->m_hParentWnd = NULL;
-	CWhatsUpDummyServer::m_lpOldProc=0;
-	WSAStartup(WINSOCK_REQUESTED_VERSION, &wsaVer);
-}
-	
-
-CWhatsUpDummyServer::~CWhatsUpDummyServer()
-{
-	if ( this->m_sckDUMMY != INVALID_SOCKET ) // INVALID_SOCKET
-	{
-		closesocket(this->m_sckDUMMY );
-	}
+CWhatsUpDummyServer::CWhatsUpDummyServer() {
+    WSADATA wsaVer;
+    this->m_sckDUMMY = INVALID_SOCKET;    // INVALID_SOCKET
+    this->m_hParentWnd = NULL;
+    CWhatsUpDummyServer::m_lpOldProc = 0;
+    WSAStartup(WINSOCK_REQUESTED_VERSION, &wsaVer);
 }
 
 
-int CWhatsUpDummyServer::Start(HWND hWnd, WORD wPort)
+CWhatsUpDummyServer::~CWhatsUpDummyServer() {
+    if (this->m_sckDUMMY != INVALID_SOCKET) // INVALID_SOCKET
+    {
+        closesocket(this->m_sckDUMMY);
+    }
+}
+
+
+int CWhatsUpDummyServer::Start(HWND
+hWnd,
+WORD wPort
+)
 {
-	sockaddr_in sockinfo;
-	int iRetVal;
+sockaddr_in sockinfo;
+int iRetVal;
 
-	if ( hWnd == 0 )
-	{
-		return 0;
-	}
+if ( hWnd == 0 )
+{
+return 0;
+}
 
-	if ( !IsWindow(hWnd) )
-	{
-		return 0;
-	}
+if ( !
+IsWindow(hWnd)
+)
+{
+return 0;
+}
 
-	this->m_hParentWnd = hWnd;
+this->
+m_hParentWnd = hWnd;
 
-	this->m_sckDUMMY=socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
-	
-	if ( this->m_sckDUMMY == INVALID_SOCKET ) // INVALID_SOCKET
-	{
-		return 0;
-	}
+this->
+m_sckDUMMY = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
 
-	sockinfo.sin_family =AF_INET;
-	sockinfo.sin_addr.S_un.S_addr=0;
-	sockinfo.sin_port=htons(wPort);
-	
-	iRetVal=0;
-	iRetVal=bind(this->m_sckDUMMY , (sockaddr*)&sockinfo,16);
+if ( this->m_sckDUMMY == INVALID_SOCKET ) // INVALID_SOCKET
+{
+return 0;
+}
 
-	if (iRetVal == -1)
-	{
-		closesocket(this->m_sckDUMMY);
-		this->m_sckDUMMY = INVALID_SOCKET;
-		return 0;
-	}
+sockinfo.
+sin_family = AF_INET;
+sockinfo.sin_addr.S_un.
+S_addr = 0;
+sockinfo.
+sin_port = htons(wPort);
 
-	iRetVal=listen(this->m_sckDUMMY, 2147483647 );
+iRetVal = 0;
+iRetVal = bind(this->m_sckDUMMY, (sockaddr * ) & sockinfo, 16);
 
-	if (iRetVal == -1 )
-	{
-		closesocket(this->m_sckDUMMY);
-		this->m_sckDUMMY = INVALID_SOCKET;
-		return 0;
-	}
+if (iRetVal == -1)
+{
+closesocket(this->m_sckDUMMY);
+this->
+m_sckDUMMY = INVALID_SOCKET;
+return 0;
+}
 
-	iRetVal=WSAAsyncSelect(this->m_sckDUMMY , hWnd, WM_GM_CONNECT_SERVER_MSG, FD_ACCEPT);
+iRetVal = listen(this->m_sckDUMMY, 2147483647);
 
-	if (iRetVal == -1 )
-	{
-		closesocket(this->m_sckDUMMY);
-		this->m_sckDUMMY = INVALID_SOCKET;
-		return 0;
-	}
+if (iRetVal == -1 )
+{
+closesocket(this->m_sckDUMMY);
+this->
+m_sckDUMMY = INVALID_SOCKET;
+return 0;
+}
 
-	//CWhatsUpDummyServer::m_lpOldProc=(WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC, (LONG)ParentWndProc  );
-	return 1;
+iRetVal = WSAAsyncSelect(this->m_sckDUMMY, hWnd, WM_GM_CONNECT_SERVER_MSG, FD_ACCEPT);
+
+if (iRetVal == -1 )
+{
+closesocket(this->m_sckDUMMY);
+this->
+m_sckDUMMY = INVALID_SOCKET;
+return 0;
+}
+
+//CWhatsUpDummyServer::m_lpOldProc=(WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC, (LONG)ParentWndProc  );
+return 1;
 }
 
 /*

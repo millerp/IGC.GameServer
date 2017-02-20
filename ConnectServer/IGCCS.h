@@ -21,9 +21,9 @@ extern char g_ClientVersion[9];
 extern char FTPLauncher[200];
 extern char HashLauncher[200];
 extern char g_WhiteListIP[16];
-#define	WM_LOG_PAINT	(0x101)
-#define WM_LOG_DATE_CHANGE	(0x102)
-#define WM_SERVER_CHECK		(0x103)
+#define    WM_LOG_PAINT    (0x101)
+#define WM_LOG_DATE_CHANGE    (0x102)
+#define WM_SERVER_CHECK        (0x103)
 
 #define SET_NUMBERH(x) ( (BYTE)((DWORD)(x)>>(DWORD)8) )
 #define SET_NUMBERL(x) ( (BYTE)((DWORD)(x) & 0xFF) )

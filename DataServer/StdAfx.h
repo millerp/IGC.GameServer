@@ -11,8 +11,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-#define TRACE_PACKET 0	
+#define WIN32_LEAN_AND_MEAN        // Exclude rarely-used stuff from Windows headers
+#define TRACE_PACKET 0
 #define CURRENT_DB_VERSION 3
 #define MAX_TYPE_PLAYER 8
 #define MAX_NUMBER_MAP 101
@@ -21,7 +21,7 @@
 #define DATASERVER_VERSION "9.5.1.15"
 
 // WARNING - IF YOU WANT TO RELEASE DS FOR PUBLIC - UNCOMMENT THIS LINE
-#define DS_AUTHORITY 
+#define DS_AUTHORITY
 
 // Windows Header Files:
 #include <windows.h>

@@ -6,20 +6,22 @@ extern int iBattleZoneWarpList[60]; // MAX_MOVE_COMMAND
 
 extern int iBattleZoneWarpCount;
 
-struct _tagPMSG_SEND_GENS_BATTLEZONE_DATA
-{
-	BYTE c;
-	BYTE sizeH;
-	BYTE sizeL;
-	BYTE headcode;
-	BYTE subcode;
-	WORD iMapList[103];
-	int iWarpList[60];
+struct _tagPMSG_SEND_GENS_BATTLEZONE_DATA {
+    BYTE c;
+    BYTE sizeH;
+    BYTE sizeL;
+    BYTE headcode;
+    BYTE subcode;
+    WORD iMapList[103];
+    int iWarpList[60];
 };
 
 void GensInitData();
+
 void GensWarpMenuFix();
+
 bool GensIsBattleZoneMap(int iMapNumber);
-void GCSetBattleZoneData(_tagPMSG_SEND_GENS_BATTLEZONE_DATA * lpMsg);
+
+void GCSetBattleZoneData(_tagPMSG_SEND_GENS_BATTLEZONE_DATA *lpMsg);
 
 #endif

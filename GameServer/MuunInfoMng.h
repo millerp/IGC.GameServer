@@ -6,24 +6,28 @@
 
 #define MAX_MUUN_ITEM 100
 
-class CMuunInfoMng
-{
+class CMuunInfoMng {
 public:
-	CMuunInfoMng();
-	~CMuunInfoMng();
+    CMuunInfoMng();
 
-	bool LoadScriptMuunSystemInfo(char *lpszFileName);
-	bool LoadScriptMuunSystemOption(const char *lpszFileName);
+    ~CMuunInfoMng();
 
-	bool InsertMuunOptionInfo(CMuunOpt *pCMuunOpt);
-	time_t ConvertStringToTime(const char *pchTime);
+    bool LoadScriptMuunSystemInfo(char *lpszFileName);
 
-	CMuunInfo * GetMuunInfo(int iIndex);
-	CMuunInfo * GetMuunItemNumToMuunInfo(int iMuunItemNum);
+    bool LoadScriptMuunSystemOption(const char *lpszFileName);
 
-	int GetBeforeEvolutionMuunItemIndex(int iItemNum);
+    bool InsertMuunOptionInfo(CMuunOpt *pCMuunOpt);
+
+    time_t ConvertStringToTime(const char *pchTime);
+
+    CMuunInfo *GetMuunInfo(int iIndex);
+
+    CMuunInfo *GetMuunItemNumToMuunInfo(int iMuunItemNum);
+
+    int GetBeforeEvolutionMuunItemIndex(int iItemNum);
 
 private:
-	CMuunInfo m_CMuunInfo[MAX_MUUN_ITEM];
+    CMuunInfo m_CMuunInfo[MAX_MUUN_ITEM];
 };
+
 #endif

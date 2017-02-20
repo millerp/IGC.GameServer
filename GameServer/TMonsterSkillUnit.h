@@ -12,11 +12,10 @@
 #include "TMonsterSkillElement.h"
 
 
-#define MAX_MONSTER_SKILL_UNIT_ARRAY	(200)
-#define MAX_MONSTER_SKILL_ELEMENT_INFO	(5)
+#define MAX_MONSTER_SKILL_UNIT_ARRAY    (200)
+#define MAX_MONSTER_SKILL_ELEMENT_INFO    (5)
 
-class TSkillUnit
-{
+class TSkillUnit {
 
 public:
 
@@ -24,34 +23,37 @@ private:
 
 };
 
-class TMonsterSkillUnit : public TSkillUnit
-{
+class TMonsterSkillUnit : public TSkillUnit {
 
 public:
 
-	TMonsterSkillUnit();
-	virtual ~TMonsterSkillUnit();
+    TMonsterSkillUnit();
 
-	void RunSkill(int iIndex, int iTargetIndex);
-	void Reset();
+    virtual ~TMonsterSkillUnit();
 
-	static int LoadData(char* lpszFileName);
-	static int DelAllSkillUnit();
-	static class TMonsterSkillUnit* FindSkillUnit(int iUnitNumber);
+    void RunSkill(int iIndex, int iTargetIndex);
+
+    void Reset();
+
+    static int LoadData(char *lpszFileName);
+
+    static int DelAllSkillUnit();
+
+    static class TMonsterSkillUnit *FindSkillUnit(int iUnitNumber);
 
 public:
 
-	char m_szUnitName[20];	// 4
-	int m_iUnitNumber;	// 18
-	int m_iUnitTargetType;	// 1C
-	int m_iUnitScopeType;	// 20
-	int m_iUnitScopeValue;	// 24
-	int m_iDelay;	// 28
-	int m_iElementsCount;	// 2C
-	TMonsterSkillElement* m_lpElementsSlot[MAX_MONSTER_SKILL_ELEMENT_INFO];	// 30
+    char m_szUnitName[20];    // 4
+    int m_iUnitNumber;    // 18
+    int m_iUnitTargetType;    // 1C
+    int m_iUnitScopeType;    // 20
+    int m_iUnitScopeValue;    // 24
+    int m_iDelay;    // 28
+    int m_iElementsCount;    // 2C
+    TMonsterSkillElement *m_lpElementsSlot[MAX_MONSTER_SKILL_ELEMENT_INFO];    // 30
 
-	static BOOL s_bDataLoad;
-	static TMonsterSkillUnit s_MonsterSkillUnitArray[MAX_MONSTER_SKILL_UNIT_ARRAY];
+    static BOOL s_bDataLoad;
+    static TMonsterSkillUnit s_MonsterSkillUnitArray[MAX_MONSTER_SKILL_UNIT_ARRAY];
 
 };
 

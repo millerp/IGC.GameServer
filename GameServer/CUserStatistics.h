@@ -1,17 +1,19 @@
 #pragma once
+
 #include "CUserStatisticsData.h"
 
-class CUserStatistics
-{
+class CUserStatistics {
 private:
-	char Name[11];
-	int aIndex;
+    char Name[11];
+    int aIndex;
 public:
-	CUserStatistics(char Name[11], int aIndex);
-	virtual ~CUserStatistics();
+    CUserStatistics(char Name[11], int aIndex);
 
-	bool LoadData(CUserStatisticsData *LoadUserData);
-	void SaveData();
+    virtual ~CUserStatistics();
 
-	CUserStatisticsData *UserData;
+    bool LoadData(CUserStatisticsData *LoadUserData);
+
+    void SaveData();
+
+    CUserStatisticsData *UserData;
 };

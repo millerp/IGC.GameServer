@@ -1,4 +1,4 @@
- // ------------------------------
+// ------------------------------
 // Decompiled by Deathway
 // Date : 2007-03-09
 // ------------------------------
@@ -11,70 +11,58 @@
 CConMember ConMember;
 
 
-
-CConMember::CConMember()
-{
-	this->m_dwTickCount = GetTickCount();
-	return;
+CConMember::CConMember() {
+    this->m_dwTickCount = GetTickCount();
+    return;
 }
 
-CConMember::~CConMember()
-{
-	return;
+CConMember::~CConMember() {
+    return;
 }
 
 
-void CConMember::Init()
-{
-	this->m_szAccount.clear();
+void CConMember::Init() {
+    this->m_szAccount.clear();
 }
 
-BOOL CConMember::IsMember(char * AccountID )
-{
-	if ( (AccountID == NULL ) || ( strcmp(AccountID, "") == 0 ) )
-	{
-		return FALSE;
-	}
+BOOL CConMember::IsMember(char *AccountID) {
+    if ((AccountID == NULL) || (strcmp(AccountID, "") == 0)) {
+        return FALSE;
+    }
 
-	std::map<std::string, int>::iterator it = this->m_szAccount.find( (std::string) AccountID );
-	
-	if ( it != this->m_szAccount.end() )
-	{
-		return TRUE;
-	}
+    std::map<std::string, int>::iterator it = this->m_szAccount.find((std::string) AccountID);
 
-	return FALSE;
+    if (it != this->m_szAccount.end()) {
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
-void CConMember::Load(char* filename)
-{
-	int count=0;
-	int Token;
+void CConMember::Load(char *filename) {
+    int count = 0;
+    int Token;
 
-	this->Init();
+    this->Init();
 
-	pugi::xml_document file;
-	pugi::xml_parse_result res = file.load_file(filename);
+    pugi::xml_document file;
+    pugi::xml_parse_result res = file.load_file(filename);
 
-	if ( res.status != pugi::status_ok )
-	{
-		g_Log.MsgBox("File %s not found (%s)", filename, res.description());
-		return;
-	}
+    if (res.status != pugi::status_ok) {
+        g_Log.MsgBox("File %s not found (%s)", filename, res.description());
+        return;
+    }
 
-	pugi::xml_node main = file.child("ConnectMember");
+    pugi::xml_node main = file.child("ConnectMember");
 
-	for (pugi::xml_node account = main.child("Account"); account; account = account.next_sibling())
-	{
-		this->m_szAccount.insert(std::pair<std::string, int>(account.attribute("Name").as_string(), 0));
-	}
+    for (pugi::xml_node account = main.child("Account"); account; account = account.next_sibling()) {
+        this->m_szAccount.insert(std::pair<std::string, int>(account.attribute("Name").as_string(), 0));
+    }
 }
 
-void CConMember::Run()
-{
-	if ( GetTickCount() - this->m_dwTickCount >= 300000 )
-	{
-		this->m_dwTickCount = GetTickCount();
-		this->Load("IGC_ConnectMember.xml");
-	}
+void CConMember::Run() {
+    if (GetTickCount() - this->m_dwTickCount >= 300000) {
+        this->m_dwTickCount = GetTickCount();
+        this->Load("IGC_ConnectMember.xml");
+    }
 }

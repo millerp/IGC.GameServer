@@ -1,9 +1,9 @@
-#define FPTR(Func)	(DWORD)Func			// Interpretacja wskaŸnika na funkcjê jako liczba
+#define FPTR(Func)    (DWORD)Func            // Interpretacja wskaï¿½nika na funkcjï¿½ jako liczba
 
 #ifndef RGBA
-#define RGBA(r,g,b,a)        ((COLORREF)( (((DWORD)(BYTE)(a))<<24) |     RGB(r,g,b) ))
-#define AddAValue(rgb, a)	 ((COLORREF)( (((DWORD)(BYTE)(a))<<24) | RGB(GetRValue(rgb), GetGValue(rgb), GetBValue(rgb))))
-#define GetAValue(rgb)   ((BYTE) ((rgb) >> 24)) 
+#define RGBA(r, g, b, a)        ((COLORREF)( (((DWORD)(BYTE)(a))<<24) |     RGB(r,g,b) ))
+#define AddAValue(rgb, a)     ((COLORREF)( (((DWORD)(BYTE)(a))<<24) | RGB(GetRValue(rgb), GetGValue(rgb), GetBValue(rgb))))
+#define GetAValue(rgb)   ((BYTE) ((rgb) >> 24))
 #endif
 
 #define CMYK_RGB(c, m, y, k) (RGBA(((255-c)*(255-k))/255, ((255-m)*(255-k))/255, ((255-Y)*(255-K))/255), 255))

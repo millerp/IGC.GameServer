@@ -4,32 +4,34 @@
 #include "StdAfx.h"
 #include "user.h"
 
-struct SKILL_TIME_INFO
-{
-	WORD iSkill;
-	DWORD iMinMagicSpeed;
-	DWORD iMaxMagicSpeed;
-	ULONGLONG iUseTime;
+struct SKILL_TIME_INFO {
+    WORD iSkill;
+    DWORD iMinMagicSpeed;
+    DWORD iMaxMagicSpeed;
+    ULONGLONG iUseTime;
 };
 
 #pragma once
-class CSkillUseTime
-{
-public:
-	CSkillUseTime(void);
-	virtual ~CSkillUseTime(void);
 
-	bool LoadFile(LPSTR lpFile);
-	bool LoadConfig(LPSTR lpFile);
-	bool CheckSkillTime(LPOBJ lpObj, int Skill);
+class CSkillUseTime {
+public:
+    CSkillUseTime(void);
+
+    virtual ~CSkillUseTime(void);
+
+    bool LoadFile(LPSTR lpFile);
+
+    bool LoadConfig(LPSTR lpFile);
+
+    bool CheckSkillTime(LPOBJ lpObj, int Skill);
 
 private:
-	std::vector<SKILL_TIME_INFO> m_vtSkillTimeInfo;
-	bool m_bFileLoad;
-	bool m_bEnabled;
-	bool m_bDebugMode;
-	int m_iNumberOfBadSkillUseDC;
-	bool m_iIsDC;
+    std::vector <SKILL_TIME_INFO> m_vtSkillTimeInfo;
+    bool m_bFileLoad;
+    bool m_bEnabled;
+    bool m_bDebugMode;
+    int m_iNumberOfBadSkillUseDC;
+    bool m_iIsDC;
 
 };
 

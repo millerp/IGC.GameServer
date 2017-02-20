@@ -32,7 +32,7 @@
 #define ID_OPTIONS_PLAYERLIST           32775
 #define ID_OPTIONS_RESETERROR           32776
 #define ID_OPTIONS_RELOADHWIDLIMIT      32777
-#define ID_GENS_RELOADLEAVEDELAY		32778
+#define ID_GENS_RELOADLEAVEDELAY        32778
 #define IDC_STATIC                      -1
 
 // Next default values for new objects

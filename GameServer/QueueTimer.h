@@ -5,31 +5,36 @@
 
 #pragma once
 
-class CQueueTimer
-{
+class CQueueTimer {
 public:
-	CQueueTimer();
-	virtual ~CQueueTimer();
+    CQueueTimer();
 
-	void RegCallBack(WAITORTIMERCALLBACK callback);
-	void QueueTimerInit();
-	
-	void PushEventID(int eventID);
-	void PopEventID();
-	int GetEventID();
+    virtual ~CQueueTimer();
 
-	int CreateTimer(int eventID, DWORD period, DWORD flags);
-	void DeleteQueueTimer();
+    void RegCallBack(WAITORTIMERCALLBACK callback);
 
-	void SyncLock() { this->m_Sync.Lock(); }
-	void SyncUnlock() { this->m_Sync.Unlock(); }
+    void QueueTimerInit();
+
+    void PushEventID(int eventID);
+
+    void PopEventID();
+
+    int GetEventID();
+
+    int CreateTimer(int eventID, DWORD period, DWORD flags);
+
+    void DeleteQueueTimer();
+
+    void SyncLock() { this->m_Sync.Lock(); }
+
+    void SyncUnlock() { this->m_Sync.Unlock(); }
 
 private:
 
-	WAITORTIMERCALLBACK m_callback;
-	HANDLE m_hTimerQueue;
-	std::stack<int> m_EventIdStack;
-	TSync m_Sync;
+    WAITORTIMERCALLBACK m_callback;
+    HANDLE m_hTimerQueue;
+    std::stack<int> m_EventIdStack;
+    TSync m_Sync;
 };
 
 #endif

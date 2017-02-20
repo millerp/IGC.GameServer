@@ -10,35 +10,35 @@
 #endif // _MSC_VER > 1000
 
 #include <map>
+
 using namespace std;
 
-class DelayHandler  
-{
+class DelayHandler {
 public:
-	DelayHandler();
-	virtual ~DelayHandler();
+    DelayHandler();
 
-	void Initialize();
+    virtual ~DelayHandler();
 
-	int GetQuerySessionId()
-	{
-		return this->m_lQuerySessionId;
-	}
+    void Initialize();
 
-	void IncreaseQuerySessionId()
-	{
-		InterlockedIncrement(&this->m_lQuerySessionId);
-	}
+    int GetQuerySessionId() {
+        return this->m_lQuerySessionId;
+    }
 
-	void AddHeadCode(BYTE btHeadCode);
-	bool CheckHeadCode(BYTE btHeadCode);
+    void IncreaseQuerySessionId() {
+        InterlockedIncrement(&this->m_lQuerySessionId);
+    }
+
+    void AddHeadCode(BYTE btHeadCode);
+
+    bool CheckHeadCode(BYTE btHeadCode);
 
 public:
-	long m_lQuerySessionId;
-	std::map<int, int> m_mapHeadCode;
-	CRITICAL_SECTION m_critHeadCode;
+    long m_lQuerySessionId;
+    std::map<int, int> m_mapHeadCode;
+    CRITICAL_SECTION m_critHeadCode;
 };
 
-extern DelayHandler	g_DelayHandler;
+extern DelayHandler g_DelayHandler;
 
 #endif // !defined(AFX_DELAYHANDLER_H__1667AE73_CE35_4AB1_B115_DEE906B5ACEE__INCLUDED_)

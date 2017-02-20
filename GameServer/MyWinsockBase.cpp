@@ -9,125 +9,108 @@
 #include "stdafx.h"
 #include "MyWinsockBase.h"
 
-MyWinsockBase::MyWinsockBase()
-{
-	this->m_socket = INVALID_SOCKET;
-	this->Startup();
+MyWinsockBase::MyWinsockBase() {
+    this->m_socket = INVALID_SOCKET;
+    this->Startup();
 }
 
 
-MyWinsockBase::~MyWinsockBase()
-{
-	WSACleanup();
+MyWinsockBase::~MyWinsockBase() {
+    WSACleanup();
 }
 
-BOOL MyWinsockBase::Startup()
-{
-	WORD wVersionRequested;
-	WSADATA wsaData;
-	int err;
+BOOL MyWinsockBase::Startup() {
+    WORD wVersionRequested;
+    WSADATA wsaData;
+    int err;
 
-	wVersionRequested = WINSOCK_VERSION;
-	err=WSAStartup(wVersionRequested, &wsaData);
-	
-	if ( err != 0 )
-	{
-		MessageBox(NULL, "WINSOCK STARTUP FAILED", "Error", MB_OK|MB_APPLMODAL);
-		return FALSE;
-	}
+    wVersionRequested = WINSOCK_VERSION;
+    err = WSAStartup(wVersionRequested, &wsaData);
 
-	if ( ((wsaData.wVersion &0xFF & 0xFF )   != (2 ) ) || ( ( ((DWORD)wsaData.wVersion >> (DWORD)8) &0xFF )  != (2)) )	// Lacking Some Code Here	It said SAR and is SHR
-	{
-		WSACleanup();
-		MessageBox(NULL, "WINSOCK VERSION INVALID", "Error", MB_OK|MB_APPLMODAL);
-		return FALSE;
-	}
-	else
-	{
-		this->m_socket = INVALID_SOCKET;
-		this->m_iMaxSockets = wsaData.iMaxSockets ;
-		this->m_Connect = FALSE;
-		return TRUE;
-	}
-}
+    if (err != 0) {
+        MessageBox(NULL, "WINSOCK STARTUP FAILED", "Error", MB_OK | MB_APPLMODAL);
+        return FALSE;
+    }
 
-		
-
-BOOL MyWinsockBase::CreateSocket(HWND hWnd)
-{
-	int size;
-	size=4;
-
-	this->m_socket=socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
-	
-	if (this->m_socket == INVALID_SOCKET )
-	{
-		return FALSE;
-	}
-
-	this->m_hWnd =hWnd;
-	return TRUE;
+    if (((wsaData.wVersion & 0xFF & 0xFF) != (2)) ||
+        ((((DWORD) wsaData.wVersion >> (DWORD) 8) & 0xFF) != (2)))    // Lacking Some Code Here	It said SAR and is SHR
+    {
+        WSACleanup();
+        MessageBox(NULL, "WINSOCK VERSION INVALID", "Error", MB_OK | MB_APPLMODAL);
+        return FALSE;
+    } else {
+        this->m_socket = INVALID_SOCKET;
+        this->m_iMaxSockets = wsaData.iMaxSockets;
+        this->m_Connect = FALSE;
+        return TRUE;
+    }
 }
 
 
-BOOL MyWinsockBase::Close()
-{
-	closesocket(this->m_socket );
-	this->m_socket=INVALID_SOCKET;
+BOOL MyWinsockBase::CreateSocket(HWND hWnd) {
+    int size;
+    size = 4;
 
-	this->m_Connect=FALSE;
+    this->m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
 
-	return TRUE;
-}
+    if (this->m_socket == INVALID_SOCKET) {
+        return FALSE;
+    }
 
-BOOL MyWinsockBase::Close(SOCKET socket)
-{
-	shutdown(socket, SD_RECEIVE);
-	closesocket(socket);
-
-	this->m_socket=INVALID_SOCKET;
-	this->m_Connect =FALSE;
-	return TRUE;
-}
-
-int MyWinsockBase::Close2(SOCKET socket)
-{
-	shutdown(this->m_socket , SD_SEND);
-	closesocket(socket);
-
-	this->m_socket=INVALID_SOCKET;
-	this->m_Connect=0;
-	return 1;
+    this->m_hWnd = hWnd;
+    return TRUE;
 }
 
 
-SOCKET MyWinsockBase::GetSocket()
-{
-	return this->m_socket;
+BOOL MyWinsockBase::Close() {
+    closesocket(this->m_socket);
+    this->m_socket = INVALID_SOCKET;
+
+    this->m_Connect = FALSE;
+
+    return TRUE;
 }
 
-int MyWinsockBase::GetRecvBuffSize()
-{
-	return this->m_recvbufsize;
+BOOL MyWinsockBase::Close(SOCKET socket) {
+    shutdown(socket, SD_RECEIVE);
+    closesocket(socket);
+
+    this->m_socket = INVALID_SOCKET;
+    this->m_Connect = FALSE;
+    return TRUE;
+}
+
+int MyWinsockBase::Close2(SOCKET socket) {
+    shutdown(this->m_socket, SD_SEND);
+    closesocket(socket);
+
+    this->m_socket = INVALID_SOCKET;
+    this->m_Connect = 0;
+    return 1;
 }
 
 
-int MyWinsockBase::GetSendBuffSize()
-{
-	return this->m_sendbufsize;
+SOCKET MyWinsockBase::GetSocket() {
+    return this->m_socket;
+}
+
+int MyWinsockBase::GetRecvBuffSize() {
+    return this->m_recvbufsize;
 }
 
 
-int MyWinsockBase::GetConnect()
-{
-	return this->m_Connect;
+int MyWinsockBase::GetSendBuffSize() {
+    return this->m_sendbufsize;
 }
 
 
+int MyWinsockBase::GetConnect() {
+    return this->m_Connect;
+}
 
-void MyWinsockBase::SetConnect(BOOL connected)	
-{
-	this->m_Connect = connected;
+
+void MyWinsockBase::SetConnect(BOOL connected) {
+    this->m_Connect = connected;
 }
 
 
