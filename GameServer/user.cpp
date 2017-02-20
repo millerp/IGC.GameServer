@@ -9,195 +9,101 @@
 	BOOL gObjJoominCheck(int aIndex, char* szInJN)	-	strcmpi comflict symbols
 	void SkillFrustrum()	-	Wrong Symbol NAmes of the zzmath functions
 */
-#include
- "stdafx.h"
-#include
- "user.h"
-#include
- "TLog.h"
-#include
- "LogToFile.h"
-#include
- "GameServer.h"
-#include
- "GameMain.h"
-#include
- "DoppelGanger.h"
-#include
- "MapServerManager.h"
-#include
- "gObjMonster.h"
-#include
- "ObjCalCharacter.h"
-#include
- "ObjUseSkill.h"
-#include
- "DarkSpirit.h"
-#include
- "DSProtocol.h"
-#include
- "DevilSquare.h"
-#include
- "protocol.h"
-#include
- "ImperialGuardian.h"
-#include
- "MonsterAttr.h"
-#include
- "SendNPCInfo.h"
-#include
- "ChaosBox.h"
-#include
- "PacketChecksum.h"
-#include
- "QuestInfo.h"
-#include
- "EledoradoEvent.h"
-#include
- "TNotice.h"
-#include
- "GMMng.h"
-#include
- "zzzmathlib.h"
-#include
- "Gate.h"
-#include
- "ObjAttack.h"
-#include
- "SProtocol.h"
-#include
- "MultiAttackHAckCheck.h"
-#include
- "BattleSoccer.h"
-#include
- "BattleSoccerManager.h"
-#include
- "TUnion.h"
-#include
- "TMonsterAIElement.h"
-#include
- "winutil.h"
-#include
- "Weapon.h"
-#include
- "CrywolfSync.h"
-#include
- "Kanturu.h"
-#include
- "CashShop.h"
-#include
- "Mercenary.h"
-#include
- "KalimaGate.h"
-#include
- "KanturuBattleUserMng.h"
-#include
- "Guardian.h"
-#include
- "MoveCommand.h"
-#include
- "StatMng.h"
-#include
- "SetItemOption.h"
-#include
- "SkillAdditionInfo.h"
-#include
- "PeriodItemEx.h"
-#include
- "TMonsterSkillManager.h"
-#include
- "IllusionTempleEvent_Renewal.h"
-#include
- "BuffEffect.h"
-#include
- "BuffEffectSlot.h"
-#include
- "MasterSkillSystem.h"
-#include
- "PentagramMixSystem.h"
-#include
- "MasterLevelSkillTreeSystem.h"
+#include "stdafx.h"
+#include "user.h"
+#include "TLog.h"
+#include "LogToFile.h"
+#include "GameServer.h"
+#include "GameMain.h"
+#include "DoppelGanger.h"
+#include "MapServerManager.h"
+#include "gObjMonster.h"
+#include "ObjCalCharacter.h"
+#include "ObjUseSkill.h"
+#include "DarkSpirit.h"
+#include "DSProtocol.h"
+#include "DevilSquare.h"
+#include "protocol.h"
+#include "ImperialGuardian.h"
+#include "MonsterAttr.h"
+#include "SendNPCInfo.h"
+#include "ChaosBox.h"
+#include "PacketChecksum.h"
+#include "QuestInfo.h"
+#include "EledoradoEvent.h"
+#include "TNotice.h"
+#include "GMMng.h"
+#include "zzzmathlib.h"
+#include "Gate.h"
+#include "ObjAttack.h"
+#include "SProtocol.h"
+#include "MultiAttackHAckCheck.h"
+#include "BattleSoccer.h"
+#include "BattleSoccerManager.h"
+#include "TUnion.h"
+#include "TMonsterAIElement.h"
+#include "winutil.h"
+#include "Weapon.h"
+#include "CrywolfSync.h"
+#include "Kanturu.h"
+#include "CashShop.h"
+#include "Mercenary.h"
+#include "KalimaGate.h"
+#include "KanturuBattleUserMng.h"
+#include "Guardian.h"
+#include "MoveCommand.h"
+#include "StatMng.h"
+#include "SetItemOption.h"
+#include "SkillAdditionInfo.h"
+#include "PeriodItemEx.h"
+#include "TMonsterSkillManager.h"
+#include "IllusionTempleEvent_Renewal.h"
+#include "BuffEffect.h"
+#include "BuffEffectSlot.h"
+#include "MasterSkillSystem.h"
+#include "PentagramMixSystem.h"
+#include "MasterLevelSkillTreeSystem.h"
 //Added by HermeX
-#include
- "Crywolf.h"
-#include
- "CrywolfStatue.h"
-#include
- "CrywolfAltar.h"
-#include
- "LifeStone.h"
-#include
- "GuardianStatue.h"
-#include
- "CannonTower.h"
-#include
- "CastleCrown.h"
-#include
- "CastleCrownSwitch.h"
-#include
- "CastleSiegeSync.h"
-#include
- "Raklion.h"
-#include
- "RaklionUtil.h"
-#include
- "RaklionBattleUserMng.h"
-#include
- "RaklionMonsterMng.h"
-#include
- "ItemSocketOptionSystem.h"
-#include
- "ChaosCastle.h"
-#include
- "configread.h"
-#include
- "LastManStanding.h"
-#include
- "MapAttribute.h"
-#include
- "GensSystem.h"
-#include
- "NewPVP.h"
-#include
- "VipSys.h"
-#include
- "ExpManager.h"
-#include
- "QuestExpProgMng.h"
-#include
- "QuestExpInfo.h"
-#include
- "LuckyItemManager.h"
-#include
- "PentagramSystem.h"
-#include
- "MuunSystem.h"
-#include
- "ChaosCastleFinal.h"// directions
-#include
- "MuRummyMng.h"
-#include
- "MineSystem.h"
-#include
- "Shop.h"
-#include
- "PersonalStore.h"
-#include
- "LargeRand.h"
-#include
- "AcheronGuardianEvent.h"
-#include
- "ItemOptionTypeMng.h"
-#include
- "BonusEvent.h"
-#include
- "CItemDrop.h"
-#include
- "DevilSquareFinal.h"
-#include
- "BotSystem.h"
-#include
- "OfflineLevelling.h"
+#include "Crywolf.h"
+#include "CrywolfStatue.h"
+#include "CrywolfAltar.h"
+#include "LifeStone.h"
+#include "GuardianStatue.h"
+#include "CannonTower.h"
+#include "CastleCrown.h"
+#include "CastleCrownSwitch.h"
+#include "CastleSiegeSync.h"
+#include "Raklion.h"
+#include "RaklionUtil.h"
+#include "RaklionBattleUserMng.h"
+#include "RaklionMonsterMng.h"
+#include "ItemSocketOptionSystem.h"
+#include "ChaosCastle.h"
+#include "configread.h"
+#include "LastManStanding.h"
+#include "MapAttribute.h"
+#include "GensSystem.h"
+#include "NewPVP.h"
+#include "VipSys.h"
+#include "ExpManager.h"
+#include "QuestExpProgMng.h"
+#include "QuestExpInfo.h"
+#include "LuckyItemManager.h"
+#include "PentagramSystem.h"
+#include "MuunSystem.h"
+#include "ChaosCastleFinal.h"// directions
+#include "MuRummyMng.h"
+#include "MineSystem.h"
+#include "Shop.h"
+#include "PersonalStore.h"
+#include "LargeRand.h"
+#include "AcheronGuardianEvent.h"
+#include "ItemOptionTypeMng.h"
+#include "BonusEvent.h"
+#include "CItemDrop.h"
+#include "DevilSquareFinal.h"
+#include "BotSystem.h"
+#include "OfflineLevelling.h"
 
 inline bool ObjectMaxRange(int Index)
 {
@@ -474,15 +380,11 @@ PMSG_VIEWPORTDESTROY pViewportDestroy;
 PMSG_MONSTER_VIEWPORTCREATE pMonsterViewportCreate;
 PMSG_CALLMONSTER_VIEWPORTCREATE pCallMonsterViewportCreate;
 
-#pragma
- pack(1)
-
+#pragma pack(1)
 PWMSG_COUNT pItemCount;
 PMSG_ITEMVIEWPORTCREATE pItemViewportCreate;
 PMSG_VIEWPORTDESTROY pItemViewportDestroy;
-
-#pragma
- pack()
+#pragma pack()
 
 
 
@@ -17034,8 +16936,7 @@ gObjClearViewport(lpObj);
 }
 
 
-#define
- MP 1
+#define MP 1
 
 inline void gObjViewportListCreate(short aIndex)
 {
@@ -17095,10 +16996,8 @@ LPOBJ lpTempObj;
 if (lpObj->Type == OBJ_USER    )
 {
 
-#if
- (MP==1)
-#pragma
- omp parallel for
+#if (MP==1)
+#pragma omp parallel for
 #endif
 for (int n = 0; n < g_ConfigRead.server.GetObjectMax(); n++)
 {
@@ -17123,10 +17022,8 @@ result = ViewportAdd2(n, aIndex, gObj[aIndex].Type);
 else if (lpObj->Type == OBJ_MONSTER || lpObj->Type == OBJ_NPC)
 {
 
-#if
- (MP==1)
-#pragma
- omp parallel for
+#if (MP==1)
+#pragma omp parallel for
 #endif
 for (int n = g_ConfigRead.server.GetObjectMaxMonster(); n < g_ConfigRead.server.GetObjectMax(); n++)
 {
@@ -17709,8 +17606,7 @@ gEledoradoEvent.CheckGoldDercon(lpObj->MapNumber);
 
 }
 }
-#pragma
- pack (1)
+#pragma pack (1)
 struct PMSG_CHARREGEN
 {
 struct PBMSG_HEAD h;
@@ -17737,8 +17633,7 @@ DWORD Money;
 int IGCLife;
 int IGCMana;
 };
-#pragma
- pack ()
+#pragma pack ()
 
 void gObjSetState()
 {

@@ -6,179 +6,93 @@
 //	GS-N	1.00.18	JPN	0x0042FBF0	-	Completed
 // PMoveProc - Weird form of compilation
 // void GameProtocol::CGCloseWindow(int aIndex) Weird form of compilation
-#include
- "stdafx.h"
-#include
- "protocol.h"
-#include
- "user.h"
-#include
- "giocp.h"
-#include
- "Event.h"
-#include
- "TLog.h"
-#include
- "GameMain.h"
-#include
- "winutil.h"
-#include
- "TNotice.h"
-#include
- "QuestInfo.h"
-#include
- "ConMember.h"
-#include
- "GameServer.h"
-#include
- "GMMng.h"
-#include
- "BattleSoccerManager.h"
-#include
- "BuffEffectSlot.h"
-#include
- "ChaosBox.h"
-#include
- "CastleSiegeSync.h"
-#include
- "TUnion.h"
-#include
- "JewelMixSystem.h"
-#include
- "Weapon.h"
-#include
- "ImperialGuardian.h"
-#include
- "MasterLevelSkillTreeSystem.h"
-#include
- "KalimaGate.h"
-#include
- "ObjUseSkill.h"
-#include
- "ObjCalCharacter.h"
-#include
- "NpcTalk.h"
-#include
- "Shop.h"
-#include
- "PeriodItemEx.h"
-#include
- "BattleSoccer.h"
-#include
- "BattleSoccerManager.h"
-#include
- "gObjMonster.h"
-#include
- "ComboAttack.h"
-#include
- "Gate.h"
-#include
- "MoveCommand.h"
-#include
- "MultiAttackHackCheck.h"
-#include
- "ItemAddOption.h"
-#include
- "JewelOfHarmonySystem.h"
-#include
- "PacketCheckSum.h"
-#include
- "DarkSpirit.h"
-#include
- "Crywolf.h"
-#include
- "CrywolfAltar.h"
-#include
- "CrywolfSync.h"
-#include
- "DevilSquare.h"
-#include
- "KanturuEntranceNPC.h"
-#include
- "CashShop.h"
-#include
- "PentagramSystem.h"
-#include
- "IllusionTempleEvent_Renewal.h"
-#include
- "Sprotocol.h"
-#include
- "DSProtocol.h"
-#include
- "EDSProtocol.h"
-#include
- "Mercenary.h"
-#include
- "ItemSocketOptionSystem.h"
-#include
- "Guardian.h"
-#include
- "DoppelGanger.h"
-#include
- "AntiSwear.h"
-#include
- "ChaosCastle.h"
-#include
- "ChaosCastleFinal.h"
-#include
- "GamblingSystem.h"
-#include
- "configread.h"
+#include "stdafx.h"
+#include "protocol.h"
+#include "user.h"
+#include "giocp.h"
+#include "Event.h"
+#include "TLog.h"
+#include "GameMain.h"
+#include "winutil.h"
+#include "TNotice.h"
+#include "QuestInfo.h"
+#include "ConMember.h"
+#include "GameServer.h"
+#include "GMMng.h"
+#include "BattleSoccerManager.h"
+#include "BuffEffectSlot.h"
+#include "ChaosBox.h"
+#include "CastleSiegeSync.h"
+#include "TUnion.h"
+#include "JewelMixSystem.h"
+#include "Weapon.h"
+#include "ImperialGuardian.h"
+#include "MasterLevelSkillTreeSystem.h"
+#include "KalimaGate.h"
+#include "ObjUseSkill.h"
+#include "ObjCalCharacter.h"
+#include "NpcTalk.h"
+#include "Shop.h"
+#include "PeriodItemEx.h"
+#include "BattleSoccer.h"
+#include "BattleSoccerManager.h"
+#include "gObjMonster.h"
+#include "ComboAttack.h"
+#include "Gate.h"
+#include "MoveCommand.h"
+#include "MultiAttackHackCheck.h"
+#include "ItemAddOption.h"
+#include "JewelOfHarmonySystem.h"
+#include "PacketCheckSum.h"
+#include "DarkSpirit.h"
+#include "Crywolf.h"
+#include "CrywolfAltar.h"
+#include "CrywolfSync.h"
+#include "DevilSquare.h"
+#include "KanturuEntranceNPC.h"
+#include "CashShop.h"
+#include "PentagramSystem.h"
+#include "IllusionTempleEvent_Renewal.h"
+#include "Sprotocol.h"
+#include "DSProtocol.h"
+#include "EDSProtocol.h"
+#include "Mercenary.h"
+#include "ItemSocketOptionSystem.h"
+#include "Guardian.h"
+#include "DoppelGanger.h"
+#include "AntiSwear.h"
+#include "ChaosCastle.h"
+#include "ChaosCastleFinal.h"
+#include "GamblingSystem.h"
+#include "configread.h"
 //#include "bcore.h"
-#include
- "GensSystem.h"
-#include
- "GensSystemProtocol.h"
-#include
- "NewPVP.h"
-#include
- "MapServerManager.h"
-#include
- "MineSystem.h"
-#include
- "VipSys.h"
-#include
- "LifeStone.h"
-#include
- "QuestExpProtocol.h"
-#include
- "QuestExpProgMng.h"
-#include
- "QuestExpInfo.h"
-#include
- "QuestExpLuaBind.h"
-#include
- "LuaFun.h"
-#include
- "BagManager.h"
-#include
- "SetItemOption.h"
-#include
- "LuckyItemManager.h"
-#include
- "PentagramSystem.h"
-#include
- "PentagramMixSystem.h"
-#include
- "ProhibitedSymbols.h"
-#include
- "PersonalStore.h"
-#include
- "MuunSystem.h"
-#include
- "MuRummyMng.h"
-#include
- "KeyGenerater.h"
-#include
- "AcheronGuardianEvent.h"
-#include
- "GremoryCase.h"
-#include
- "DevilSquareFinal.h"
-#include
- "BotSystem.h"
-#include
- "ExpManager.h"
+#include "GensSystem.h"
+#include "GensSystemProtocol.h"
+#include "NewPVP.h"
+#include "MapServerManager.h"
+#include "MineSystem.h"
+#include "VipSys.h"
+#include "LifeStone.h"
+#include "QuestExpProtocol.h"
+#include "QuestExpProgMng.h"
+#include "QuestExpInfo.h"
+#include "QuestExpLuaBind.h"
+#include "LuaFun.h"
+#include "BagManager.h"
+#include "SetItemOption.h"
+#include "LuckyItemManager.h"
+#include "PentagramSystem.h"
+#include "PentagramMixSystem.h"
+#include "ProhibitedSymbols.h"
+#include "PersonalStore.h"
+#include "MuunSystem.h"
+#include "MuRummyMng.h"
+#include "KeyGenerater.h"
+#include "AcheronGuardianEvent.h"
+#include "GremoryCase.h"
+#include "DevilSquareFinal.h"
+#include "BotSystem.h"
+#include "ExpManager.h"
 
 GameProtocol GSProtocol;
 
@@ -208,8 +122,7 @@ return true;
 
 bool GameProtocol::DataEncryptCheck(int aIndex, BYTE protoNum, BOOL Encrypt)
 {
-#ifndef
- EMU_NOCRYPT
+#ifndef EMU_NOCRYPT
 if (!ObjectMaxRange(aIndex))
 return false;
 
@@ -2623,8 +2536,7 @@ IOCP.DataSend(index, (UCHAR*)&pWhisper, pWhisper.h.size);
 }
 
 
-#pragma
- pack (1)
+#pragma pack (1)
 struct PMSG_JOINRESULT
 {
 PBMSG_HEAD h;    // C1:F1
@@ -2634,9 +2546,8 @@ BYTE NumberH;    // 5
 BYTE NumberL;    // 6
 BYTE CliVersion[5];    // 7
 };
-#pragma
- pack ()
 
+#pragma pack ()
 
 void GameProtocol::SCPJoinResultSend(int aIndex, BYTE result)
 {
@@ -3444,18 +3355,15 @@ MsgSendV2(&gObj[aIndex], (UCHAR*)&pMsg, pMsg.h.size);
 }
 
 
-#pragma
- pack(1)
+#pragma pack(1)
 struct PMSG_MAGICLIST    //Revised to 1.01.03
 {
 char Pos;    // 0
 WORD wSkillNum; //3
 BYTE btSkillLevel;    // 5
 };
-#pragma
- pack()
 
-
+#pragma pack()
 struct PMSG_MAGICLISTCOUNT_S9
 {
 PBMSG_HEAD h;    // C1:F3:11
@@ -22737,8 +22645,7 @@ return;
 GDReqCancelPartyMatching(nUserIndex, lpMsg->btType);
 }
 
-#pragma
- pack (1)
+#pragma pack (1)
 struct stBuffList
 {
 stBuffList()
@@ -22758,9 +22665,8 @@ char Name[MAX_ACCOUNT_LEN + 1];
 BYTE btBuffCount;
 stBuffList stBuffList[32];
 };
-#pragma
- pack ()
 
+#pragma pack ()
 void GameProtocol::GCDisplayBuffeffectPartyMember(int aIndex)
 {
 if (ObjectMaxRange(aIndex) == false)
